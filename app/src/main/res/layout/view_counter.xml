@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.dgtimer.activities.timer.CounterViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_counter_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.index == 0 &amp;&amp; viewModel.total > 1 ? @string/latte : viewModel.type}"
+            android:textColor="@{viewModel.active ? @color/colorBackground : @color/colorTextTransparent}"
+            android:gravity="center"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/tv_counter_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(viewModel.currentTime)}"
+            android:textColor="@{viewModel.active ? @color/colorBackground : @color/colorTextTransparent}"
+            android:gravity="center"
+            android:textSize="84sp"
+            android:layout_marginTop="32dp"/>
+    </LinearLayout>
+</layout>

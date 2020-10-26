@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "272017712400",
+    "firebase_url": "https://dgtimer-910f4.firebaseio.com",
+    "project_id": "dgtimer-910f4",
+    "storage_bucket": "dgtimer-910f4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:272017712400:android:1e8a150c509fdfa954f195",
+        "android_client_info": {
+          "package_name": "com.tyehooney.dgtimer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "272017712400-43f1tmebnpgb4iob1ft2kg21cevga6d2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLREGOzUdGglPdR6qXcqF-YIfa3qBxRNw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "272017712400-43f1tmebnpgb4iob1ft2kg21cevga6d2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
