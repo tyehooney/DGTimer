@@ -5,13 +5,16 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
 import com.example.dgtimer.R;
 import com.example.dgtimer.databinding.ActivitySettingsBinding;
 
+import static com.example.dgtimer.ApplicationClass.GOOGLE_PLAY_LINK;
 import static com.example.dgtimer.ApplicationClass.mSharedPreferences;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -49,5 +52,11 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void onFinishSettings(View view){
         finish();
+    }
+
+    public void onGoReviewsClick(View view){
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(GOOGLE_PLAY_LINK));
+        startActivity(intent);
     }
 }

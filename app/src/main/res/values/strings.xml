@@ -8,4 +8,10 @@
     <string name="tip1">* 추출 레버(버튼)를 켜는 순간부터 카운트를 시작하시면 됩니다.</string>
     <string name="tip2">* 흰색 캡슐이 밀크캡슐입니다.</string>
 
+    <string name="ratingDialogTitle">앱 사용이 어떠셨나요?</string>
+    <string name="induceRate">저희 돌구타이머를 잘 사용해보셨다면 Google Play에서 평가를 남겨주세요!</string>
+    <string name="rate">평가하기</string>
+    <string name="later">나중에</string>
+    <string name="neverShowIt">싫어요</string>
+
 </resources>
