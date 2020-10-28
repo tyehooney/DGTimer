@@ -51,7 +51,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     //Google Firebase
-    implementation 'com.google.firebase:firebase-firestore:21.7.1'
+    implementation 'com.google.firebase:firebase-firestore:22.0.0'
 
     annotationProcessor 'androidx.room:room-compiler:2.2.5'
 
