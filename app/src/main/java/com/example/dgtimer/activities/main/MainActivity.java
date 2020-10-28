@@ -35,14 +35,11 @@ public class MainActivity extends AppCompatActivity {
         binding.setLifecycleOwner(this);
         binding.setViewModel(viewModel);
 
-        //배너 광고 게시
+        //광고 초기화
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {}
         });
-
-        AdRequest adRequest = new AdRequest.Builder().build();
-        binding.adView.loadAd(adRequest);
 
         //scroll 될 때 fab 보이기
         binding.rvCapsules.addOnScrollListener(new RecyclerView.OnScrollListener() {
