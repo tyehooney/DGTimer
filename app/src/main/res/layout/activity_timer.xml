@@ -109,7 +109,7 @@
         <com.google.android.gms.ads.AdView
             android:id="@+id/ad_view"
             ads:adSize="BANNER"
-            ads:adUnitId="@string/admob_unit_test_id"
+            ads:adUnitId="@string/admob_unit_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorTextTransparent"
