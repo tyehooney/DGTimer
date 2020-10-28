@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.dgtimer.AppRater;
 import com.example.dgtimer.R;
 import com.example.dgtimer.databinding.ActivityMainBinding;
 import com.example.dgtimer.db.Capsule;
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -67,5 +67,11 @@ public class MainActivity extends AppCompatActivity {
     //fab onClick
     public void scrollUp(View view){
         binding.rvCapsules.smoothScrollToPosition(0);
+    }
+
+    //끝내기 전에 평가 dialog 띄우기
+    @Override
+    public void onBackPressed() {
+        AppRater.set(this);
     }
 }
