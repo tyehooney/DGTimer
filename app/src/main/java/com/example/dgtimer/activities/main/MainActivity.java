@@ -30,20 +30,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-
-            }
-        });
-
-        AdRequest adRequest = new AdRequest.Builder().build();
-        binding.adView.loadAd(adRequest);
-
         viewModel = new ViewModelProvider(this, new MainViewModel.Factory(getApplication(), this))
                 .get(MainViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setViewModel(viewModel);
+
+        //배너 광고 게시
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {}
+        });
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        binding.adView.loadAd(adRequest);
 
         //scroll 될 때 fab 보이기
         binding.rvCapsules.addOnScrollListener(new RecyclerView.OnScrollListener() {
