@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">돌구타이머</string>
 
+    <string name="searchCapsule">캡슐을 입력하세요</string>
+
     <string name="latte">밀크</string>
 
     <string name="tip1">* 추출 레버(버튼)를 켜는 순간부터 카운트를 시작하시면 됩니다.</string>

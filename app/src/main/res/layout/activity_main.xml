@@ -71,7 +71,7 @@
                     android:lines="1"
                     android:imeOptions="actionSearch"
                     android:background="@android:color/transparent"
-                    android:hint="캡슐을 입력하세요"
+                    android:hint="@string/searchCapsule"
                     setFocus="@{viewModel.searchOn}"
                     android:text="@={viewModel.searchingWord}"
                     android:textColor="@color/colorText"
@@ -102,7 +102,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorTextTransparent"
             ads:adSize="BANNER"
-            ads:adUnitId="@string/admob_unit_test_id"/>
+            ads:adUnitId="@string/admob_unit_id"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
