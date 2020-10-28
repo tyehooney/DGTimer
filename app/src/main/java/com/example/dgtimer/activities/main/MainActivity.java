@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.dgtimer.AppRater;
 import com.example.dgtimer.R;
 import com.example.dgtimer.databinding.ActivityMainBinding;
 import com.example.dgtimer.db.Capsule;
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -30,20 +30,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-
-            }
-        });
-
-        AdRequest adRequest = new AdRequest.Builder().build();
-        binding.adView.loadAd(adRequest);
-
         viewModel = new ViewModelProvider(this, new MainViewModel.Factory(getApplication(), this))
                 .get(MainViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setViewModel(viewModel);
+
+        //광고 초기화
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {}
+        });
 
         //scroll 될 때 fab 보이기
         binding.rvCapsules.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -71,5 +67,11 @@ public class MainActivity extends AppCompatActivity {
     //fab onClick
     public void scrollUp(View view){
         binding.rvCapsules.smoothScrollToPosition(0);
+    }
+
+    //끝내기 전에 평가 dialog 띄우기
+    @Override
+    public void onBackPressed() {
+        AppRater.set(this);
     }
 }

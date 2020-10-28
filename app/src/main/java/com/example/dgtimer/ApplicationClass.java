@@ -30,6 +30,8 @@ public class ApplicationClass extends Application {
     public static final int DEFAULT_VOLUME = 75;
     public static final int DEFAULT_AMPLITUDE = 180;
 
+    public static final String GOOGLE_PLAY_LINK = "http://play.google.com/store/apps/details?id=com.tyehooney.dgtimer";
+
     @Override
     public void onCreate() {
         super.onCreate();
