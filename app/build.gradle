@@ -21,6 +21,8 @@ android {
 
     buildTypes {
         debug{
+            resValue("string", "admob_id", localProperties['admobId'])
+            resValue("string", "admob_unit_id", localProperties['admobUnitId'])
             resValue("string", "admob_unit_test_id", localProperties['admobUnitTestId'])
         }
         release {
