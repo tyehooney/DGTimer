@@ -26,7 +26,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.settings.SettingsActivity" />
+        <activity android:name=".activities.settings.SettingsActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.timer.TimerActivity"
             android:screenOrientation="portrait" />

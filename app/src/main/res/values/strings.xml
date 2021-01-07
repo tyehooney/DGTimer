@@ -14,4 +14,17 @@
     <string name="later">나중에</string>
     <string name="neverShowIt">싫어요</string>
 
+    <string name="selectAlarm">알람을 선택해주세요</string>
+    <string name="alarm_0">초인종</string>
+    <string name="alarm_1">맑은 종</string>
+    <string name="alarm_2">딩동댕</string>
+    <string name="alarm_3">탁상시계 알람</string>
+    <string name="alarm_4">닭소리</string>
+    <string name="alarm_5">고양이</string>
+    <string name="alarm_6">전자 경보</string>
+    <string name="alarm_7">철도 건널목</string>
+    <string name="alarm_8">뱃고동</string>
+
+    <string name="save">저장</string>
+    <string name="cancel">취소</string>
 </resources>
