@@ -1,6 +1,7 @@
 package com.example.dgtimer.activities.timer;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.VibrationEffect;
@@ -25,6 +26,7 @@ import static com.example.dgtimer.ApplicationClass.DEFAULT_AMPLITUDE;
 import static com.example.dgtimer.ApplicationClass.DEFAULT_VOLUME;
 import static com.example.dgtimer.ApplicationClass.capsuleDatabase;
 import static com.example.dgtimer.ApplicationClass.mSharedPreferences;
+import static com.example.dgtimer.ApplicationClass.vibratePattern;
 import static com.example.dgtimer.utils.TimeUtils.stageToSecond;
 
 public class TimerViewModel extends AndroidViewModel implements CounterViewModel.AlertListener {
@@ -39,7 +41,6 @@ public class TimerViewModel extends AndroidViewModel implements CounterViewModel
     private MutableLiveData<String> tips = new MutableLiveData<>();
 
     private Vibrator vibrator;
-    private long[] pattern = {0, 500, 500, 500};
     private MediaPlayer mediaPlayer;
 
     public TimerViewModel(Application application, int id){
@@ -49,7 +50,6 @@ public class TimerViewModel extends AndroidViewModel implements CounterViewModel
         timerOn.setValue(timerOn.getValue() != null && timerOn.getValue());
         alarmBell.setValue(mSharedPreferences.getBoolean("alarmBell", true));
         vibrator = (Vibrator) application.getSystemService(VIBRATOR_SERVICE);
-        mediaPlayer = MediaPlayer.create(application.getApplicationContext(), R.raw.alarm_timeout);
 
         tips.setValue(application.getString(R.string.tip1));
     }
@@ -94,6 +94,12 @@ public class TimerViewModel extends AndroidViewModel implements CounterViewModel
 
     private CounterViewModel getActiveCounterViewModel(){
         return times.getValue().get(activeIndex);
+    }
+
+    public void onResume(Context context){
+        mediaPlayer = MediaPlayer.create(context, context.getResources()
+                .getIdentifier("alarm_"+mSharedPreferences.getInt("alarm", 0), "raw", context.getPackageName())
+        );
     }
 
     public LiveData<String> getTips() {
@@ -152,7 +158,7 @@ public class TimerViewModel extends AndroidViewModel implements CounterViewModel
             int amplitude = mSharedPreferences.getInt("amplitude", DEFAULT_AMPLITUDE);
             Log.d("TAGTAG", "amplitude : "+amplitude);
             vibrator.vibrate(
-                    VibrationEffect.createWaveform(pattern, new int[]{0, amplitude, 0, amplitude},
+                    VibrationEffect.createWaveform(vibratePattern, new int[]{0, amplitude, 0, amplitude},
                             -1));
         }else{
             float volume = mSharedPreferences.getInt("volume", DEFAULT_VOLUME) / 100.f;

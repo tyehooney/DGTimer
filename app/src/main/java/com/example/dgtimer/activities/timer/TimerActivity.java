@@ -71,6 +71,12 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        viewModel.onResume(this);
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         viewModel.onStop();

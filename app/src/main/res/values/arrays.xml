@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="strAlarms">
+        <item>@string/alarm_0</item>
+        <item>@string/alarm_1</item>
+        <item>@string/alarm_2</item>
+        <item>@string/alarm_3</item>
+        <item>@string/alarm_4</item>
+        <item>@string/alarm_5</item>
+        <item>@string/alarm_6</item>
+        <item>@string/alarm_7</item>
+        <item>@string/alarm_8</item>
+    </string-array>
+</resources>
