@@ -156,13 +156,11 @@ public class TimerViewModel extends AndroidViewModel implements CounterViewModel
     public void onFinished() {
         if (!alarmBell.getValue()){
             int amplitude = mSharedPreferences.getInt("amplitude", DEFAULT_AMPLITUDE);
-            Log.d("TAGTAG", "amplitude : "+amplitude);
             vibrator.vibrate(
                     VibrationEffect.createWaveform(vibratePattern, new int[]{0, amplitude, 0, amplitude},
                             -1));
         }else{
             float volume = mSharedPreferences.getInt("volume", DEFAULT_VOLUME) / 100.f;
-            Log.d("TAGTAG", "volume : "+volume);
             mediaPlayer.setVolume(volume, volume);
             mediaPlayer.start();
         }

@@ -10,5 +10,6 @@
         <item>@string/alarm_6</item>
         <item>@string/alarm_7</item>
         <item>@string/alarm_8</item>
+        <item>@string/alarm_9</item>
     </string-array>
 </resources>

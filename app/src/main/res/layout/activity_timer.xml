@@ -75,7 +75,7 @@
             android:layout_height="72dp"
             android:onClick="@{()->viewModel.onPlayBtnClick()}"
             android:src="@{viewModel.timerOn ? @drawable/ic_pause : @drawable/ic_play}"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/ad_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
@@ -89,7 +89,7 @@
             android:layout_marginStart="16dp"
             android:onClick="@{()->viewModel.onResetBtnClick()}"
             android:src="@drawable/ic_replay"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/ad_view"
             app:layout_constraintStart_toEndOf="@+id/iv_btn_play"
             app:layout_constraintTop_toBottomOf="@+id/ll_timers"
             app:layout_constraintVertical_bias="0.522" />
@@ -101,7 +101,7 @@
             android:src="@{viewModel.alarmBell ? @drawable/ic_alarm_bell : @drawable/ic_alarm_vibration}"
             android:onClick="@{()->viewModel.onAlarmOptionClick()}"
             android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/ad_view"
             app:layout_constraintEnd_toStartOf="@+id/iv_btn_play"
             app:layout_constraintTop_toBottomOf="@+id/ll_timers"
             app:layout_constraintVertical_bias="0.522"/>

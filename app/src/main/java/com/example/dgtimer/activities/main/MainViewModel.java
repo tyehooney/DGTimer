@@ -1,7 +1,10 @@
 package com.example.dgtimer.activities.main;
 
+import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,12 +14,15 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.dgtimer.R;
 import com.example.dgtimer.db.Capsule;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.dgtimer.ApplicationClass.capsuleDatabase;
+import static com.example.dgtimer.ApplicationClass.mSharedPreferences;
+import static com.example.dgtimer.ApplicationClass.readUpdateNote;
 
 public class MainViewModel extends AndroidViewModel {
 
@@ -34,6 +40,23 @@ public class MainViewModel extends AndroidViewModel {
         searchRvAdapter = new CapsuleAdapter(context, setItemViewModels(new ArrayList<Capsule>()));
         searchOn.setValue(searchOn.getValue() != null && searchOn.getValue());
         searchRvOn.setValue(searchRvOn.getValue() != null && searchRvOn.getValue());
+
+        try {
+            float currentVersion = Float.parseFloat(application.getPackageManager().getPackageInfo(application.getPackageName(), 0).versionName);
+            if (currentVersion != mSharedPreferences.getFloat("currentVersion", 0.0f)){
+                String strUpdateNote = readUpdateNote(context, currentVersion);
+                if (strUpdateNote != null){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setMessage(strUpdateNote);
+                    builder.setPositiveButton(R.string.check, null);
+                    builder.create().show();
+
+                    mSharedPreferences.edit().putFloat("currentVersion", currentVersion).apply();
+                }
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public LiveData<List<Capsule>> getCapsules() {

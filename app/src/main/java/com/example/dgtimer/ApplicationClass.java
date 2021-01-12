@@ -20,6 +20,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 public class ApplicationClass extends Application {
 
     public static CapsuleDatabase capsuleDatabase;
@@ -59,6 +62,24 @@ public class ApplicationClass extends Application {
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
 
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+    }
+
+    public static String readUpdateNote(Context context, float version){
+        int temp = (int) (version * 10);
+        int versionInt = temp / 10;
+        int versionFloat = temp % 10;
+        int rawId = context.getResources()
+                .getIdentifier("update_note_"+versionInt+"_"+versionFloat, "raw", context.getPackageName());
+        InputStream in = context.getResources().openRawResource(rawId);
+        byte[] b = new byte[0];
+        try {
+            b = new byte[in.available()];
+            in.read(b);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return new String(b);
     }
 
     public static void refreshData(Context context){
