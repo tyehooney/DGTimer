@@ -14,9 +14,6 @@ import com.example.dgtimer.AppRater;
 import com.example.dgtimer.R;
 import com.example.dgtimer.databinding.ActivityMainBinding;
 import com.example.dgtimer.db.Capsule;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 import java.util.List;
 
@@ -34,12 +31,6 @@ public class MainActivity extends AppCompatActivity {
                 .get(MainViewModel.class);
         binding.setLifecycleOwner(this);
         binding.setViewModel(viewModel);
-
-        //광고 초기화
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {}
-        });
 
         //scroll 될 때 fab 보이기
         binding.rvCapsules.addOnScrollListener(new RecyclerView.OnScrollListener() {

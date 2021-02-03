@@ -42,16 +42,16 @@ public class MainViewModel extends AndroidViewModel {
         searchRvOn.setValue(searchRvOn.getValue() != null && searchRvOn.getValue());
 
         try {
-            float currentVersion = Float.parseFloat(application.getPackageManager().getPackageInfo(application.getPackageName(), 0).versionName);
-            if (currentVersion != mSharedPreferences.getFloat("currentVersion", 0.0f)){
-                String strUpdateNote = readUpdateNote(context, currentVersion);
+            int currentVersion = application.getPackageManager().getPackageInfo(application.getPackageName(), 0).versionCode;
+            if (currentVersion != mSharedPreferences.getInt("currentVersionCode", 0)){
+                String strUpdateNote = readUpdateNote(context, application.getPackageManager().getPackageInfo(application.getPackageName(), 0).versionName);
                 if (strUpdateNote != null){
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setMessage(strUpdateNote);
                     builder.setPositiveButton(R.string.check, null);
                     builder.create().show();
 
-                    mSharedPreferences.edit().putFloat("currentVersion", currentVersion).apply();
+                    mSharedPreferences.edit().putInt("currentVersionCode", currentVersion).apply();
                 }
             }
         } catch (PackageManager.NameNotFoundException e) {

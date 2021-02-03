@@ -9,11 +9,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.dgtimer.KakaoBannerAdsKt;
 import com.example.dgtimer.R;
 import com.example.dgtimer.activities.settings.SettingsActivity;
 import com.example.dgtimer.databinding.ActivityTimerBinding;
 import com.example.dgtimer.db.Capsule;
-import com.google.android.gms.ads.AdRequest;
 
 import java.util.List;
 
@@ -65,8 +65,7 @@ public class TimerActivity extends AppCompatActivity {
             });
 
             //배너 광고 개시
-            AdRequest adRequest = new AdRequest.Builder().build();
-            binding.adView.loadAd(adRequest);
+            KakaoBannerAdsKt.setAd(binding.adView, TimerActivity.this, getLifecycle());
         }
     }
 

@@ -64,12 +64,9 @@ public class ApplicationClass extends Application {
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
-    public static String readUpdateNote(Context context, float version){
-        int temp = (int) (version * 10);
-        int versionInt = temp / 10;
-        int versionFloat = temp % 10;
+    public static String readUpdateNote(Context context, String versionName){
         int rawId = context.getResources()
-                .getIdentifier("update_note_"+versionInt+"_"+versionFloat, "raw", context.getPackageName());
+                .getIdentifier("update_note_"+versionName.replace(".","_"), "raw", context.getPackageName());
         InputStream in = context.getResources().openRawResource(rawId);
         byte[] b = new byte[0];
         try {

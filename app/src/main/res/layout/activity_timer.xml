@@ -106,10 +106,8 @@
             app:layout_constraintTop_toBottomOf="@+id/ll_timers"
             app:layout_constraintVertical_bias="0.522"/>
 
-        <com.google.android.gms.ads.AdView
+        <com.kakao.adfit.ads.ba.BannerAdView
             android:id="@+id/ad_view"
-            ads:adSize="BANNER"
-            ads:adUnitId="@string/admob_unit_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorTextTransparent"

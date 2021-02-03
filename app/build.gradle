@@ -5,6 +5,17 @@ def localProperties = new Properties()
 localProperties.load(new FileInputStream(rootProject.file("local.properties")))
 
 android {
+    signingConfigs {
+        release {
+            storeFile file(localProperties['signedStoreDir']) // 기준은 App 폴더 기준이다.
+
+            storePassword localProperties['signedStorePassword']
+
+            keyAlias localProperties['signedKeyAlias']
+
+            keyPassword localProperties['signedKeyAliasPassword']
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.1"
 
@@ -12,8 +23,8 @@ android {
         applicationId "com.tyehooney.dgtimer"
         minSdkVersion 26
         targetSdkVersion 30
-        versionCode 3
-        versionName "1.2"
+        versionCode 7
+        versionName "1.2.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -21,17 +32,13 @@ android {
 
     buildTypes {
         debug{
-            resValue("string", "admob_id", localProperties['admobId'])
-            resValue("string", "admob_unit_id", localProperties['admobUnitId'])
-            resValue("string", "admob_unit_test_id", localProperties['admobUnitTestId'])
+            resValue("string", "adfit_id", localProperties['adfitId'])
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-
-            resValue("string", "admob_id", localProperties['admobId'])
-            resValue("string", "admob_unit_id", localProperties['admobUnitId'])
-            resValue("string", "admob_unit_test_id", localProperties['admobUnitTestId'])
+            resValue("string", "adfit_id", localProperties['adfitId'])
+            signingConfig signingConfigs.release
         }
     }
 
@@ -47,17 +54,17 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
-    implementation 'androidx.room:room-runtime:2.2.5'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.room:room-runtime:2.2.6'
     implementation 'com.google.android.material:material:1.2.1'
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     //Google Firebase
-    implementation 'com.google.firebase:firebase-firestore:22.0.0'
+    implementation 'com.google.firebase:firebase-firestore:22.0.2'
 
-    annotationProcessor 'androidx.room:room-compiler:2.2.5'
+    annotationProcessor 'androidx.room:room-compiler:2.2.6'
 
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
@@ -72,6 +79,12 @@ dependencies {
     //noinspection LifecycleAnnotationProcessorWithJava8
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.2.0"
 
-    //Ad
-    implementation 'com.google.firebase:firebase-ads:19.5.0'
+    //kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10"
+    implementation "com.google.android.gms:play-services-ads-identifier:17.0.0"
+    apply plugin: 'kotlin-android'
+    apply plugin: 'kotlin-android-extensions'
+
+    //kakao adfit
+    implementation "com.kakao.adfit:ads-base:3.7.1"
 }
