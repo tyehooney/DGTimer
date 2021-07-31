@@ -35,6 +35,7 @@ android {
             resValue("string", "adfit_id", localProperties['adfitId'])
         }
         release {
+            debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             resValue("string", "adfit_id", localProperties['adfitId'])
