@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dgtimer.databinding.ItemCapsuleBinding;
@@ -74,7 +75,11 @@ public class CapsuleAdapter extends RecyclerView.Adapter<CapsuleAdapter.CapsuleH
 
     //LiveData 자동 갱신
     public void setData(List<CapsuleItemViewModel> dataViewModels){
+        CapsuleDiffCallback diffCallback = new CapsuleDiffCallback(mDataViewModels, dataViewModels);
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
+
         mDataViewModels = dataViewModels;
-        notifyDataSetChanged();
+
+        diffResult.dispatchUpdatesTo(this);
     }
 }

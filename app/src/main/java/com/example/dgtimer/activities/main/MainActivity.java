@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 
 import com.example.dgtimer.AppRater;
@@ -43,7 +44,9 @@ public class MainActivity extends AppCompatActivity {
         viewModel.getCapsules().observe(this, new Observer<List<Capsule>>() {
             @Override
             public void onChanged(List<Capsule> capsules) {
+                Parcelable recyclerViewState = binding.rvCapsules.getLayoutManager().onSaveInstanceState();
                 viewModel.refreshData((CapsuleAdapter)binding.rvCapsules.getAdapter(), capsules);
+                if(recyclerViewState != null) binding.rvCapsules.getLayoutManager().onRestoreInstanceState(recyclerViewState);
             }
         });
 
