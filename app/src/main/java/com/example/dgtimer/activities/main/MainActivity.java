@@ -66,6 +66,11 @@ public class MainActivity extends AppCompatActivity {
     //끝내기 전에 평가 dialog 띄우기
     @Override
     public void onBackPressed() {
-        AppRater.set(this);
+        if(viewModel.getSearchOn().getValue()){
+            binding.etSearch.setText("");
+            viewModel.getSearchOn().setValue(false);
+        }else{
+            AppRater.set(this);
+        }
     }
 }
