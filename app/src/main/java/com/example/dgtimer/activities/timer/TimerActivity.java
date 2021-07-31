@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.example.dgtimer.KakaoBannerAdsKt;
 import com.example.dgtimer.R;
@@ -61,6 +62,14 @@ public class TimerActivity extends AppCompatActivity {
                             binding.llTimers.addView(counterView);
                         }
                     }
+                }
+            });
+
+            viewModel.getTimerOn().observe(this, new Observer<Boolean>() {
+                @Override
+                public void onChanged(Boolean aBoolean) {
+                    if(aBoolean) getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                    else getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 }
             });
 
