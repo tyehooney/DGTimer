@@ -19,6 +19,7 @@
 [DataBinding](https://developer.android.com/topic/libraries/data-binding)  
 [DiffUtil](https://developer.android.com/reference/androidx/recyclerview/widget/DiffUtil)  
 [Glide](https://github.com/bumptech/glide)
+[Room](https://developer.android.com/training/data-storage/room?hl=ko)
 
 ## 💻개발자
 [박태훈](https://github.com/tyehooney)
