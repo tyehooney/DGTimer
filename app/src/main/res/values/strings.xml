@@ -29,4 +29,5 @@
     <string name="save">저장</string>
     <string name="cancel">취소</string>
     <string name="check">확인</string>
+    <string name="when_network_disconnected">캡슐 커피 목록을 불러오기 위해\n 네트워크를 활성화해주세요!</string>
 </resources>
