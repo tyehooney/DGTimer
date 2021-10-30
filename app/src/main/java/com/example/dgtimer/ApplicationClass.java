@@ -50,18 +50,6 @@ public class ApplicationClass extends Application {
                     .allowMainThreadQueries().build();
         }
 
-//        인터넷 있을 시 firestore data를 로컬 db에 업데이트
-        refreshData(this);
-    }
-
-//    인터넷 연결 여부 확인
-    public static boolean hasInternet(Context context){
-        ConnectivityManager cm =
-                (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-
-        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
     public static String readUpdateNote(Context context, String versionName){
@@ -79,29 +67,26 @@ public class ApplicationClass extends Application {
         return new String(b);
     }
 
-    public static void refreshData(Context context){
-        if (hasInternet(context)){
-            FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-            firestore.collection("capsules")
-                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful() && task.getResult() != null){
-                        for (QueryDocumentSnapshot document : task.getResult()){
-                            Capsule capsule = document.toObject(Capsule.class);
-                            if(capsuleDatabase.getCapsuleDao().getByName(capsule.getName()).isEmpty())
-                                capsuleDatabase.getCapsuleDao().insert(capsule);
+    public static void refreshData(){
+        FirebaseFirestore.getInstance().collection("capsules")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful() && task.getResult() != null){
+                    for (QueryDocumentSnapshot document : task.getResult()){
+                        Capsule capsule = document.toObject(Capsule.class);
+                        if(capsuleDatabase.getCapsuleDao().getByName(capsule.getName()).isEmpty())
+                            capsuleDatabase.getCapsuleDao().insert(capsule);
 
-                            Capsule lastCapsule = capsuleDatabase.getCapsuleDao().getCapsuleById(capsule.getId());
-                            if (lastCapsule != null &&
-                                    (!lastCapsule.getName().equals(capsule.getName()) ||
-                                            !lastCapsule.getStage().toString().equals(capsule.getStage().toString()))){
-                                capsuleDatabase.getCapsuleDao().updateCapsule(capsule);
-                            }
+                        Capsule lastCapsule = capsuleDatabase.getCapsuleDao().getCapsuleById(capsule.getId());
+                        if (lastCapsule != null &&
+                                (!lastCapsule.getName().equals(capsule.getName()) ||
+                                        !lastCapsule.getStage().toString().equals(capsule.getStage().toString()))){
+                            capsuleDatabase.getCapsuleDao().updateCapsule(capsule);
                         }
                     }
                 }
-            });
-        }
+            }
+        });
     }
 }
