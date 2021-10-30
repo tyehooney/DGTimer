@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.bumptech.glide.Glide;
-import com.example.dgtimer.ApplicationClass;
 import com.example.dgtimer.R;
 import com.example.dgtimer.activities.main.CapsuleAdapter;
 
@@ -26,10 +25,7 @@ public class DataBindingUtils {
 //    인터넷 연결 유무에 따른 이미지 로드
     @BindingAdapter({"bindUri"})
     public static void loadImage(ImageView view, String uri){
-        if (ApplicationClass.hasInternet(view.getContext()))
-            Glide.with(view.getContext()).load(Uri.parse(uri)).into(view);
-        else
-            view.setVisibility(View.GONE);
+        Glide.with(view.getContext()).load(Uri.parse(uri)).into(view);
     }
 
 //    recyclerView adapter

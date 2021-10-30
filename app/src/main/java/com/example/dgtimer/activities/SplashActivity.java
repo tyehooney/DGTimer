@@ -16,6 +16,15 @@ import com.example.dgtimer.databinding.ActivitySplashBinding;
 
 public class SplashActivity extends AppCompatActivity {
 
+    private Handler splashHandler;
+    private final Runnable runnableMoveToMainActivity = new Runnable() {
+        @Override
+        public void run() {
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            finish();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,12 +37,15 @@ public class SplashActivity extends AppCompatActivity {
         binding.ivLogo.startAnimation(ivAnim);
         binding.tvTitle.startAnimation(tvAnim);
 
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                finish();
-            }
-        }, 1500);
+        splashHandler = new Handler(Looper.getMainLooper());
+        splashHandler.postDelayed(runnableMoveToMainActivity, 1500);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (splashHandler != null) {
+            splashHandler.removeCallbacks(runnableMoveToMainActivity);
+        }
     }
 }

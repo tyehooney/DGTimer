@@ -100,6 +100,14 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="22sp"
+                android:text="@string/when_network_disconnected"
+                android:visibility="@{viewModel.capsules.size() == 0 ? View.VISIBLE : View.GONE}"/>
+
 <!--            전체 data-->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_capsules"

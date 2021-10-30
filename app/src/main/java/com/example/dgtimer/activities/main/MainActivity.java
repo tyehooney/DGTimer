@@ -1,5 +1,7 @@
 package com.example.dgtimer.activities.main;
 
+import static com.example.dgtimer.ApplicationClass.refreshData;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -7,6 +9,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.Network;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
@@ -22,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private MainViewModel viewModel;
+    private ConnectivityManager cm;
+    private ConnectivityManager.NetworkCallback networkCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +63,33 @@ public class MainActivity extends AppCompatActivity {
                 viewModel.search(s);
             }
         });
+
+        setNetworkCallback();
+    }
+
+    private void setNetworkCallback() {
+        cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        networkCallback = new ConnectivityManager.NetworkCallback() {
+            @Override
+            public void onAvailable(@NonNull Network network) {
+                super.onAvailable(network);
+                refreshData();
+            }
+
+            @Override
+            public void onLost(@NonNull Network network) {
+                super.onLost(network);
+            }
+        };
+        cm.registerDefaultNetworkCallback(networkCallback);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (cm != null && networkCallback != null) {
+            cm.unregisterNetworkCallback(networkCallback);
+        }
     }
 
     //fab onClick
