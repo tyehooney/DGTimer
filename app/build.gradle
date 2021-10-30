@@ -35,7 +35,7 @@ android {
             resValue("string", "adfit_id", localProperties['adfitId'])
         }
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             resValue("string", "adfit_id", localProperties['adfitId'])
             signingConfig signingConfigs.release
