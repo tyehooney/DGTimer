@@ -51,7 +51,6 @@ public class TimerViewModel extends AndroidViewModel implements CounterViewModel
         alarmBell.setValue(mSharedPreferences.getBoolean("alarmBell", true));
         vibrator = (Vibrator) application.getSystemService(VIBRATOR_SERVICE);
 
-        tips.setValue(application.getString(R.string.tip1));
     }
 
     private LiveData<Capsule> getCapsuleInfo(int capsuleId){
@@ -70,8 +69,11 @@ public class TimerViewModel extends AndroidViewModel implements CounterViewModel
             viewModel.setAlertListener(this);
             tempList.add(viewModel);
         }
-        if (stageList.size() > 1)
+
+        tips.setValue(mApplication.getString(R.string.tip1));
+        if (stageList.size() > 1) {
             tips.setValue(tips.getValue()+"\n"+mApplication.getString(R.string.tip2));
+        }
 
         times.setValue(tempList);
     }
