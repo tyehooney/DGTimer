@@ -17,8 +17,7 @@
             android:id="@+id/iv_capsule"
             android:scaleType="centerCrop"
             android:layout_width="75dp"
-            android:layout_height="match_parent"
-            bindUri="@{viewModel.image}"/>
+            android:layout_height="match_parent" />
 
         <TextView
             android:id="@+id/tv_capsule"

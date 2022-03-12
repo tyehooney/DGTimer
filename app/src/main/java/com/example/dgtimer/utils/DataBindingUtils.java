@@ -3,7 +3,6 @@ package com.example.dgtimer.utils;
 import android.content.Context;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -16,17 +15,10 @@ import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
-import com.bumptech.glide.Glide;
 import com.example.dgtimer.R;
 import com.example.dgtimer.activities.main.CapsuleAdapter;
 
 public class DataBindingUtils {
-
-//    인터넷 연결 유무에 따른 이미지 로드
-    @BindingAdapter({"bindUri"})
-    public static void loadImage(ImageView view, String uri){
-        Glide.with(view.getContext()).load(Uri.parse(uri)).into(view);
-    }
 
 //    recyclerView adapter
     @BindingAdapter({"adapter"})
