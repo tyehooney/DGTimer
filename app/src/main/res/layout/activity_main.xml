@@ -10,22 +10,26 @@
             type="com.example.dgtimer.activities.main.MainViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorBackground"
         tools:context=".activities.main.MainActivity"
         android:orientation="vertical"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:focusableInTouchMode="true" >
 
         <RelativeLayout
             android:id="@+id/rl_action_bar"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="56dp"
             android:paddingHorizontal="16dp"
             android:paddingVertical="8dp"
             android:background="@color/colorBackground"
-            android:elevation="5dp">
+            android:elevation="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:id="@+id/ll_logo"
@@ -50,6 +54,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -95,53 +100,63 @@
                 android:onClick="@{()->viewModel.onSearchBtnClick()}"/>
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:gravity="center"
+            android:textSize="22sp"
+            android:text="@string/when_network_disconnected"
+            android:visibility="@{viewModel.capsules.size() == 0 ? View.VISIBLE : View.GONE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rl_action_bar"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:textSize="22sp"
-                android:text="@string/when_network_disconnected"
-                android:visibility="@{viewModel.capsules.size() == 0 ? View.VISIBLE : View.GONE}"/>
+        <!--            전체 data-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_capsules"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:overScrollMode="never"
+            android:visibility="@{viewModel.searchRvOn ? View.GONE : View.VISIBLE}"
+            app:layoutManager="LinearLayoutManager"
+            adapter="@{viewModel.rvAdapter}"
+            android:focusableInTouchMode="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rl_action_bar"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-<!--            전체 data-->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_capsules"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:overScrollMode="never"
-                android:visibility="@{viewModel.searchRvOn ? View.GONE : View.VISIBLE}"
-                app:layoutManager="LinearLayoutManager"
-                adapter="@{viewModel.rvAdapter}" />
+        <!--            검색된 data-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_searched_capsules"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:visibility="@{viewModel.searchRvOn ? View.VISIBLE : View.GONE}"
+            app:layoutManager="LinearLayoutManager"
+            adapter="@{viewModel.searchRvAdapter}"
+            android:focusableInTouchMode="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rl_action_bar"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-<!--            검색된 data-->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_searched_capsules"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:overScrollMode="never"
-                android:visibility="@{viewModel.searchRvOn ? View.VISIBLE : View.GONE}"
-                app:layoutManager="LinearLayoutManager"
-                adapter="@{viewModel.searchRvAdapter}"/>
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_up"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="@{viewModel.scrollY > 300 ? View.VISIBLE : View.GONE}"
-                android:layout_marginBottom="48dp"
-                android:layout_marginEnd="16dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/ic_arrow_up_24"
-                app:backgroundTint="@color/colorBackground"
-                app:fabSize="mini"
-                android:elevation="5dp"
-                android:onClick="scrollUp"/>
-        </RelativeLayout>
-    </LinearLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.scrollY > 300 ? View.VISIBLE : View.GONE}"
+            android:layout_marginBottom="48dp"
+            android:layout_marginEnd="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_arrow_up_24"
+            app:backgroundTint="@color/colorBackground"
+            app:fabSize="mini"
+            android:elevation="5dp"
+            android:onClick="scrollUp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
