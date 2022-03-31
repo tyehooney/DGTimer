@@ -130,8 +130,8 @@
         <!--            검색된 data-->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_searched_capsules"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:overScrollMode="never"
             android:visibility="@{viewModel.searchRvOn ? View.VISIBLE : View.GONE}"
             app:layoutManager="LinearLayoutManager"
