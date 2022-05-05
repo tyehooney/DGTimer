@@ -86,5 +86,5 @@ dependencies {
     apply plugin: 'kotlin-android-extensions'
 
     //kakao adfit
-    implementation "com.kakao.adfit:ads-base:3.7.1"
+    implementation "com.kakao.adfit:ads-base:3.11.11"
 }
