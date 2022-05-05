@@ -49,6 +49,10 @@ android {
     dataBinding{
         enabled = true
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -86,5 +90,5 @@ dependencies {
     apply plugin: 'kotlin-android-extensions'
 
     //kakao adfit
-    implementation "com.kakao.adfit:ads-base:3.11.11"
+    implementation "com.kakao.adfit:ads-base:3.12.4"
 }
