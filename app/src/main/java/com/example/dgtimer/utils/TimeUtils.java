@@ -26,6 +26,9 @@ public class TimeUtils {
             case 7:
                 second = 38;
                 break;
+            case 8:
+                second = 60;
+                break;
         }
 
         return second;
