@@ -17,7 +17,7 @@ android {
         }
     }
     compileSdkVersion 32
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.tyehooney.dgtimer"
@@ -48,6 +48,10 @@ android {
 
     dataBinding{
         enabled = true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -86,5 +90,5 @@ dependencies {
     apply plugin: 'kotlin-android-extensions'
 
     //kakao adfit
-    implementation "com.kakao.adfit:ads-base:3.7.1"
+    implementation "com.kakao.adfit:ads-base:3.12.4"
 }
