@@ -12,7 +12,6 @@ data class Capsule(
     val id: Int = 0,
     val name: String? = null,
     val type: String? = null,
-    @TypeConverters(Converter::class)
     val stage: List<Int>? = null,
     val color: String? = null,
     val image: String? = null,
