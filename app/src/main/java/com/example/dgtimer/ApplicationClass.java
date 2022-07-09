@@ -3,8 +3,6 @@ package com.example.dgtimer;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -75,14 +73,14 @@ public class ApplicationClass extends Application {
                 if (task.isSuccessful() && task.getResult() != null){
                     for (QueryDocumentSnapshot document : task.getResult()){
                         Capsule capsule = document.toObject(Capsule.class);
-                        if(capsuleDatabase.getCapsuleDao().getByName(capsule.getName()).isEmpty())
-                            capsuleDatabase.getCapsuleDao().insert(capsule);
+                        if(capsuleDatabase.capsuleDao().getByName(capsule.getName()).isEmpty())
+                            capsuleDatabase.capsuleDao().insert(capsule);
 
-                        Capsule lastCapsule = capsuleDatabase.getCapsuleDao().getCapsuleById(capsule.getId());
+                        Capsule lastCapsule = capsuleDatabase.capsuleDao().getCapsuleById(capsule.getId());
                         if (lastCapsule != null &&
                                 (!lastCapsule.getName().equals(capsule.getName()) ||
                                         !lastCapsule.getStage().toString().equals(capsule.getStage().toString()))){
-                            capsuleDatabase.getCapsuleDao().updateCapsule(capsule);
+                            capsuleDatabase.capsuleDao().updateCapsule(capsule);
                         }
                     }
                 }
