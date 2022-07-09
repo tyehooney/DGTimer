@@ -1,39 +1,31 @@
-package com.example.dgtimer.db;
+package com.example.dgtimer.db
 
-import androidx.annotation.Nullable;
-import androidx.lifecycle.LiveData;
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
-import androidx.room.Update;
-
-import java.util.List;
+import androidx.lifecycle.LiveData
+import androidx.room.*
 
 @Dao
-public interface CapsuleDao {
+interface CapsuleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Capsule capsule);
+    fun insert(capsule: Capsule?)
 
     @Query("SELECT * FROM capsules ORDER BY major desc, name")
-    LiveData<List<Capsule>> getAll();
+    fun getAll(): LiveData<List<Capsule?>?>?
 
     @Query("SELECT * FROM capsules WHERE name = :name")
-    List<Capsule> getByName(String name);
+    fun getByName(name: String?): List<Capsule?>?
 
     @Query("SELECT * FROM capsules WHERE id = :id")
-    @Nullable
-    Capsule getCapsuleById(int id);
+    fun getCapsuleById(id: Int): Capsule?
 
     @Query("SELECT * FROM capsules WHERE name LIKE :name ORDER BY major desc")
-    List<Capsule> searchByName(String name);
+    fun searchByName(name: String?): List<Capsule?>?
 
     @Query("SELECT * FROM capsules WHERE id = :id LIMIT 1")
-    LiveData<Capsule> searchById(int id);
+    fun searchById(id: Int): LiveData<Capsule?>?
 
     @Query("UPDATE capsules SET major = :major WHERE id = :id")
-    void updateMajor(int id, boolean major);
+    fun updateMajor(id: Int, major: Boolean)
 
     @Update
-    void updateCapsule(Capsule capsule);
+    fun updateCapsule(capsule: Capsule?)
 }

@@ -1,29 +1,21 @@
-package com.example.dgtimer.db;
+package com.example.dgtimer.db
 
-import androidx.room.TypeConverter;
+import androidx.room.TypeConverter
+import java.util.ArrayList
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Converter {
+class Converter {
     @TypeConverter
-    public String ListConverter(List<Integer> intList){
-        String str = "";
-
-        for (int num : intList)
-            str += (num + ",");
-
-        return str;
+    fun convertIntListToString(intList: List<Int>): String {
+        var str = ""
+        for (num in intList) str += "$num,"
+        return str
     }
 
     @TypeConverter
-    public List<Integer> StringConverter(String str){
-        List<Integer> intList = new ArrayList<>();
-        String[] arrStr = str.split(",");
-
-        for (String strNum : arrStr)
-            intList.add(Integer.parseInt(strNum));
-
-        return intList;
+    fun convertStringToIntList(str: String): List<Int> {
+        val intList: MutableList<Int> = ArrayList()
+        val arrStr = str.split(",").toTypedArray()
+        for (strNum in arrStr) intList.add(strNum.toInt())
+        return intList
     }
 }
