@@ -26,6 +26,19 @@ class KMainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: KMainViewModel by viewModels()
 
+    private val mainCapsulesAdapter: KCapsuleAdapter by lazy {
+        KCapsuleAdapter(
+            this::onCapsuleItemClick,
+            this::onCapsuleItemStarClick
+        )
+    }
+    private val searchedCapsulesAdapter: KCapsuleAdapter by lazy {
+        KCapsuleAdapter(
+            this::onCapsuleItemClick,
+            this::onCapsuleItemStarClick
+        )
+    }
+
     private var searchJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
@@ -42,12 +55,14 @@ class KMainActivity : AppCompatActivity() {
                 launch {
                     viewModel.capsules.collect {
                         // todo update recyclerView
+                        mainCapsulesAdapter.submitList(it)
                     }
                 }
 
                 launch {
                     viewModel.searchedCapsules.collectLatest {
                         // todo update searched capsules recyclerView
+                        searchedCapsulesAdapter.submitList(it)
                     }
                 }
             }
@@ -72,6 +87,14 @@ class KMainActivity : AppCompatActivity() {
             viewModel.searchCapsules(text)
             searchJob = null
         }
+    }
+
+    private fun onCapsuleItemClick(capsuleId: Int) {
+        // todo onCapsuleItemClick
+    }
+
+    private fun onCapsuleItemStarClick(capsuleId: Int) {
+        // todo onCapsuleItemStarClick
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
