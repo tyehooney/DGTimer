@@ -2,19 +2,26 @@ package com.example.dgtimer.activities.main
 
 import android.content.Context
 import android.graphics.Rect
+import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
+import com.example.dgtimer.R
 import com.example.dgtimer.databinding.ActivityMainBinding
+import com.example.dgtimer.utils.Extensions.setSearchFocus
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -54,15 +61,17 @@ class KMainActivity : AppCompatActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.capsules.collect {
-                        // todo update recyclerView
                         mainCapsulesAdapter.submitList(it)
                     }
                 }
-
                 launch {
                     viewModel.searchedCapsules.collectLatest {
-                        // todo update searched capsules recyclerView
                         searchedCapsulesAdapter.submitList(it)
+                    }
+                }
+                launch {
+                    viewModel.isSearchModeOn.collect {
+                        toggleSearchMode(it)
                     }
                 }
             }
@@ -73,7 +82,11 @@ class KMainActivity : AppCompatActivity() {
         with(binding) {
             fabUp.setOnClickListener { scrollUpToTop() }
             ivBtnSearch.setOnClickListener {
-                // todo toggle searchBox
+                val isSearchModeOn = viewModel.isSearchModeOn.value
+                viewModel.setSearchMode(!isSearchModeOn)
+            }
+            ivBtnSearchTextCancel.setOnClickListener {
+                etSearch.setText("")
             }
             etSearch.doOnTextChanged { text, _, _, _ ->
                 searchCapsules(text.toString())
@@ -115,6 +128,32 @@ class KMainActivity : AppCompatActivity() {
     private fun hideKeyboard(view: View) {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    private fun toggleSearchMode(isOn: Boolean) {
+        val needToShowSearchedCapsules =
+            isOn && (viewModel.searchedCapsules.value?.isNotEmpty() ?: false)
+        binding.rvCapsules.isVisible = !needToShowSearchedCapsules
+        binding.rvSearchedCapsules.isVisible = needToShowSearchedCapsules
+        binding.llSearch.isVisible = isOn
+        binding.etSearch.setSearchFocus(isOn)
+        binding.ivBtnSearch.setSearchButtonAnimation(isOn)
+    }
+
+    private fun ImageView.setSearchButtonAnimation(on: Boolean) {
+        setImageDrawable(
+            if (on) {
+                ContextCompat.getDrawable(context, R.drawable.avd_anim_search_to_back)
+            } else {
+                ContextCompat.getDrawable(context, R.drawable.avd_anim_back_to_search)
+            }
+        )
+
+        if (drawable is AnimatedVectorDrawableCompat) {
+            drawable as AnimatedVectorDrawableCompat
+        } else {
+            drawable as AnimatedVectorDrawable
+        }.start()
     }
 
     private fun scrollUpToTop() {
