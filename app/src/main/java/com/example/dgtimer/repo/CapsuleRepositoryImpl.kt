@@ -3,7 +3,9 @@ package com.example.dgtimer.repo
 import com.example.dgtimer.db.Capsule
 import com.example.dgtimer.db.CapsuleDao
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -37,8 +39,11 @@ class CapsuleRepositoryImpl @Inject constructor(
     override fun getCapsuleById(id: Int): Capsule? =
         capsuleDao.getCapsuleById(id)
 
-    override fun searchCapsulesByName(name: String): List<Capsule>? =
+    override suspend fun searchCapsulesByName(
+        name: String
+    ): List<Capsule>? = withContext(Dispatchers.IO) {
         capsuleDao.searchByName(name)
+    }
 
     override fun searchCapsuleById(id: Int): Flow<Capsule?> =
         capsuleDao.searchById(id)

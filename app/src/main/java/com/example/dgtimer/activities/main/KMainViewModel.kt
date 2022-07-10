@@ -25,8 +25,8 @@ class KMainViewModel @Inject constructor(
         repository.refreshCapsules()
     }
 
-    suspend fun searchCapsules(text: String) = withContext(Dispatchers.IO) {
-        _searchedCapsules.emit(repository.searchCapsulesByName(text))
+    suspend fun searchCapsules(text: String) {
+        _searchedCapsules.value = repository.searchCapsulesByName(text)
     }
 
     init {
