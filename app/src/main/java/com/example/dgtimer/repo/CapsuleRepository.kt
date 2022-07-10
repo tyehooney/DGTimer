@@ -11,5 +11,5 @@ interface CapsuleRepository {
     fun getCapsuleById(id: Int): Capsule?
     suspend fun searchCapsulesByName(name: String): List<Capsule>?
     fun searchCapsuleById(id: Int): Flow<Capsule?>
-    fun updateCapsule(capsule: Capsule)
+    fun updateCapsuleMajor(capsuleId: Int)
 }

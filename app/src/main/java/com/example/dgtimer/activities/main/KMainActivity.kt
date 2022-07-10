@@ -136,7 +136,7 @@ class KMainActivity : AppCompatActivity() {
     }
 
     private fun onCapsuleItemStarClick(capsuleId: Int) {
-        // todo onCapsuleItemStarClick
+        viewModel.updateCapsuleMajor(capsuleId)
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {

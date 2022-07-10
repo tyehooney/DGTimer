@@ -48,8 +48,9 @@ class CapsuleRepositoryImpl @Inject constructor(
     override fun searchCapsuleById(id: Int): Flow<Capsule?> =
         capsuleDao.searchById(id)
 
-    override fun updateCapsule(capsule: Capsule) {
-        capsuleDao.updateCapsule(capsule)
+    override fun updateCapsuleMajor(capsuleId: Int) {
+        val selectedCapsule = capsuleDao.getCapsuleById(capsuleId) ?: return
+        capsuleDao.updateCapsule(selectedCapsule.copy(isMajor = !selectedCapsule.isMajor))
     }
 
     companion object {

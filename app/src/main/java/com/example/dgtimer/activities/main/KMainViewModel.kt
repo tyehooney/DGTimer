@@ -47,6 +47,10 @@ class KMainViewModel @Inject constructor(
         }
     }
 
+    fun updateCapsuleMajor(capsuleId: Int) {
+        repository.updateCapsuleMajor(capsuleId)
+    }
+
     companion object {
         private const val FAB_SCROLL_Y_LIMIT = 300
     }
