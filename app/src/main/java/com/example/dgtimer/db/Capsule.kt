@@ -4,15 +4,14 @@ import android.graphics.Color
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
 
 @Entity(tableName = "capsules")
 data class Capsule(
     @PrimaryKey
     val id: Int = 0,
-    val name: String? = null,
-    val type: String? = null,
-    val stage: List<Int>? = null,
+    val name: String = "",
+    val type: String = "",
+    val stage: List<Int> = emptyList(),
     val color: String? = null,
     val image: String? = null,
     @ColumnInfo(name="major")
