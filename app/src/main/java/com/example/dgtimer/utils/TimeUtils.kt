@@ -1,36 +1,17 @@
-package com.example.dgtimer.utils;
+package com.example.dgtimer.utils
 
-public class TimeUtils {
-    public static int stageToSecond(int stage){
-        int second = 0;
-
-        switch (stage){
-            case 1:
-                second = 8;
-                break;
-            case 2:
-                second = 10;
-                break;
-            case 3:
-                second = 15;
-                break;
-            case 4:
-                second = 21;
-                break;
-            case 5:
-                second = 24;
-                break;
-            case 6:
-                second = 28;
-                break;
-            case 7:
-                second = 38;
-                break;
-            case 8:
-                second = 60;
-                break;
+object TimeUtils {
+    @JvmStatic
+    fun stageToSecond(stage: Int): Int =
+        when (stage) {
+            1 -> 8
+            2 -> 10
+            3 -> 15
+            4 -> 21
+            5 -> 24
+            6 -> 28
+            7 -> 38
+            8 -> 60
+            else -> 0
         }
-
-        return second;
-    }
 }
