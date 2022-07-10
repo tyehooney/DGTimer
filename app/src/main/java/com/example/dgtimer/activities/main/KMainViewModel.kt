@@ -34,13 +34,12 @@ class KMainViewModel @Inject constructor(
         _isSearchModeOn.value = isOn
     }
 
-    var currentScrollY = 0
-        private set
+    private var currentScrollY = 0
     private val _showFab: MutableStateFlow<Boolean> =
         MutableStateFlow(false)
     val showFab = _showFab.asStateFlow()
-    fun setScrollYForShowingFab(scrollY: Int) {
-        currentScrollY += scrollY
+    fun setScrollYForShowingFab(dy: Int) {
+        currentScrollY += dy
         val needToShowFab = currentScrollY > FAB_SCROLL_Y_LIMIT
         if (_showFab.value != needToShowFab) {
             _showFab.value = needToShowFab
