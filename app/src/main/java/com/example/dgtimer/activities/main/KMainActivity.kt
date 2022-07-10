@@ -18,6 +18,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.example.dgtimer.R
 import com.example.dgtimer.databinding.ActivityMainBinding
@@ -74,6 +75,11 @@ class KMainActivity : AppCompatActivity() {
                         toggleSearchMode(it)
                     }
                 }
+                launch {
+                    viewModel.showFab.collect() {
+                        toggleScrollTopFab(it)
+                    }
+                }
             }
         }
     }
@@ -91,6 +97,13 @@ class KMainActivity : AppCompatActivity() {
             etSearch.doOnTextChanged { text, _, _, _ ->
                 searchCapsules(text.toString())
             }
+            rvCapsules.addOnScrollListener(
+                object: RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        viewModel.setScrollYForShowingFab(dy)
+                    }
+                }
+            )
         }
     }
 
@@ -154,6 +167,10 @@ class KMainActivity : AppCompatActivity() {
         } else {
             drawable as AnimatedVectorDrawable
         }.start()
+    }
+
+    private fun toggleScrollTopFab(showButton: Boolean) {
+        binding.fabUp.isVisible = showButton
     }
 
     private fun scrollUpToTop() {
