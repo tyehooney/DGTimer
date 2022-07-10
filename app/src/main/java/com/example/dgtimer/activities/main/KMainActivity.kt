@@ -3,6 +3,8 @@ package com.example.dgtimer.activities.main
 import android.content.Context
 import android.graphics.Rect
 import android.graphics.drawable.AnimatedVectorDrawable
+import android.net.ConnectivityManager
+import android.net.Network
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.MotionEvent
@@ -49,12 +51,25 @@ class KMainActivity : AppCompatActivity() {
 
     private var searchJob: Job? = null
 
+    private val connectivityManager by lazy {
+        getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    }
+    private val networkCallback by lazy {
+        object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                super.onAvailable(network)
+                viewModel.updateCapsulesFromServer()
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         initView()
         initObservers()
+        connectivityManager.registerDefaultNetworkCallback(networkCallback)
     }
 
     private fun initObservers() {
@@ -63,6 +78,7 @@ class KMainActivity : AppCompatActivity() {
                 launch {
                     viewModel.capsules.collect {
                         mainCapsulesAdapter.submitList(it)
+                        binding.tvNetworkDisconnected.isVisible = it?.isEmpty() ?: true
                     }
                 }
                 launch {
@@ -175,6 +191,11 @@ class KMainActivity : AppCompatActivity() {
 
     private fun scrollUpToTop() {
         binding.rvCapsules.smoothScrollToPosition(0)
+    }
+
+    override fun onDestroy() {
+        connectivityManager.unregisterNetworkCallback(networkCallback)
+        super.onDestroy()
     }
 
     override fun onBackPressed() {

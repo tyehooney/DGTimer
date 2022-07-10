@@ -19,7 +19,7 @@ class KMainViewModel @Inject constructor(
         MutableStateFlow(emptyList())
     val searchedCapsules = _searchedCapsules.asStateFlow()
 
-    private fun updateCapsulesFromServer() {
+    fun updateCapsulesFromServer() {
         repository.refreshCapsules()
     }
 
@@ -45,10 +45,6 @@ class KMainViewModel @Inject constructor(
         if (_showFab.value != needToShowFab) {
             _showFab.value = needToShowFab
         }
-    }
-
-    init {
-        updateCapsulesFromServer()
     }
 
     companion object {
