@@ -23,6 +23,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.example.dgtimer.R
+import com.example.dgtimer.activities.timer.KTimerActivity
 import com.example.dgtimer.databinding.ActivityMainBinding
 import com.example.dgtimer.utils.Extensions.setSearchFocus
 import dagger.hilt.android.AndroidEntryPoint
@@ -132,7 +133,8 @@ class KMainActivity : AppCompatActivity() {
     }
 
     private fun onCapsuleItemClick(capsuleId: Int) {
-        // todo onCapsuleItemClick
+        val intent = KTimerActivity.createTimerActivityIntent(this, capsuleId)
+        startActivity(intent)
     }
 
     private fun onCapsuleItemStarClick(capsuleId: Int) {
