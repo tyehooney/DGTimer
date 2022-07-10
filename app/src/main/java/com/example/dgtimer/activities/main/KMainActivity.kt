@@ -176,4 +176,13 @@ class KMainActivity : AppCompatActivity() {
     private fun scrollUpToTop() {
         binding.rvCapsules.smoothScrollToPosition(0)
     }
+
+    override fun onBackPressed() {
+        if (viewModel.isSearchModeOn.value) {
+            viewModel.setSearchMode(false)
+        } else {
+            // todo AppRater
+            super.onBackPressed()
+        }
+    }
 }
