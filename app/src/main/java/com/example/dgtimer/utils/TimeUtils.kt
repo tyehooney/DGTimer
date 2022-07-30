@@ -1,7 +1,6 @@
 package com.example.dgtimer.utils
 
 object TimeUtils {
-    @JvmStatic
     fun stageToSecond(stage: Int): Int =
         when (stage) {
             1 -> 8

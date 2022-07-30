@@ -10,6 +10,7 @@ import androidx.core.view.get
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.example.dgtimer.R
 import com.example.dgtimer.databinding.ActivityTimerBinding
 import com.example.dgtimer.setAd
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,9 +37,19 @@ class KTimerActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        val capsule = viewModel.capsule ?: return
         with(binding) {
-            tvCapsuleName.text = capsule.name
+            lifecycleScope.launch {
+                viewModel.setCapsuleDataJob?.join()
+                val capsule = viewModel.capsule ?: return@launch
+                tvCapsuleName.text = capsule.name
+                tvCapsuleTips.text = getString(R.string.tip1) +
+                        if (capsule.stage.size > 1) "\n${getString(R.string.tip2)}"
+                        else ""
+            }
+            ivBtnAlarmOption.setOnClickListener {  }
+            ivBtnPlay.setOnClickListener {  }
+            ivBtnReplay.setOnClickListener {  }
+            ivBtnGoSettings.setOnClickListener {  }
 
             setAd(adView, this@KTimerActivity, lifecycle)
         }

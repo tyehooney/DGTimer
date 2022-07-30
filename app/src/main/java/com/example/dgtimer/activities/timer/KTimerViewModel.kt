@@ -6,6 +6,7 @@ import com.example.dgtimer.db.Capsule
 import com.example.dgtimer.repo.CapsuleRepository
 import com.example.dgtimer.utils.TimeUtils.stageToSecond
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -22,20 +23,30 @@ class KTimerViewModel @Inject constructor(
         MutableStateFlow(emptyList())
     val counters = _counters.asStateFlow()
 
+    var setCapsuleDataJob: Job? = null
+    private var countDownTimerJob: Job? = null
+
     fun setCapsuleData(capsuleId: Int) {
-        viewModelScope.launch {
+        setCapsuleDataJob?.cancel()
+        setCapsuleDataJob = viewModelScope.launch {
             val fetchedCapsule = repository.getCapsuleById(capsuleId) ?: return@launch
             capsule = fetchedCapsule
             val fetchedCounters = fetchedCapsule.stage.mapIndexed { index, stage ->
-                val time = stageToSecond(stage)
                 Counter(
                     fetchedCapsule.type ?: "",
-                    time,
+                    stageToSecond(stage),
                     index,
                     index == 0
                 )
             }
             _counters.value = fetchedCounters
+            setCapsuleDataJob = null
+        }
+    }
+
+    fun setActiveCounter(activeIndex: Int) {
+        _counters.value = counters.value.map {
+            it.copy(isActive = it.index == activeIndex)
         }
     }
 }
