@@ -1,6 +1,8 @@
 package com.example.dgtimer.utils
 
 object TimeUtils {
+    const val MILLIS = 1000L
+
     fun stageToSecond(stage: Int): Int =
         when (stage) {
             1 -> 8
