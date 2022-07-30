@@ -1,12 +1,14 @@
 package com.example.dgtimer.activities.main
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.dgtimer.db.Capsule
 import com.example.dgtimer.repo.CapsuleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -47,7 +49,9 @@ class KMainViewModel @Inject constructor(
     }
 
     fun updateCapsuleMajor(capsuleId: Int) {
-        repository.updateCapsuleMajor(capsuleId)
+        viewModelScope.launch {
+            repository.updateCapsuleMajor(capsuleId)
+        }
     }
 
     companion object {

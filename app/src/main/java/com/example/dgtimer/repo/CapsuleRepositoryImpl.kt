@@ -14,6 +14,8 @@ class CapsuleRepositoryImpl @Inject constructor(
     private val capsuleDao: CapsuleDao
 ) : CapsuleRepository {
 
+    private val ioDispatcher = Dispatchers.IO
+
     override fun refreshCapsules() {
         val collection = FirebaseFirestore.getInstance().collection(FIREBASE_COLLECTION_NAME)
         collection.get().addOnCompleteListener { task ->
@@ -29,29 +31,34 @@ class CapsuleRepositoryImpl @Inject constructor(
     override fun loadCapsules(): Flow<List<Capsule>?> =
         capsuleDao.getAll()
 
-    override fun addCapsule(capsule: Capsule) {
+    override suspend fun addCapsule(capsule: Capsule) {
         capsuleDao.insertCapsule(capsule)
     }
 
-    override fun getCapsuleByName(name: String): List<Capsule>? =
-        capsuleDao.getByName(name)
+    override suspend fun getCapsuleByName(name: String): List<Capsule>? =
+        withContext(ioDispatcher) {
+            capsuleDao.getByName(name)
+        }
 
-    override fun getCapsuleById(id: Int): Capsule? =
-        capsuleDao.getCapsuleById(id)
+    override suspend fun getCapsuleById(id: Int): Capsule? =
+        withContext(ioDispatcher) {
+            capsuleDao.getCapsuleById(id)
+        }
 
     override suspend fun searchCapsulesByName(
         name: String
-    ): List<Capsule>? = withContext(Dispatchers.IO) {
+    ): List<Capsule>? = withContext(ioDispatcher) {
         capsuleDao.searchByName(name)
     }
 
     override fun searchCapsuleById(id: Int): Flow<Capsule?> =
         capsuleDao.searchById(id)
 
-    override fun updateCapsuleMajor(capsuleId: Int) {
-        val selectedCapsule = capsuleDao.getCapsuleById(capsuleId) ?: return
-        capsuleDao.updateCapsule(selectedCapsule.copy(isMajor = !selectedCapsule.isMajor))
-    }
+    override suspend fun updateCapsuleMajor(capsuleId: Int) =
+        withContext(ioDispatcher) {
+            val selectedCapsule = capsuleDao.getCapsuleById(capsuleId) ?: return@withContext
+            capsuleDao.updateCapsule(selectedCapsule.copy(isMajor = !selectedCapsule.isMajor))
+        }
 
     companion object {
         private const val FIREBASE_COLLECTION_NAME = "capsules"

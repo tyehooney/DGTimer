@@ -6,10 +6,10 @@ import kotlinx.coroutines.flow.Flow
 interface CapsuleRepository {
     fun refreshCapsules()
     fun loadCapsules(): Flow<List<Capsule>?>
-    fun addCapsule(capsule: Capsule)
-    fun getCapsuleByName(name: String): List<Capsule>?
-    fun getCapsuleById(id: Int): Capsule?
+    suspend fun addCapsule(capsule: Capsule)
+    suspend fun getCapsuleByName(name: String): List<Capsule>?
+    suspend fun getCapsuleById(id: Int): Capsule?
     suspend fun searchCapsulesByName(name: String): List<Capsule>?
     fun searchCapsuleById(id: Int): Flow<Capsule?>
-    fun updateCapsuleMajor(capsuleId: Int)
+    suspend fun updateCapsuleMajor(capsuleId: Int)
 }
