@@ -40,6 +40,7 @@ class KTimerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
         binding = ActivityTimerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setCapsuleData()
         initView()
