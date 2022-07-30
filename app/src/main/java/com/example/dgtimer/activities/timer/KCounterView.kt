@@ -10,15 +10,18 @@ import com.example.dgtimer.R
 import com.example.dgtimer.databinding.ViewCounterBinding
 
 class KCounterView(
-    context: Context,
+    context: Context
 ) : LinearLayout(context) {
     private val binding: ViewCounterBinding =
         ViewCounterBinding.inflate(LayoutInflater.from(context), this, true)
 
-    fun setCounter(counter: Counter) {
+    private var onClick: ((Int) -> Unit)? = null
+
+    fun updateCounter(counter: Counter) {
         with(binding) {
             tvCounterCount.text = counter.currentTime.toString()
             tvCounterCount.setTextColor(getTextColorByActiveState(counter.isActive))
+            tvCounterName.setTextColor(getTextColorByActiveState(counter.isActive))
             val counterViewCount =
                 (parent as ViewGroup).children.filter { it is KCounterView }.count()
             tvCounterName.text =
@@ -27,8 +30,14 @@ class KCounterView(
                 } else {
                     counter.type
                 }
-            tvCounterName.setTextColor(getTextColorByActiveState(counter.isActive))
+            root.setOnClickListener {
+                onClick?.invoke(counter.index)
+            }
         }
+    }
+
+    fun setOnClickListener(onClick: (Int) -> Unit) {
+        this.onClick = onClick
     }
 
     private fun getTextColorByActiveState(isActive: Boolean) =

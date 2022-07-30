@@ -11,6 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.dgtimer.databinding.ActivityTimerBinding
+import com.example.dgtimer.setAd
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -58,11 +59,16 @@ class KTimerActivity : AppCompatActivity() {
     private fun updateCounterViews(counters: List<Counter>) {
         if (binding.llTimers.childCount == 0) {
             repeat(counters.size) {
-                binding.llTimers.addView(KCounterView(this@KTimerActivity))
+                val counterView = KCounterView(this@KTimerActivity).apply {
+                    setOnClickListener { activeIndex ->
+                        viewModel.setActiveCounter(activeIndex)
+                    }
+                }
+                binding.llTimers.addView(counterView)
             }
         }
         counters.forEachIndexed { index, counter ->
-            (binding.llTimers[index] as KCounterView).setCounter(counter)
+            (binding.llTimers[index] as KCounterView).updateCounter(counter)
         }
     }
 
