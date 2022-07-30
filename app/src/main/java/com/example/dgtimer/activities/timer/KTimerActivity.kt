@@ -39,7 +39,7 @@ class KTimerActivity : AppCompatActivity() {
         with(binding) {
             tvCapsuleName.text = capsule.name
 
-
+            setAd(adView, this@KTimerActivity, lifecycle)
         }
     }
 

@@ -2,43 +2,33 @@ package com.example.dgtimer
 
 import android.content.Context
 import android.util.Log
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.*
 import com.kakao.adfit.ads.AdListener
 import com.kakao.adfit.ads.ba.BannerAdView
 
+private const val TAG = "KakaoBannerAds"
 fun setAd(bannerAdView: BannerAdView, context: Context,
           lifecycle: Lifecycle){
 
     bannerAdView.setClientId(context.getString(R.string.adfit_id))
     bannerAdView.setAdListener(object : AdListener{
-        override fun onAdLoaded() {
+        override fun onAdLoaded() {}
+
+        override fun onAdFailed(errorCode: Int) {
+            Log.d(TAG, "ad Failed : $errorCode")
         }
 
-        override fun onAdFailed(p0: Int) {
-            Log.d("TAGTAG", "ad Failed : "+p0)
-        }
-
-        override fun onAdClicked() {
-        }
+        override fun onAdClicked() {}
     })
 
-    lifecycle.addObserver(object : LifecycleObserver{
-
-        @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-        fun onResume(){
-            bannerAdView.resume()
-        }
-
-        @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-        fun onPause(){
-            bannerAdView.pause()
-        }
-
-        @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-        fun onDestroy(){
-            bannerAdView.destroy()
+    lifecycle.addObserver(object : LifecycleEventObserver {
+        override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
+            when (event) {
+                Lifecycle.Event.ON_RESUME -> bannerAdView.resume()
+                Lifecycle.Event.ON_PAUSE -> bannerAdView.pause()
+                Lifecycle.Event.ON_DESTROY -> bannerAdView.destroy()
+                else -> {}
+            }
         }
     })
 
