@@ -16,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.dgtimer.DGTimerPreferences.Companion.vibratePattern
 import com.example.dgtimer.R
+import com.example.dgtimer.activities.settings.KSettingsActivity
 import com.example.dgtimer.databinding.ActivityTimerBinding
 import com.example.dgtimer.setAd
 import dagger.hilt.android.AndroidEntryPoint
@@ -72,7 +73,9 @@ class KTimerActivity : AppCompatActivity() {
                 viewModel.resetCountDownTimer()
             }
             ivBtnGoSettings.setOnClickListener {
-                // todo : go settings screen
+                startActivity(
+                    KSettingsActivity.createSettingsActivityIntent(this@KTimerActivity)
+                )
             }
 
             setAd(adView, this@KTimerActivity, lifecycle)

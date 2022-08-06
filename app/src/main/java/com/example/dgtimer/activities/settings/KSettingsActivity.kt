@@ -1,5 +1,6 @@
 package com.example.dgtimer.activities.settings
 
+import android.app.Activity
 import android.content.Intent
 import android.media.MediaPlayer
 import android.net.Uri
@@ -167,5 +168,9 @@ class KSettingsActivity : AppCompatActivity() {
     companion object {
         private const val GOOGLE_PLAY_LINK =
             "http://play.google.com/store/apps/details?id=com.tyehooney.dgtimer"
+
+        fun createSettingsActivityIntent(
+            callerActivity: Activity
+        ): Intent = Intent(callerActivity, KSettingsActivity::class.java)
     }
 }
