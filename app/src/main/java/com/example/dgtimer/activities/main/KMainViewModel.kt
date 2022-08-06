@@ -2,6 +2,8 @@ package com.example.dgtimer.activities.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.dgtimer.DGTimerPreferences
+import com.example.dgtimer.PrefKey
 import com.example.dgtimer.db.Capsule
 import com.example.dgtimer.repo.CapsuleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,8 +15,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 class KMainViewModel @Inject constructor(
-    private val repository: CapsuleRepository
+    private val repository: CapsuleRepository,
+    private val preferences: DGTimerPreferences
 ) : ViewModel() {
+    var savedVersionCode = preferences.getInt(PrefKey.VersionCode())
+        private set
+    fun saveVersionCode(newVersionCode: Int) {
+        savedVersionCode = newVersionCode
+        preferences.put(PrefKey.VersionCode(), newVersionCode)
+    }
+
     val capsules: Flow<List<Capsule>?> = repository.loadCapsules()
 
     private val _searchedCapsules: MutableStateFlow<List<Capsule>?> =
