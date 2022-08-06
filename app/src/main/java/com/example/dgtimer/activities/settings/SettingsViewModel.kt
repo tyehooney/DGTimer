@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class KSettingsViewModel @Inject constructor(
+class SettingsViewModel @Inject constructor(
     private val preferences: DGTimerPreferences
 ) : ViewModel() {
 

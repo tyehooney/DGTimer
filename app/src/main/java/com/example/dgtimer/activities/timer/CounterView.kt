@@ -9,7 +9,7 @@ import androidx.core.view.children
 import com.example.dgtimer.R
 import com.example.dgtimer.databinding.ViewCounterBinding
 
-class KCounterView(
+class CounterView(
     context: Context
 ) : LinearLayout(context) {
     private val binding: ViewCounterBinding =
@@ -23,7 +23,7 @@ class KCounterView(
             tvCounterCount.setTextColor(getTextColorByActiveState(counter.isActive))
             tvCounterName.setTextColor(getTextColorByActiveState(counter.isActive))
             val counterViewCount =
-                (parent as ViewGroup).children.filter { it is KCounterView }.count()
+                (parent as ViewGroup).children.filter { it is CounterView }.count()
             tvCounterName.text =
                 if (counter.index == 0 && counterViewCount > 1) {
                     context.getString(R.string.latte)

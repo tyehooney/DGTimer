@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class KMainViewModel @Inject constructor(
+class MainViewModel @Inject constructor(
     private val repository: CapsuleRepository,
     private val preferences: DGTimerPreferences
 ) : ViewModel() {

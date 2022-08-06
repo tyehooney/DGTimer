@@ -7,7 +7,7 @@ import android.net.Uri
 import com.example.dgtimer.utils.TimeUtils.MILLIS
 import javax.inject.Inject
 
-class KAppRater @Inject constructor(
+class AppRater @Inject constructor(
     private val preferences: DGTimerPreferences
 ) {
     fun set(activity: Activity) {

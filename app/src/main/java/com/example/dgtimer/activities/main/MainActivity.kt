@@ -26,9 +26,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
-import com.example.dgtimer.KAppRater
+import com.example.dgtimer.AppRater
 import com.example.dgtimer.R
-import com.example.dgtimer.activities.timer.KTimerActivity
+import com.example.dgtimer.activities.timer.TimerActivity
 import com.example.dgtimer.databinding.ActivityMainBinding
 import com.example.dgtimer.utils.Extensions.readUpdateNote
 import com.example.dgtimer.utils.Extensions.setSearchFocus
@@ -39,12 +39,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class KMainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
-    @Inject lateinit var appRater: KAppRater
+    @Inject lateinit var appRater: AppRater
 
     private lateinit var binding: ActivityMainBinding
-    private val viewModel: KMainViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels()
 
     private val mainCapsulesAdapter: KCapsuleAdapter by lazy {
         KCapsuleAdapter(
@@ -162,7 +162,7 @@ class KMainActivity : AppCompatActivity() {
     }
 
     private fun onCapsuleItemClick(capsuleId: Int) {
-        val intent = KTimerActivity.createTimerActivityIntent(this, capsuleId)
+        val intent = TimerActivity.createTimerActivityIntent(this, capsuleId)
         startActivity(intent)
     }
 

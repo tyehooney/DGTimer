@@ -7,15 +7,15 @@ import android.os.PersistableBundle
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dgtimer.R
-import com.example.dgtimer.activities.main.KMainActivity
+import com.example.dgtimer.activities.main.MainActivity
 import com.example.dgtimer.databinding.ActivitySplashBinding
 
-class KSplashActivity: AppCompatActivity() {
+class SplashActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashBinding
     private var splashHandler: Handler? = null
     private val runnableMoveToMainActivity = Runnable {
-        startActivity(KMainActivity.createMainActivityIntent(this))
+        startActivity(MainActivity.createMainActivityIntent(this))
     }
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {

@@ -16,17 +16,17 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.dgtimer.DGTimerPreferences.Companion.vibratePattern
 import com.example.dgtimer.R
-import com.example.dgtimer.activities.settings.KSettingsActivity
+import com.example.dgtimer.activities.settings.SettingsActivity
 import com.example.dgtimer.databinding.ActivityTimerBinding
 import com.example.dgtimer.setAd
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class KTimerActivity : AppCompatActivity() {
+class TimerActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTimerBinding
-    private val viewModel: KTimerViewModel by viewModels()
+    private val viewModel: TimerViewModel by viewModels()
 
     private val mediaPlayer by lazy {
         MediaPlayer.create(
@@ -74,11 +74,11 @@ class KTimerActivity : AppCompatActivity() {
             }
             ivBtnGoSettings.setOnClickListener {
                 startActivity(
-                    KSettingsActivity.createSettingsActivityIntent(this@KTimerActivity)
+                    SettingsActivity.createSettingsActivityIntent(this@TimerActivity)
                 )
             }
 
-            setAd(adView, this@KTimerActivity, lifecycle)
+            setAd(adView, this@TimerActivity, lifecycle)
         }
     }
 
@@ -159,7 +159,7 @@ class KTimerActivity : AppCompatActivity() {
     private fun updateCounterViews(counters: List<Counter>) {
         if (binding.llTimers.childCount == 0) {
             repeat(counters.size) {
-                val counterView = KCounterView(this@KTimerActivity).apply {
+                val counterView = CounterView(this@TimerActivity).apply {
                     setOnClickListener { activeIndex ->
                         viewModel.setActiveCounter(activeIndex)
                     }
@@ -168,7 +168,7 @@ class KTimerActivity : AppCompatActivity() {
             }
         }
         counters.forEachIndexed { index, counter ->
-            (binding.llTimers[index] as KCounterView).updateCounter(counter)
+            (binding.llTimers[index] as CounterView).updateCounter(counter)
         }
     }
 
@@ -179,7 +179,7 @@ class KTimerActivity : AppCompatActivity() {
             callerActivity: Activity,
             capsuleId: Int
         ): Intent =
-            Intent(callerActivity, KTimerActivity::class.java).apply {
+            Intent(callerActivity, TimerActivity::class.java).apply {
                 putExtra(KEY_CAPSULE_ID, capsuleId)
             }
     }

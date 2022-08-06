@@ -15,7 +15,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.dgtimer.DGTimerPreferences.Companion.vibratePattern
-import com.example.dgtimer.KAppRater.Companion.launchGooglePlayForRating
+import com.example.dgtimer.AppRater.Companion.launchGooglePlayForRating
 import com.example.dgtimer.R
 import com.example.dgtimer.databinding.ActivitySettingsBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,10 +23,10 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class KSettingsActivity : AppCompatActivity() {
+class SettingsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySettingsBinding
-    private val viewModel: KSettingsViewModel by viewModels()
+    private val viewModel: SettingsViewModel by viewModels()
 
     private val vibrator by lazy {
         (getSystemService(VIBRATOR_MANAGER_SERVICE) as VibratorManager).defaultVibrator
@@ -92,7 +92,7 @@ class KSettingsActivity : AppCompatActivity() {
             }
 
             tvBtnGoReview.setOnClickListener {
-                launchGooglePlayForRating(this@KSettingsActivity)
+                launchGooglePlayForRating(this@SettingsActivity)
             }
         }
     }
@@ -161,6 +161,6 @@ class KSettingsActivity : AppCompatActivity() {
     companion object {
         fun createSettingsActivityIntent(
             callerActivity: Activity
-        ): Intent = Intent(callerActivity, KSettingsActivity::class.java)
+        ): Intent = Intent(callerActivity, SettingsActivity::class.java)
     }
 }

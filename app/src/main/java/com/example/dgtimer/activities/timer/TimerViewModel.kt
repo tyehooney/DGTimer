@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class KTimerViewModel @Inject constructor(
+class TimerViewModel @Inject constructor(
     private val repository: CapsuleRepository,
     private val preferences: DGTimerPreferences
 ): ViewModel() {
@@ -47,7 +47,7 @@ class KTimerViewModel @Inject constructor(
             capsule = fetchedCapsule
             val fetchedCounters = fetchedCapsule.stage.mapIndexed { index, stage ->
                 Counter(
-                    fetchedCapsule.type ?: "",
+                    fetchedCapsule.type,
                     stageToSecond(stage),
                     index,
                     index == 0
