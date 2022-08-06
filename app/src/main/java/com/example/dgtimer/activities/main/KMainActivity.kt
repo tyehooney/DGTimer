@@ -1,6 +1,8 @@
 package com.example.dgtimer.activities.main
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Rect
 import android.graphics.drawable.AnimatedVectorDrawable
@@ -234,5 +236,11 @@ class KMainActivity : AppCompatActivity() {
             appRater.set(this)
             super.onBackPressed()
         }
+    }
+
+    companion object {
+        fun createMainActivityIntent(
+            callerActivity: Activity
+        ) = Intent(callerActivity, MainActivity::class.java)
     }
 }
