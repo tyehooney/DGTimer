@@ -3,7 +3,6 @@ package com.example.dgtimer.activities.settings
 import android.app.Activity
 import android.content.Intent
 import android.media.MediaPlayer
-import android.net.Uri
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.os.VibrationEffect
@@ -16,6 +15,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.dgtimer.DGTimerPreferences.Companion.vibratePattern
+import com.example.dgtimer.KAppRater.Companion.launchGooglePlayForRating
 import com.example.dgtimer.R
 import com.example.dgtimer.databinding.ActivitySettingsBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -92,7 +92,7 @@ class KSettingsActivity : AppCompatActivity() {
             }
 
             tvBtnGoReview.setOnClickListener {
-                goReview()
+                launchGooglePlayForRating(this@KSettingsActivity)
             }
         }
     }
@@ -129,13 +129,6 @@ class KSettingsActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun goReview() {
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse(GOOGLE_PLAY_LINK)
-        }
-        startActivity(intent)
-    }
-
     private fun saveAndFinish() {
         viewModel.saveSettings()
         finish()
@@ -166,9 +159,6 @@ class KSettingsActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val GOOGLE_PLAY_LINK =
-            "http://play.google.com/store/apps/details?id=com.tyehooney.dgtimer"
-
         fun createSettingsActivityIntent(
             callerActivity: Activity
         ): Intent = Intent(callerActivity, KSettingsActivity::class.java)

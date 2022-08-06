@@ -57,8 +57,8 @@ sealed class PrefKey(val value: String) {
     class AlarmBell : PrefKey("alarmBell")
     class Amplitude : PrefKey("amplitude")
     class Volume : PrefKey("volume")
-    class IsShown : PrefKey("dontshowagain")
-    class LaunchCount : PrefKey("launch_count")
-    class FirstLaunchedData : PrefKey("date_firstlaunch")
+    class IsRaterShown : PrefKey("dontshowagain")
+    class RaterLaunchCount : PrefKey("launch_count")
+    class FirstLaunchedDate : PrefKey("date_firstlaunch")
     class VersionCode : PrefKey("currentVersionCode")
 }

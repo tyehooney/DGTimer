@@ -22,6 +22,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
+import com.example.dgtimer.KAppRater
 import com.example.dgtimer.R
 import com.example.dgtimer.activities.timer.KTimerActivity
 import com.example.dgtimer.databinding.ActivityMainBinding
@@ -30,9 +31,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class KMainActivity : AppCompatActivity() {
+
+    @Inject lateinit var appRater: KAppRater
 
     private lateinit var binding: ActivityMainBinding
     private val viewModel: KMainViewModel by viewModels()
@@ -205,7 +209,7 @@ class KMainActivity : AppCompatActivity() {
         if (viewModel.isSearchModeOn.value) {
             viewModel.setSearchMode(false)
         } else {
-            // todo AppRater
+            appRater.set(this)
             super.onBackPressed()
         }
     }
