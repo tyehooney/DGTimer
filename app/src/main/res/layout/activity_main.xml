@@ -54,8 +54,7 @@
             android:layout_toEndOf="@+id/ll_logo"
             android:background="@drawable/round_rect_search"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:visibility="@{viewModel.searchOn ? View.VISIBLE : View.GONE}">
+            android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/et_search"
@@ -134,7 +133,6 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="48dp"
         android:elevation="5dp"
-        android:onClick="scrollUp"
         android:src="@drawable/ic_arrow_up_24"
         app:backgroundTint="@color/colorBackground"
         app:fabSize="mini"
