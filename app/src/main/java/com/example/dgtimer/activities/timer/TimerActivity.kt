@@ -47,6 +47,11 @@ class TimerActivity : AppCompatActivity() {
         initObservers()
     }
 
+    override fun onStop() {
+        viewModel.resetCountDownTimer()
+        super.onStop()
+    }
+
     private fun setCapsuleData() {
         val capsuleId = intent.getIntExtra(KEY_CAPSULE_ID, -1)
         viewModel.setCapsuleData(capsuleId)
