@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.os.VibrationEffect
 import android.os.VibratorManager
 import androidx.activity.viewModels
@@ -58,6 +57,7 @@ class TimerActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 viewModel.setCapsuleDataJob?.join()
                 val capsule = viewModel.capsule ?: return@launch
+                root.setBackgroundColor(capsule.colorAsInt)
                 tvCapsuleName.text = capsule.name
                 tvCapsuleTips.text = getString(R.string.tip1) +
                         if (capsule.stage.size > 1) "\n${getString(R.string.tip2)}"

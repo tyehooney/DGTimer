@@ -53,12 +53,12 @@ class DGTimerPreferences @Inject constructor(@ApplicationContext context: Contex
 }
 
 sealed class PrefKey(val value: String) {
-    class Alarm : PrefKey("alarm")
-    class AlarmBell : PrefKey("alarmBell")
-    class Amplitude : PrefKey("amplitude")
-    class Volume : PrefKey("volume")
-    class IsRaterShown : PrefKey("dontshowagain")
-    class RaterLaunchCount : PrefKey("launch_count")
-    class FirstLaunchedDate : PrefKey("date_firstlaunch")
-    class VersionCode : PrefKey("currentVersionCode")
+    object Alarm : PrefKey("alarm")
+    object AlarmBell : PrefKey("alarmBell")
+    object Amplitude : PrefKey("amplitude")
+    object Volume : PrefKey("volume")
+    object IsRaterShown : PrefKey("dontshowagain")
+    object RaterLaunchCount : PrefKey("launch_count")
+    object FirstLaunchedDate : PrefKey("date_firstlaunch")
+    object VersionCode : PrefKey("currentVersionCode")
 }

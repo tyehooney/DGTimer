@@ -22,9 +22,10 @@ import javax.inject.Inject
 class TimerViewModel @Inject constructor(
     private val repository: CapsuleRepository,
     private val preferences: DGTimerPreferences
-): ViewModel() {
+) : ViewModel() {
 
     var capsule: Capsule? = null
+        private set
 
     private val _counters: MutableStateFlow<List<Counter>> =
         MutableStateFlow(emptyList())
@@ -32,9 +33,9 @@ class TimerViewModel @Inject constructor(
 
     var setCapsuleDataJob: Job? = null
 
-    val alarmAmplitude get() = preferences.getInt(PrefKey.Amplitude(), DEFAULT_AMPLITUDE)
-    val alarmVolume get() = preferences.getInt(PrefKey.Volume(), DEFAULT_VOLUME) / 100f
-    val alarm get() = preferences.getInt(PrefKey.Alarm(), 0)
+    val alarmAmplitude get() = preferences.getInt(PrefKey.Amplitude, DEFAULT_AMPLITUDE)
+    val alarmVolume get() = preferences.getInt(PrefKey.Volume, DEFAULT_VOLUME) / 100f
+    val alarm get() = preferences.getInt(PrefKey.Alarm, 0)
 
     private var countDownTimer: CountDownTimer? = null
     private val _counterState = MutableStateFlow(CounterState.Ready)
@@ -83,7 +84,8 @@ class TimerViewModel @Inject constructor(
                 override fun onFinish() {
                     _counterState.value = CounterState.Finished
                     if (counters.value.size > 1 &&
-                        activeCounter.index < counters.value.size - 1) {
+                        activeCounter.index < counters.value.size - 1
+                    ) {
                         setActiveCounter(activeCounter.index + 1)
                     }
                 }
@@ -112,12 +114,12 @@ class TimerViewModel @Inject constructor(
         counters.value.firstOrNull { it.isActive }
 
     private val _isAlarmOn = MutableStateFlow(
-        preferences.getBoolean(PrefKey.AlarmBell(), true)
+        preferences.getBoolean(PrefKey.AlarmBell, true)
     )
     val isAlarmOn = _isAlarmOn.asStateFlow()
 
     fun updateAlarmOn(isOn: Boolean) {
-        preferences.put(PrefKey.AlarmBell(), isOn)
+        preferences.put(PrefKey.AlarmBell, isOn)
         _isAlarmOn.value = isOn
     }
 }

@@ -9,7 +9,6 @@ import android.graphics.drawable.AnimatedVectorDrawable
 import android.net.ConnectivityManager
 import android.net.Network
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -46,14 +45,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
 
-    private val mainCapsulesAdapter: KCapsuleAdapter by lazy {
-        KCapsuleAdapter(
+    private val mainCapsulesAdapter: CapsuleAdapter by lazy {
+        CapsuleAdapter(
             this::onCapsuleItemClick,
             this::onCapsuleItemStarClick
         )
     }
-    private val searchedCapsulesAdapter: KCapsuleAdapter by lazy {
-        KCapsuleAdapter(
+    private val searchedCapsulesAdapter: CapsuleAdapter by lazy {
+        CapsuleAdapter(
             this::onCapsuleItemClick,
             this::onCapsuleItemStarClick
         )
@@ -125,6 +124,8 @@ class MainActivity : AppCompatActivity() {
             etSearch.doOnTextChanged { text, _, _, _ ->
                 searchCapsules(text.toString())
             }
+            rvCapsules.adapter = mainCapsulesAdapter
+            rvSearchedCapsules.adapter = searchedCapsulesAdapter
             rvCapsules.addOnScrollListener(
                 object: RecyclerView.OnScrollListener() {
                     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

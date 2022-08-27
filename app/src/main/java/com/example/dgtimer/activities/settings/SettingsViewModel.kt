@@ -17,7 +17,7 @@ class SettingsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _volume = MutableStateFlow(
-        preferences.getInt(PrefKey.Volume(), DEFAULT_VOLUME)
+        preferences.getInt(PrefKey.Volume, DEFAULT_VOLUME)
     )
     val volume = _volume.asStateFlow()
     fun setVolume(newVolume: Int) {
@@ -26,7 +26,7 @@ class SettingsViewModel @Inject constructor(
     }
 
     private val _amplitude = MutableStateFlow(
-        preferences.getInt(PrefKey.Amplitude(), DEFAULT_AMPLITUDE)
+        preferences.getInt(PrefKey.Amplitude, DEFAULT_AMPLITUDE)
     )
     val amplitude = _amplitude.asStateFlow()
     fun setAmplitude(newAmplitude: Int) {
@@ -35,7 +35,7 @@ class SettingsViewModel @Inject constructor(
     }
 
     private val _alarm = MutableStateFlow(
-        preferences.getInt(PrefKey.Alarm(), DEFAULT_ALARM)
+        preferences.getInt(PrefKey.Alarm, DEFAULT_ALARM)
     )
     val alarm = _alarm.asStateFlow()
     fun setAlarm(newAlarm: Int) {
@@ -51,9 +51,9 @@ class SettingsViewModel @Inject constructor(
 
     fun saveSettings() {
         with(preferences) {
-            put(PrefKey.Volume(), volume.value)
-            put(PrefKey.Amplitude(), amplitude.value)
-            put(PrefKey.Alarm(), alarm.value)
+            put(PrefKey.Volume, volume.value)
+            put(PrefKey.Amplitude, amplitude.value)
+            put(PrefKey.Alarm, alarm.value)
         }
     }
 }

@@ -18,11 +18,11 @@ class MainViewModel @Inject constructor(
     private val repository: CapsuleRepository,
     private val preferences: DGTimerPreferences
 ) : ViewModel() {
-    var savedVersionCode = preferences.getInt(PrefKey.VersionCode())
+    var savedVersionCode = preferences.getInt(PrefKey.VersionCode)
         private set
     fun saveVersionCode(newVersionCode: Int) {
         savedVersionCode = newVersionCode
-        preferences.put(PrefKey.VersionCode(), newVersionCode)
+        preferences.put(PrefKey.VersionCode, newVersionCode)
     }
 
     val capsules: Flow<List<Capsule>?> = repository.loadCapsules()

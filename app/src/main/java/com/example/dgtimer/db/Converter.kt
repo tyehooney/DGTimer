@@ -1,7 +1,6 @@
 package com.example.dgtimer.db
 
 import androidx.room.TypeConverter
-import java.util.ArrayList
 
 class Converter {
     @TypeConverter
@@ -13,9 +12,6 @@ class Converter {
 
     @TypeConverter
     fun convertStringToIntList(str: String): List<Int> {
-        val intList: MutableList<Int> = ArrayList()
-        val arrStr = str.split(",").toTypedArray()
-        for (strNum in arrStr) intList.add(strNum.toInt())
-        return intList
+        return str.split(",").filter { it.isNotEmpty() }.map { it.toInt() }
     }
 }

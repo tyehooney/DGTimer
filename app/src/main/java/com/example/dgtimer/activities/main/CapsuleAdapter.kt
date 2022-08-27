@@ -11,13 +11,13 @@ import com.example.dgtimer.R
 import com.example.dgtimer.databinding.ItemCapsuleBinding
 import com.example.dgtimer.db.Capsule
 
-class KCapsuleAdapter(
+class CapsuleAdapter(
     private val onItemClick: (Int) -> Unit,
     private val onStarClick: (Int) -> Unit
-) : ListAdapter<Capsule, KCapsuleViewHolder>(diffCallback) {
+) : ListAdapter<Capsule, CapsuleViewHolder>(diffCallback) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): KCapsuleViewHolder =
-        KCapsuleViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CapsuleViewHolder =
+        CapsuleViewHolder(
             ItemCapsuleBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -25,7 +25,7 @@ class KCapsuleAdapter(
             )
         )
 
-    override fun onBindViewHolder(holder: KCapsuleViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CapsuleViewHolder, position: Int) {
         holder.bind(getItem(position), onItemClick, onStarClick)
     }
 
@@ -40,7 +40,7 @@ class KCapsuleAdapter(
     }
 }
 
-class KCapsuleViewHolder(
+class CapsuleViewHolder(
     private val binding: ItemCapsuleBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(

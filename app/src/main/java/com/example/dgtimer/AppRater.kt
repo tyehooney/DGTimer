@@ -11,21 +11,21 @@ class AppRater @Inject constructor(
     private val preferences: DGTimerPreferences
 ) {
     fun set(activity: Activity) {
-        if (preferences.getBoolean(PrefKey.IsRaterShown())) {
+        if (preferences.getBoolean(PrefKey.IsRaterShown)) {
             activity.finish()
             return
         }
 
         val launchCount =
-            preferences.getInt(PrefKey.RaterLaunchCount(), 0) + 1
-        preferences.put(PrefKey.RaterLaunchCount(), launchCount)
+            preferences.getInt(PrefKey.RaterLaunchCount, 0) + 1
+        preferences.put(PrefKey.RaterLaunchCount, launchCount)
 
         val current = System.currentTimeMillis()
         var firstLaunchedDate =
-            preferences.getLong(PrefKey.FirstLaunchedDate(), 0L)
+            preferences.getLong(PrefKey.FirstLaunchedDate, 0L)
         if (firstLaunchedDate == 0L) {
             firstLaunchedDate = current
-            preferences.put(PrefKey.FirstLaunchedDate(), firstLaunchedDate)
+            preferences.put(PrefKey.FirstLaunchedDate, firstLaunchedDate)
         }
 
         if (
@@ -44,9 +44,9 @@ class AppRater @Inject constructor(
             .setMessage(R.string.induceRate)
             .setNegativeButton(R.string.rate) { _, _ ->
                 launchGooglePlayForRating(activity)
-                preferences.put(PrefKey.IsRaterShown(), true)
+                preferences.put(PrefKey.IsRaterShown, true)
             }.setPositiveButton(R.string.later) { _, _ ->
-                preferences.put(PrefKey.FirstLaunchedDate(), System.currentTimeMillis())
+                preferences.put(PrefKey.FirstLaunchedDate, System.currentTimeMillis())
             }.create().apply {
                 setOnDismissListener {
                     activity.finish()

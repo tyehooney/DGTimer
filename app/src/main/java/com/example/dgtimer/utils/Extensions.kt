@@ -1,6 +1,7 @@
 package com.example.dgtimer.utils
 
 import android.content.Context
+import android.content.res.Resources
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -39,12 +40,15 @@ object Extensions {
                 "raw",
                 packageName
             )
-        val inputStream = resources.openRawResource(rawId)
         val byte: ByteArray
         try {
+            val inputStream = resources.openRawResource(rawId)
             byte = ByteArray(inputStream.available())
             inputStream.read(byte)
         } catch (e: IOException) {
+            e.printStackTrace()
+            return null
+        } catch (e: Resources.NotFoundException) {
             e.printStackTrace()
             return null
         }

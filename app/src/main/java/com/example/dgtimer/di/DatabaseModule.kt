@@ -21,7 +21,7 @@ class DatabaseModule {
             context,
             CapsuleDatabase::class.java,
             "capsules"
-        ).build()
+        ).allowMainThreadQueries().build()
     }
 
     @Provides
