@@ -8,6 +8,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import com.example.dgtimer.R
 import com.example.dgtimer.databinding.ViewCounterBinding
+import com.example.dgtimer.utils.TimeUtils.MILLIS
+import java.lang.Integer.min
 
 class CounterView(
     context: Context
@@ -19,7 +21,11 @@ class CounterView(
 
     fun updateCounter(counter: Counter) {
         with(binding) {
-            tvCounterCount.text = counter.currentTime.toString()
+            val seconds = min(
+                (counter.currentTime / MILLIS).toInt() + 1,
+                (counter.totalTime / MILLIS).toInt()
+            )
+            tvCounterCount.text = seconds.toString()
             tvCounterCount.setTextColor(getTextColorByActiveState(counter.isActive))
             tvCounterName.setTextColor(getTextColorByActiveState(counter.isActive))
             val counterViewCount =

@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textColor="@color/timerTextColor"
         android:textSize="24sp" />
 
     <TextView
@@ -19,6 +18,5 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:gravity="center"
-        android:textColor="@color/timerTextColor"
         android:textSize="84sp" />
 </LinearLayout>

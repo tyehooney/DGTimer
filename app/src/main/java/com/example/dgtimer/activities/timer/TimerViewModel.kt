@@ -9,8 +9,7 @@ import com.example.dgtimer.DGTimerPreferences.Companion.DEFAULT_VOLUME
 import com.example.dgtimer.PrefKey
 import com.example.dgtimer.db.Capsule
 import com.example.dgtimer.repo.CapsuleRepository
-import com.example.dgtimer.utils.TimeUtils.MILLIS
-import com.example.dgtimer.utils.TimeUtils.stageToSecond
+import com.example.dgtimer.utils.TimeUtils.stageToMilliseconds
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -49,7 +48,7 @@ class TimerViewModel @Inject constructor(
             val fetchedCounters = fetchedCapsule.stage.mapIndexed { index, stage ->
                 Counter(
                     fetchedCapsule.type,
-                    stageToSecond(stage),
+                    stageToMilliseconds(stage),
                     index,
                     index == 0
                 )
@@ -73,11 +72,13 @@ class TimerViewModel @Inject constructor(
         val activeCounter = getActiveCounter() ?: return
         countDownTimer?.cancel()
         countDownTimer =
-            object : CountDownTimer(activeCounter.currentTime * MILLIS, MILLIS) {
+            object : CountDownTimer(activeCounter.currentTime, 100) {
                 override fun onTick(millisUntilFinished: Long) {
                     val counters = counters.value.toMutableList()
                     counters[activeCounter.index] =
-                        activeCounter.copy(currentTime = (millisUntilFinished / MILLIS).toInt())
+                        activeCounter.copy(
+                            currentTime = millisUntilFinished
+                        )
                     _counters.value = counters
                 }
 
