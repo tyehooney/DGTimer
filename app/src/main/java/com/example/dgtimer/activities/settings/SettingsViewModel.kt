@@ -38,6 +38,7 @@ class SettingsViewModel @Inject constructor(
         preferences.getInt(PrefKey.Alarm, DEFAULT_ALARM)
     )
     val alarm = _alarm.asStateFlow()
+    var selectedAlarmIndex = alarm.value
     fun setAlarm(newAlarm: Int) {
         if (newAlarm == alarm.value) return
         _alarm.value = newAlarm

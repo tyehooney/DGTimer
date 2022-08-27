@@ -59,6 +59,7 @@ class SettingsActivity : AppCompatActivity() {
                     }
                 }
             )
+            sbVolume.progress = viewModel.volume.value
 
             sbAmplitude.setOnSeekBarChangeListener(
                 object : SeekBar.OnSeekBarChangeListener {
@@ -74,6 +75,7 @@ class SettingsActivity : AppCompatActivity() {
                     }
                 }
             )
+            sbAmplitude.progress = viewModel.amplitude.value
 
             llBtnChooseAlarm.setOnClickListener {
                 showChooseAlarmDialog()
@@ -121,9 +123,10 @@ class SettingsActivity : AppCompatActivity() {
         AlertDialog.Builder(this)
             .setTitle(R.string.selectAlarm)
             .setSingleChoiceItems(strAlarms, viewModel.alarm.value) { _, which ->
+                viewModel.selectedAlarmIndex = which
                 ringAlarm(which)
-            }.setPositiveButton(R.string.save) { dialog, which ->
-                viewModel.setAlarm(which)
+            }.setPositiveButton(R.string.save) { dialog, _ ->
+                viewModel.setAlarm(viewModel.selectedAlarmIndex)
                 dialog.dismiss()
             }.setNegativeButton(R.string.cancel, null)
             .show()
