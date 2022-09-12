@@ -32,7 +32,6 @@ import com.example.dgtimer.databinding.ActivityMainBinding
 import com.example.dgtimer.utils.Extensions.readUpdateNote
 import com.example.dgtimer.utils.Extensions.setSearchFocus
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -57,8 +56,6 @@ class MainActivity : AppCompatActivity() {
             this::onCapsuleItemStarClick
         )
     }
-
-    private var searchJob: Job? = null
 
     private val connectivityManager by lazy {
         getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -100,7 +97,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 launch {
                     viewModel.isSearchModeOn.collect {
-                        toggleSearchMode(it)
+                        setSearchMode(it)
                     }
                 }
                 launch {
@@ -156,10 +153,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun searchCapsules(text: String) {
-        if (searchJob != null) return
-        searchJob = lifecycleScope.launch {
+        lifecycleScope.launch {
             viewModel.searchCapsules(text)
-            searchJob = null
         }
     }
 
@@ -192,11 +187,9 @@ class MainActivity : AppCompatActivity() {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    private fun toggleSearchMode(isOn: Boolean) {
-        val needToShowSearchedCapsules =
-            isOn && (viewModel.searchedCapsules.value?.isNotEmpty() ?: false)
-        binding.rvCapsules.isVisible = !needToShowSearchedCapsules
-        binding.rvSearchedCapsules.isVisible = needToShowSearchedCapsules
+    private fun setSearchMode(isOn: Boolean) {
+        binding.rvCapsules.isVisible = !isOn
+        binding.rvSearchedCapsules.isVisible = isOn
         binding.llSearch.isVisible = isOn
         binding.etSearch.setSearchFocus(isOn)
         binding.ivBtnSearch.setSearchButtonAnimation(isOn)

@@ -20,7 +20,7 @@ interface CapsuleDao {
     @Query("SELECT * FROM capsules WHERE id = :id")
     fun getCapsuleById(id: Int): Capsule?
 
-    @Query("SELECT * FROM capsules WHERE name LIKE :name ORDER BY major desc")
+    @Query("SELECT * FROM capsules WHERE name LIKE '%' || :name || '%' ORDER BY major desc")
     fun searchByName(name: String): List<Capsule>?
 
     @Query("SELECT * FROM capsules WHERE id = :id LIMIT 1")

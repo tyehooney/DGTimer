@@ -51,7 +51,11 @@ class CapsuleRepositoryImpl @Inject constructor(
     override suspend fun searchCapsulesByName(
         name: String
     ): List<Capsule>? = withContext(ioDispatcher) {
-        capsuleDao.searchByName(name)
+        if (name.isNotEmpty()) {
+            capsuleDao.searchByName(name)
+        } else {
+            emptyList()
+        }
     }
 
     override fun searchCapsuleById(id: Int): Flow<Capsule?> =
