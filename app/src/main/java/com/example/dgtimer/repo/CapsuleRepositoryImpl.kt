@@ -16,7 +16,7 @@ class CapsuleRepositoryImpl @Inject constructor(
 
     private val ioDispatcher = Dispatchers.IO
 
-    override fun refreshCapsules() {
+    override fun refreshCapsules(onFinished: (Boolean) -> Unit) {
         val collection = FirebaseFirestore.getInstance().collection(FIREBASE_COLLECTION_NAME)
         collection.get().addOnCompleteListener { task ->
             if (task.isSuccessful && task.result != null) {
@@ -24,6 +24,9 @@ class CapsuleRepositoryImpl @Inject constructor(
                     it.toObject(Capsule::class.java)
                 }
                 capsuleDao.insertCapsules(capsules)
+                onFinished.invoke(true)
+            } else {
+                onFinished.invoke(false)
             }
         }
     }

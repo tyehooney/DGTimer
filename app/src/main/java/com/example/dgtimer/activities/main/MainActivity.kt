@@ -89,7 +89,8 @@ class MainActivity : AppCompatActivity() {
                 launch {
                     viewModel.capsules.collect {
                         mainCapsulesAdapter.submitList(it)
-                        binding.tvNetworkDisconnected.isVisible = it?.isEmpty() ?: true
+                        binding.tvNetworkDisconnected.isVisible =
+                            it?.isEmpty() ?: true && viewModel.isInitialized
                     }
                 }
                 launch {

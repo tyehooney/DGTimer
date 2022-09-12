@@ -4,7 +4,7 @@ import com.example.dgtimer.db.Capsule
 import kotlinx.coroutines.flow.Flow
 
 interface CapsuleRepository {
-    fun refreshCapsules()
+    fun refreshCapsules(onFinished: (Boolean) -> Unit)
     fun loadCapsules(): Flow<List<Capsule>?>
     suspend fun addCapsule(capsule: Capsule)
     suspend fun getCapsuleByName(name: String): List<Capsule>?

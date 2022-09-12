@@ -18,8 +18,12 @@ class MainViewModel @Inject constructor(
     private val repository: CapsuleRepository,
     private val preferences: DGTimerPreferences
 ) : ViewModel() {
+    var isInitialized = false
+        private set
+
     var savedVersionCode = preferences.getInt(PrefKey.VersionCode)
         private set
+
     fun saveVersionCode(newVersionCode: Int) {
         savedVersionCode = newVersionCode
         preferences.put(PrefKey.VersionCode, newVersionCode)
@@ -32,7 +36,9 @@ class MainViewModel @Inject constructor(
     val searchedCapsules = _searchedCapsules.asStateFlow()
 
     fun updateCapsulesFromServer() {
-        repository.refreshCapsules()
+        repository.refreshCapsules() {
+            isInitialized = true
+        }
     }
 
     suspend fun searchCapsules(text: String) {
