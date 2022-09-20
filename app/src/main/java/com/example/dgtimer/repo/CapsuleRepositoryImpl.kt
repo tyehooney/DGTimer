@@ -20,10 +20,14 @@ class CapsuleRepositoryImpl @Inject constructor(
         val collection = FirebaseFirestore.getInstance().collection(FIREBASE_COLLECTION_NAME)
         collection.get().addOnCompleteListener { task ->
             if (task.isSuccessful && task.result != null) {
-                val capsules = task.result.documents.mapNotNull {
+                val newCapsules = task.result.documents.mapNotNull {
                     it.toObject(Capsule::class.java)
+                }.filter { capsule ->
+                    capsuleDao.getCapsuleById(capsule.id) == null
                 }
-                capsuleDao.insertCapsules(capsules)
+                if (newCapsules.isNotEmpty()) {
+                    capsuleDao.insertCapsules(newCapsules)
+                }
                 onFinished.invoke(true)
             } else {
                 onFinished.invoke(false)
