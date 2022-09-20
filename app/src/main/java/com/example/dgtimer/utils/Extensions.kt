@@ -54,4 +54,7 @@ object Extensions {
         }
         return String(byte)
     }
+
+    fun String.trimAllSpaces(): String =
+        filter { !it.isWhitespace() }
 }

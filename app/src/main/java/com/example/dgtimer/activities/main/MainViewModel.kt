@@ -6,8 +6,12 @@ import com.example.dgtimer.DGTimerPreferences
 import com.example.dgtimer.PrefKey
 import com.example.dgtimer.db.Capsule
 import com.example.dgtimer.repo.CapsuleRepository
+import com.example.dgtimer.utils.Extensions.trimAllSpaces
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -35,12 +39,12 @@ class MainViewModel @Inject constructor(
         MutableStateFlow("")
     val searchedCapsules: Flow<List<Capsule>> =
         capsules.combine(searchingWord) { capsules, word ->
-            val trimmedWord = word.trim()
+            val trimmedWord = word.trimAllSpaces()
             if (trimmedWord.isEmpty()) {
                 emptyList()
             } else {
                 capsules?.filter { capsule ->
-                    capsule.name.trim().contains(trimmedWord)
+                    capsule.name.trimAllSpaces().contains(trimmedWord)
                 } ?: emptyList()
             }
         }
