@@ -18,8 +18,10 @@ class MainViewModel @Inject constructor(
     private val repository: CapsuleRepository,
     private val preferences: DGTimerPreferences
 ) : ViewModel() {
-    var isInitialized = false
-        private set
+
+    private val _isInitialized: MutableStateFlow<Boolean> =
+        MutableStateFlow(false)
+    val isInitialized = _isInitialized.asStateFlow()
 
     var savedVersionCode = preferences.getInt(PrefKey.VersionCode)
         private set
@@ -37,7 +39,7 @@ class MainViewModel @Inject constructor(
 
     fun updateCapsulesFromServer() {
         repository.refreshCapsules() {
-            isInitialized = true
+            _isInitialized.value = true
         }
     }
 

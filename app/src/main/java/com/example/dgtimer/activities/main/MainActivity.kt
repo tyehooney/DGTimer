@@ -32,7 +32,7 @@ import com.example.dgtimer.databinding.ActivityMainBinding
 import com.example.dgtimer.utils.Extensions.readUpdateNote
 import com.example.dgtimer.utils.Extensions.setSearchFocus
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -80,14 +80,23 @@ class MainActivity : AppCompatActivity() {
         checkAppVersion()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.updateCapsulesFromServer()
+    }
+
     private fun initObservers() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.capsules.collect {
                         mainCapsulesAdapter.submitList(it)
-                        binding.tvNetworkDisconnected.isVisible =
-                            it?.isEmpty() ?: true && viewModel.isInitialized
+                        updateNetworkDisconnectedText()
+                    }
+                }
+                launch {
+                    viewModel.isInitialized.collectLatest {
+                        updateNetworkDisconnectedText()
                     }
                 }
                 launch {
@@ -107,6 +116,12 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private suspend fun updateNetworkDisconnectedText() {
+        val capsules = viewModel.capsules.stateIn(lifecycleScope).value
+        binding.tvNetworkDisconnected.isVisible =
+            capsules?.isEmpty() ?: true && viewModel.isInitialized.value
     }
 
     private fun initView() {
