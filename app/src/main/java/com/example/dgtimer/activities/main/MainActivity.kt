@@ -168,9 +168,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun searchCapsules(text: String) {
-        lifecycleScope.launch {
-            viewModel.searchCapsules(text)
-        }
+        viewModel.searchCapsules(text)
     }
 
     private fun onCapsuleItemClick(capsuleId: Int) {

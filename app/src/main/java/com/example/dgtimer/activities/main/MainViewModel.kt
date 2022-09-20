@@ -7,9 +7,7 @@ import com.example.dgtimer.PrefKey
 import com.example.dgtimer.db.Capsule
 import com.example.dgtimer.repo.CapsuleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,9 +31,19 @@ class MainViewModel @Inject constructor(
 
     val capsules: Flow<List<Capsule>?> = repository.loadCapsules()
 
-    private val _searchedCapsules: MutableStateFlow<List<Capsule>?> =
-        MutableStateFlow(emptyList())
-    val searchedCapsules = _searchedCapsules.asStateFlow()
+    private val searchingWord: MutableStateFlow<String> =
+        MutableStateFlow("")
+    val searchedCapsules: Flow<List<Capsule>> =
+        capsules.combine(searchingWord) { capsules, word ->
+            val trimmedWord = word.trim()
+            if (trimmedWord.isEmpty()) {
+                emptyList()
+            } else {
+                capsules?.filter { capsule ->
+                    capsule.name.trim().contains(trimmedWord)
+                } ?: emptyList()
+            }
+        }
 
     fun updateCapsulesFromServer() {
         repository.refreshCapsules() {
@@ -43,8 +51,8 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    suspend fun searchCapsules(text: String) {
-        _searchedCapsules.value = repository.searchCapsulesByName(text)
+    fun searchCapsules(text: String) {
+        searchingWord.value = text
     }
 
     private val _isSearchModeOn: MutableStateFlow<Boolean> =
