@@ -84,7 +84,8 @@ class TimerViewModel @Inject constructor(
 
                 override fun onFinish() {
                     _counterState.value = CounterState.Finished
-                    if (counters.value.size > 1 &&
+                    if (
+                        counters.value.size > 1 &&
                         activeCounter.index < counters.value.size - 1
                     ) {
                         setActiveCounter(activeCounter.index + 1)

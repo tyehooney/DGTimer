@@ -21,10 +21,15 @@ class CounterView(
 
     fun updateCounter(counter: Counter) {
         with(binding) {
-            val seconds = min(
-                (counter.currentTime / MILLIS).toInt() + 1,
-                (counter.totalTime / MILLIS).toInt()
-            )
+            val seconds =
+                if (counter.currentTime < 100) {
+                    0
+                } else {
+                    min(
+                        (counter.currentTime / MILLIS).toInt() + 1,
+                        (counter.totalTime / MILLIS).toInt()
+                    )
+                }
             tvCounterCount.text = seconds.toString()
             tvCounterCount.setTextColor(getTextColorByActiveState(counter.isActive))
             tvCounterName.setTextColor(getTextColorByActiveState(counter.isActive))
