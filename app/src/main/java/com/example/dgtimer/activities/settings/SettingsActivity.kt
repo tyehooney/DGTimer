@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.os.VibrationEffect
 import android.os.VibratorManager
 import android.widget.SeekBar
@@ -34,6 +33,8 @@ class SettingsActivity : AppCompatActivity() {
     private val strAlarms by lazy {
         resources.getStringArray(R.array.strAlarms)
     }
+
+    private var alarmPlayer: MediaPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,7 +102,12 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun ringAlarm(alarm: Int) {
         val volume = viewModel.volume.value / 100f
-        MediaPlayer.create(
+        alarmPlayer?.let {
+            it.stop()
+            it.release()
+        }
+        alarmPlayer = null
+        alarmPlayer = MediaPlayer.create(
             this,
             resources.getIdentifier("alarm_$alarm","raw", packageName)
         ).apply {
