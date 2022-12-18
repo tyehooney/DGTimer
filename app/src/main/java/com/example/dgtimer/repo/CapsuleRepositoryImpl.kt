@@ -22,8 +22,6 @@ class CapsuleRepositoryImpl @Inject constructor(
             if (task.isSuccessful && task.result != null) {
                 val newCapsules = task.result.documents.mapNotNull {
                     it.toObject(Capsule::class.java)
-                }.filter { capsule ->
-                    capsuleDao.getCapsuleById(capsule.id) == null
                 }
                 if (newCapsules.isNotEmpty()) {
                     capsuleDao.insertCapsules(newCapsules)
