@@ -1,5 +1,6 @@
 package com.example.dgtimer.activities
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -9,6 +10,7 @@ import com.example.dgtimer.R
 import com.example.dgtimer.activities.main.MainActivity
 import com.example.dgtimer.databinding.ActivitySplashBinding
 
+@SuppressLint("CustomSplashScreen")
 class SplashActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashBinding
