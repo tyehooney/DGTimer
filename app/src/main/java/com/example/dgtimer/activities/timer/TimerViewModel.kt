@@ -69,21 +69,20 @@ class TimerViewModel @Inject constructor(
     }
 
     fun playCountDownTimer() {
+        if (getActiveCounter()?.currentTime == 0L) {
+            resetCountDownTimer()
+        }
         val activeCounter = getActiveCounter() ?: return
         countDownTimer?.cancel()
         countDownTimer =
             object : CountDownTimer(activeCounter.currentTime, 100) {
                 override fun onTick(millisUntilFinished: Long) {
-                    val counters = counters.value.toMutableList()
-                    counters[activeCounter.index] =
-                        activeCounter.copy(
-                            currentTime = millisUntilFinished
-                        )
-                    _counters.value = counters
+                    updateCounterTime(activeCounter.index, millisUntilFinished)
                 }
 
                 override fun onFinish() {
                     _counterState.value = CounterState.Finished
+                    updateCounterTime(activeCounter.index, 0L)
                     if (
                         counters.value.size > 1 &&
                         activeCounter.index < counters.value.size - 1
@@ -94,6 +93,16 @@ class TimerViewModel @Inject constructor(
             }
         _counterState.value = CounterState.Counting
         countDownTimer?.start()
+    }
+
+    private fun updateCounterTime(index: Int, timeInMillis: Long) {
+        val counters = counters.value.toMutableList()
+        val counter = counters[index]
+        counters[index] =
+            counter.copy(
+                currentTime = timeInMillis
+            )
+        _counters.value = counters
     }
 
     fun pauseCountDownTimer() {
