@@ -14,6 +14,7 @@ import com.example.dgtimer.AppRater.Companion.launchGooglePlayForRating
 import com.example.dgtimer.R
 import com.example.dgtimer.databinding.ActivitySettingsBinding
 import com.example.dgtimer.utils.AlarmPlayerWrapper
+import com.example.dgtimer.utils.Extensions.getPackageInfoCompat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -87,7 +88,7 @@ class SettingsActivity : AppCompatActivity() {
             }
 
             tvAppVersion.text = packageManager
-                .getPackageInfo(packageName, 0)
+                .getPackageInfoCompat(packageName)
                 .versionName
 
             tvBtnReset.setOnClickListener {

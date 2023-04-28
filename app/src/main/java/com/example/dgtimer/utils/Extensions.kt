@@ -1,7 +1,11 @@
 package com.example.dgtimer.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.content.res.Resources
+import android.os.Build
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -33,10 +37,11 @@ object Extensions {
         }
     }
 
+    @SuppressLint("DiscouragedApi")
     fun Context.readUpdateNote(versionName: String): String? {
         val rawId =
             resources.getIdentifier(
-                "update_note_"+versionName.replace(".","_"),
+                "update_note_" + versionName.replace(".", "_"),
                 "raw",
                 packageName
             )
@@ -57,4 +62,11 @@ object Extensions {
 
     fun String.trimAllSpaces(): String =
         filter { !it.isWhitespace() }
+
+    fun PackageManager.getPackageInfoCompat(packageName: String, flags: Int = 0): PackageInfo =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(flags.toLong()))
+        } else {
+            @Suppress("DEPRECATION") getPackageInfo(packageName, flags)
+        }
 }

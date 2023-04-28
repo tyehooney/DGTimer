@@ -14,10 +14,12 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.pm.PackageInfoCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Lifecycle
@@ -29,10 +31,12 @@ import com.example.dgtimer.AppRater
 import com.example.dgtimer.R
 import com.example.dgtimer.activities.timer.TimerActivity
 import com.example.dgtimer.databinding.ActivityMainBinding
+import com.example.dgtimer.utils.Extensions.getPackageInfoCompat
 import com.example.dgtimer.utils.Extensions.readUpdateNote
 import com.example.dgtimer.utils.Extensions.setSearchFocus
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -73,6 +77,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        onBackPressedDispatcher.addCallback(this) {
+            if (viewModel.isSearchModeOn.value) {
+                viewModel.setSearchMode(false)
+            } else {
+                appRater.set(this@MainActivity)
+                isEnabled = false
+            }
+        }
 
         initView()
         initObservers()
@@ -151,8 +164,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkAppVersion() {
         try {
-            val packageInfo = packageManager.getPackageInfo(packageName, 0)
-            val currentVersionCode = packageInfo.longVersionCode.toInt()
+            val packageInfo = packageManager.getPackageInfoCompat(packageName)
+            val currentVersionCode = PackageInfoCompat.getLongVersionCode(packageInfo).toInt()
             if (viewModel.savedVersionCode != currentVersionCode) {
                 readUpdateNote(packageInfo.packageName)?.let { updateNote ->
                     AlertDialog.Builder(this)
@@ -235,15 +248,6 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         connectivityManager.unregisterNetworkCallback(networkCallback)
         super.onDestroy()
-    }
-
-    override fun onBackPressed() {
-        if (viewModel.isSearchModeOn.value) {
-            viewModel.setSearchMode(false)
-        } else {
-            appRater.set(this)
-            super.onBackPressed()
-        }
     }
 
     companion object {

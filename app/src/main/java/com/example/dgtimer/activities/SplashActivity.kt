@@ -11,7 +11,7 @@ import com.example.dgtimer.activities.main.MainActivity
 import com.example.dgtimer.databinding.ActivitySplashBinding
 
 @SuppressLint("CustomSplashScreen")
-class SplashActivity: AppCompatActivity() {
+class SplashActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashBinding
     private var splashHandler: Handler? = null
@@ -25,8 +25,19 @@ class SplashActivity: AppCompatActivity() {
 
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
+    }
 
-        startSplashAnimation()
+    override fun onResume() {
+        super.onResume()
+        if (splashHandler == null) {
+            startSplashAnimation()
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        splashHandler?.removeCallbacks(runnableMoveToMainActivity)
+        splashHandler = null
     }
 
     private fun startSplashAnimation() {
@@ -39,10 +50,5 @@ class SplashActivity: AppCompatActivity() {
         splashHandler = Handler(Looper.getMainLooper()).apply {
             postDelayed(runnableMoveToMainActivity, 1500L)
         }
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        splashHandler?.removeCallbacks(runnableMoveToMainActivity)
     }
 }
