@@ -167,7 +167,7 @@ class MainActivity : AppCompatActivity() {
             val packageInfo = packageManager.getPackageInfoCompat(packageName)
             val currentVersionCode = PackageInfoCompat.getLongVersionCode(packageInfo).toInt()
             if (viewModel.savedVersionCode != currentVersionCode) {
-                readUpdateNote(packageInfo.packageName)?.let { updateNote ->
+                readUpdateNote(packageInfo.versionName)?.let { updateNote ->
                     AlertDialog.Builder(this)
                         .setMessage(updateNote)
                         .setPositiveButton(R.string.check, null)
