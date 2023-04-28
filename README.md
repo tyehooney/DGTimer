@@ -14,12 +14,14 @@
 <br>
  
 ## 🛠 기술 스택
-[AAC ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel?hl=ko)  
-[LiveData](https://developer.android.com/topic/libraries/architecture/livedata)  
+[AAC ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)  
+[Flow](https://kotlinlang.org/docs/flow.html)
+[StateFlow](https://developer.android.com/kotlin/flow/stateflow-and-sharedflow)  
 [DataBinding](https://developer.android.com/topic/libraries/data-binding)  
 [DiffUtil](https://developer.android.com/reference/androidx/recyclerview/widget/DiffUtil)  
 [Glide](https://github.com/bumptech/glide)  
 [Room](https://developer.android.com/training/data-storage/room?hl=ko)
+[Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
 
 ## 💻개발자
 [박태훈](https://github.com/tyehooney)
