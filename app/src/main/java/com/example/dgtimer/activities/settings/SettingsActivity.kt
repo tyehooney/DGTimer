@@ -2,10 +2,7 @@ package com.example.dgtimer.activities.settings
 
 import android.app.Activity
 import android.content.Intent
-import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.VibrationEffect
-import android.os.VibratorManager
 import android.widget.SeekBar
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -13,10 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.example.dgtimer.DGTimerPreferences.Companion.vibratePattern
 import com.example.dgtimer.AppRater.Companion.launchGooglePlayForRating
 import com.example.dgtimer.R
 import com.example.dgtimer.databinding.ActivitySettingsBinding
+import com.example.dgtimer.utils.AlarmPlayerWrapper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -27,14 +24,12 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingsBinding
     private val viewModel: SettingsViewModel by viewModels()
 
-    private val vibrator by lazy {
-        (getSystemService(VIBRATOR_MANAGER_SERVICE) as VibratorManager).defaultVibrator
+    private val alarmPlayer by lazy {
+        AlarmPlayerWrapper(this)
     }
     private val strAlarms by lazy {
         resources.getStringArray(R.array.strAlarms)
     }
-
-    private var alarmPlayer: MediaPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +39,11 @@ class SettingsActivity : AppCompatActivity() {
         initObservers()
     }
 
+    override fun onDestroy() {
+        alarmPlayer.release()
+        super.onDestroy()
+    }
+
     private fun initView() {
         with(binding) {
             sbVolume.setOnSeekBarChangeListener(
@@ -51,9 +51,11 @@ class SettingsActivity : AppCompatActivity() {
                     override fun onProgressChanged(
                         seekBar: SeekBar?,
                         value: Int,
-                        fromUser: Boolean) {
+                        fromUser: Boolean
+                    ) {
                         viewModel.setVolume(value)
                     }
+
                     override fun onStartTrackingTouch(seekBar: SeekBar?) {}
                     override fun onStopTrackingTouch(seekBar: SeekBar?) {
                         ringAlarm(viewModel.alarm.value)
@@ -67,9 +69,11 @@ class SettingsActivity : AppCompatActivity() {
                     override fun onProgressChanged(
                         seekBar: SeekBar?,
                         value: Int,
-                        fromUser: Boolean) {
+                        fromUser: Boolean
+                    ) {
                         viewModel.setAmplitude(value)
                     }
+
                     override fun onStartTrackingTouch(seekBar: SeekBar?) {}
                     override fun onStopTrackingTouch(seekBar: SeekBar?) {
                         vibrate()
@@ -102,27 +106,12 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun ringAlarm(alarm: Int) {
         val volume = viewModel.volume.value / 100f
-        alarmPlayer?.let {
-            it.stop()
-            it.release()
-        }
-        alarmPlayer = null
-        alarmPlayer = MediaPlayer.create(
-            this,
-            resources.getIdentifier("alarm_$alarm","raw", packageName)
-        ).apply {
-            setVolume(volume, volume)
-            start()
-        }
+        alarmPlayer.ringAlarm(alarm, volume)
     }
 
     private fun vibrate() {
         val amplitude = viewModel.amplitude.value
-        vibrator.vibrate(
-            VibrationEffect.createWaveform(
-                vibratePattern, intArrayOf(0, amplitude, 0, amplitude), -1
-            )
-        )
+        alarmPlayer.vibrate(amplitude)
     }
 
     private fun showChooseAlarmDialog() {

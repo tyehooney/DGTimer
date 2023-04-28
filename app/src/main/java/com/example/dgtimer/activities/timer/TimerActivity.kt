@@ -1,11 +1,9 @@
 package com.example.dgtimer.activities.timer
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.VibrationEffect
-import android.os.VibratorManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -13,11 +11,11 @@ import androidx.core.view.get
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.example.dgtimer.DGTimerPreferences.Companion.vibratePattern
 import com.example.dgtimer.R
 import com.example.dgtimer.activities.settings.SettingsActivity
 import com.example.dgtimer.databinding.ActivityTimerBinding
 import com.example.dgtimer.setAd
+import com.example.dgtimer.utils.AlarmPlayerWrapper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -27,14 +25,8 @@ class TimerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTimerBinding
     private val viewModel: TimerViewModel by viewModels()
 
-    private val mediaPlayer by lazy {
-        MediaPlayer.create(
-            this,
-            resources.getIdentifier("alarm_${viewModel.alarm}","raw", packageName)
-        )
-    }
-    private val vibrator by lazy {
-        (getSystemService(VIBRATOR_MANAGER_SERVICE) as VibratorManager).defaultVibrator
+    private val alarmPlayer by lazy {
+        AlarmPlayerWrapper(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,11 +44,17 @@ class TimerActivity : AppCompatActivity() {
         super.onStop()
     }
 
+    override fun onDestroy() {
+        alarmPlayer.release()
+        super.onDestroy()
+    }
+
     private fun setCapsuleData() {
         val capsuleId = intent.getIntExtra(KEY_CAPSULE_ID, -1)
         viewModel.setCapsuleData(capsuleId)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initView() {
         with(binding) {
             lifecycleScope.launch {
@@ -136,17 +134,9 @@ class TimerActivity : AppCompatActivity() {
 
         if (counterState == CounterState.Finished) {
             if (viewModel.isAlarmOn.value) {
-                val volume = viewModel.alarmVolume
-                with(mediaPlayer) {
-                    setVolume(volume, volume)
-                    start()
-                }
+                alarmPlayer.ringAlarm(viewModel.alarm, viewModel.alarmVolume)
             } else {
-                val amplitude = viewModel.alarmAmplitude
-                vibrator.vibrate(
-                    VibrationEffect.createWaveform(
-                        vibratePattern, intArrayOf(0, amplitude, 0, amplitude), -1)
-                )
+                alarmPlayer.vibrate(viewModel.alarmAmplitude)
             }
         }
     }

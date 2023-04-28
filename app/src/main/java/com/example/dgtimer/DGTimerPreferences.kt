@@ -45,7 +45,6 @@ class DGTimerPreferences @Inject constructor(@ApplicationContext context: Contex
     companion object {
         private const val PREF_NAME = "userOption"
 
-        val vibratePattern = longArrayOf(0, 500, 500, 500)
         const val DEFAULT_AMPLITUDE = 180
         const val DEFAULT_VOLUME = 75
         const val DEFAULT_ALARM = 0
