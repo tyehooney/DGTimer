@@ -1,0 +1,8 @@
+버전 1.7.1 업데이트
+
+- 기반 언어 변경(Java -> Kotlin)
+- siren 음원 파일 교체
+- splash screen시 back키 누른 후 재진입시 멈추는 현상 해결
+hotfix
+- 시작시 비정상 종료 현상 해결 (database version update)
+- 업데이트 노트 창이 갑자기 사라지는 현상 해결
