@@ -73,6 +73,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private var updateVersionNoteDialog: AlertDialog? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -168,10 +170,12 @@ class MainActivity : AppCompatActivity() {
             val currentVersionCode = PackageInfoCompat.getLongVersionCode(packageInfo).toInt()
             if (viewModel.savedVersionCode != currentVersionCode) {
                 readUpdateNote(packageInfo.versionName)?.let { updateNote ->
-                    AlertDialog.Builder(this)
+                    updateVersionNoteDialog = AlertDialog.Builder(this)
                         .setMessage(updateNote)
                         .setPositiveButton(R.string.check, null)
-                        .create().show()
+                        .create().apply {
+                            show()
+                        }
                 }
                 viewModel.saveVersionCode(currentVersionCode)
             }
@@ -246,6 +250,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        updateVersionNoteDialog?.dismiss()
+        updateVersionNoteDialog = null
         connectivityManager.unregisterNetworkCallback(networkCallback)
         super.onDestroy()
     }
