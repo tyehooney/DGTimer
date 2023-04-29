@@ -21,7 +21,9 @@ class DatabaseModule {
             context,
             CapsuleDatabase::class.java,
             "capsules"
-        ).allowMainThreadQueries().build()
+        ).fallbackToDestructiveMigration()
+            .allowMainThreadQueries()
+            .build()
     }
 
     @Provides
