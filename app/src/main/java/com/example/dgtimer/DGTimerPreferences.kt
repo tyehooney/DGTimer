@@ -57,7 +57,7 @@ sealed class PrefKey(val value: String) {
     object Amplitude : PrefKey("amplitude")
     object Volume : PrefKey("volume")
     object IsRaterShown : PrefKey("dontshowagain")
-    object RaterLaunchCount : PrefKey("launch_count")
+    object RaterLaunchCount : PrefKey("rater_launch_count")
     object FirstLaunchedDate : PrefKey("date_firstlaunch")
     object VersionCode : PrefKey("currentVersionCode")
 }
