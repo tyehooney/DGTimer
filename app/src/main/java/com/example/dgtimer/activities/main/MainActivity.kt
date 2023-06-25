@@ -218,6 +218,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setSearchMode(isOn: Boolean) {
+        binding.llLogo.isVisible = !isOn
         binding.rvCapsules.isVisible = !isOn
         binding.rvSearchedCapsules.isVisible = isOn
         binding.llSearch.isVisible = isOn

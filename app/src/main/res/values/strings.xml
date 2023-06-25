@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">DGTimer</string>
 
-    <string name="searchCapsule">Write your capsule name</string>
+    <string name="searchCapsule">Search capsules here</string>
 
     <string name="tip1">* You can start counting from the moment you turn on the extraction lever (button).</string>
     <string name="tip2">* The white capsule is the milk capsule.</string>
