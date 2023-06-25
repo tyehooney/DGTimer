@@ -172,7 +172,7 @@ class MainActivity : AppCompatActivity() {
                 readUpdateNote(packageInfo.versionName)?.let { updateNote ->
                     updateVersionNoteDialog = AlertDialog.Builder(this)
                         .setMessage(updateNote)
-                        .setPositiveButton(R.string.check, null)
+                        .setPositiveButton(R.string.ok, null)
                         .create().apply {
                             show()
                         }
