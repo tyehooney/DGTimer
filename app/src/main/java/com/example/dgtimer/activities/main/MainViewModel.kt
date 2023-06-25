@@ -39,12 +39,12 @@ class MainViewModel @Inject constructor(
         MutableStateFlow("")
     val searchedCapsules: Flow<List<Capsule>> =
         capsules.combine(searchingWord) { capsules, word ->
-            val trimmedWord = word.trimAllSpaces()
+            val trimmedWord = word.trimAllSpaces().lowercase()
             if (trimmedWord.isEmpty()) {
                 emptyList()
             } else {
                 capsules?.filter { capsule ->
-                    capsule.name.trimAllSpaces().contains(trimmedWord)
+                    capsule.name.trimAllSpaces().lowercase().contains(trimmedWord)
                 } ?: emptyList()
             }
         }
