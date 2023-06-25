@@ -3,8 +3,6 @@
 
     <string name="searchCapsule">캡슐을 입력하세요</string>
 
-    <string name="latte">밀크</string>
-
     <string name="tip1">* 추출 레버(버튼)를 켜는 순간부터 카운트를 시작하시면 됩니다.</string>
     <string name="tip2">* 흰색 캡슐이 밀크캡슐입니다.</string>
 
@@ -38,4 +36,9 @@
     <string name="cancel">취소</string>
     <string name="ok">확인</string>
     <string name="when_network_disconnected">캡슐 커피 목록이 나오지 않는다면\n 네트워크를 활성화해주세요!</string>
+
+    <string name="latte">밀크</string>
+    <string name="capsule_type_coffee">커피</string>
+    <string name="capsule_type_green_tea">녹차</string>
+    <string name="capsule_type_chocolate">초콜렛</string>
 </resources>

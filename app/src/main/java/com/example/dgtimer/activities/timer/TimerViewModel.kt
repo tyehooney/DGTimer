@@ -47,7 +47,7 @@ class TimerViewModel @Inject constructor(
             capsule = fetchedCapsule
             val fetchedCounters = fetchedCapsule.stage.mapIndexed { index, stage ->
                 Counter(
-                    fetchedCapsule.type,
+                    fetchedCapsule.typeStringResId,
                     stageToMilliseconds(stage),
                     index,
                     index == 0

@@ -1,7 +1,7 @@
 package com.example.dgtimer.activities.timer
 
 data class Counter(
-    val type: String,
+    val typeStringResId: Int,
     val totalTime: Long,
     val index: Int,
     val isActive: Boolean,

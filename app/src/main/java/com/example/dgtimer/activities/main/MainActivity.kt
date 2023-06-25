@@ -31,9 +31,9 @@ import com.example.dgtimer.AppRater
 import com.example.dgtimer.R
 import com.example.dgtimer.activities.timer.TimerActivity
 import com.example.dgtimer.databinding.ActivityMainBinding
-import com.example.dgtimer.utils.Extensions.getPackageInfoCompat
-import com.example.dgtimer.utils.Extensions.readUpdateNote
-import com.example.dgtimer.utils.Extensions.setSearchFocus
+import com.example.dgtimer.utils.getPackageInfoCompat
+import com.example.dgtimer.utils.readUpdateNote
+import com.example.dgtimer.utils.setSearchFocus
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn

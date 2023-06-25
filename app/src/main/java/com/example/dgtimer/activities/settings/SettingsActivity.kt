@@ -14,7 +14,7 @@ import com.example.dgtimer.AppRater.Companion.launchGooglePlayForRating
 import com.example.dgtimer.R
 import com.example.dgtimer.databinding.ActivitySettingsBinding
 import com.example.dgtimer.utils.AlarmPlayerWrapper
-import com.example.dgtimer.utils.Extensions.getPackageInfoCompat
+import com.example.dgtimer.utils.getPackageInfoCompat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

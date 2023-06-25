@@ -6,7 +6,7 @@ import com.example.dgtimer.DGTimerPreferences
 import com.example.dgtimer.PrefKey
 import com.example.dgtimer.db.Capsule
 import com.example.dgtimer.repo.CapsuleRepository
-import com.example.dgtimer.utils.Extensions.trimAllSpaces
+import com.example.dgtimer.utils.trimAllSpaces
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

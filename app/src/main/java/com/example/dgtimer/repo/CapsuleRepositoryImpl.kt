@@ -2,6 +2,7 @@ package com.example.dgtimer.repo
 
 import com.example.dgtimer.db.Capsule
 import com.example.dgtimer.db.CapsuleDao
+import com.example.dgtimer.db.GlobalCapsule
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -20,8 +21,10 @@ class CapsuleRepositoryImpl @Inject constructor(
         val collection = FirebaseFirestore.getInstance().collection(FIREBASE_COLLECTION_NAME)
         collection.get().addOnCompleteListener { task ->
             if (task.isSuccessful && task.result != null) {
-                val newCapsules = task.result.documents.mapNotNull {
-                    it.toObject(Capsule::class.java)
+                val newCapsules = task.result.documents.mapNotNull { snapshot ->
+                    snapshot.toObject(GlobalCapsule::class.java)
+                }.map { globalCapsule ->
+                    globalCapsule.toCapsule()
                 }
                 if (newCapsules.isNotEmpty()) {
                     capsuleDao.insertCapsules(newCapsules)
@@ -31,6 +34,19 @@ class CapsuleRepositoryImpl @Inject constructor(
                 onFinished.invoke(false)
             }
         }
+    }
+
+    private fun GlobalCapsule.toCapsule(): Capsule {
+        val existingCapsule = capsuleDao.getCapsuleById(id)
+        return Capsule(
+            id = id,
+            name = nameInfo?.localString ?: name,
+            typeId = typeId,
+            stage = stage,
+            color = color,
+            image = image,
+            isMajor = existingCapsule?.isMajor ?: false
+        )
     }
 
     override fun loadCapsules(): Flow<List<Capsule>?> =

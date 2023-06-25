@@ -39,7 +39,7 @@ class CounterView(
                 if (counter.index == 0 && counterViewCount > 1) {
                     context.getString(R.string.latte)
                 } else {
-                    counter.type
+                    context.getString(counter.typeStringResId)
                 }
             root.setOnClickListener {
                 onClick?.invoke(counter.index)
