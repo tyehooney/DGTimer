@@ -139,12 +139,18 @@ class SettingsActivity : AppCompatActivity() {
                 launch {
                     viewModel.volume.collectLatest {
                         binding.tvVolume.text = it.toString()
+                        if (binding.sbVolume.progress != it) {
+                            binding.sbVolume.progress = it
+                        }
                     }
                 }
 
                 launch {
                     viewModel.amplitude.collectLatest {
                         binding.tvAmplitude.text = it.toString()
+                        if (binding.sbAmplitude.progress != it) {
+                            binding.sbAmplitude.progress = it
+                        }
                     }
                 }
 
