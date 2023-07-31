@@ -15,7 +15,7 @@ internal val MIGRATION_2_to_3 = object : Migration(2, 3) {
                         stage TEXT NOT NULL DEFAULT '', 
                         color TEXT, 
                         image TEXT, 
-                        major BOOLEAN NOT NULL ,
+                        major INTEGER NOT NULL,
                         PRIMARY KEY(id)
                     )
                 """.trimIndent()
