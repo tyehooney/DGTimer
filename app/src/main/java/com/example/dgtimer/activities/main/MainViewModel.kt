@@ -9,7 +9,10 @@ import com.example.dgtimer.repo.CapsuleRepository
 import com.example.dgtimer.utils.trimAllSpaces
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
@@ -78,9 +81,12 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    private val _updateCapsuleMajorEvent: MutableSharedFlow<Unit> = MutableSharedFlow()
+    val updateCapsuleMajorEvent: SharedFlow<Unit> = _updateCapsuleMajorEvent.asSharedFlow()
     fun updateCapsuleMajor(capsuleId: Int) {
         viewModelScope.launch {
             repository.updateCapsuleMajor(capsuleId)
+            _updateCapsuleMajorEvent.emit(Unit)
         }
     }
 

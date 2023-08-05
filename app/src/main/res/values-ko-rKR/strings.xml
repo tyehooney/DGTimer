@@ -41,4 +41,6 @@
     <string name="capsule_type_coffee">커피</string>
     <string name="capsule_type_green_tea">녹차</string>
     <string name="capsule_type_chocolate">초콜렛</string>
+
+    <string name="widget_empty_starred_capsule_list">즐겨찾기 등록된 캡슐이 없습니다.</string>
 </resources>

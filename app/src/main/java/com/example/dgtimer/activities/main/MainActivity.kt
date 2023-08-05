@@ -1,6 +1,5 @@
 package com.example.dgtimer.activities.main
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -34,6 +33,7 @@ import com.example.dgtimer.databinding.ActivityMainBinding
 import com.example.dgtimer.utils.getPackageInfoCompat
 import com.example.dgtimer.utils.readUpdateNote
 import com.example.dgtimer.utils.setSearchFocus
+import com.example.dgtimer.widget.DGTimerWidgetProvider
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
@@ -43,7 +43,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    @Inject lateinit var appRater: AppRater
+    @Inject
+    lateinit var appRater: AppRater
 
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
@@ -129,6 +130,13 @@ class MainActivity : AppCompatActivity() {
                         toggleScrollTopFab(it)
                     }
                 }
+                launch {
+                    viewModel.updateCapsuleMajorEvent.collect {
+                        DGTimerWidgetProvider.notifyAppWidgetUpdate(
+                            this@MainActivity
+                        )
+                    }
+                }
             }
         }
     }
@@ -155,7 +163,7 @@ class MainActivity : AppCompatActivity() {
             rvCapsules.adapter = mainCapsulesAdapter
             rvSearchedCapsules.adapter = searchedCapsulesAdapter
             rvCapsules.addOnScrollListener(
-                object: RecyclerView.OnScrollListener() {
+                object : RecyclerView.OnScrollListener() {
                     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                         viewModel.setScrollYForShowingFab(dy)
                     }
@@ -259,7 +267,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         fun createMainActivityIntent(
-            callerActivity: Activity
-        ) = Intent(callerActivity, MainActivity::class.java)
+            context: Context
+        ) = Intent(context, MainActivity::class.java)
     }
 }

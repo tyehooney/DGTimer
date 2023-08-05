@@ -61,6 +61,11 @@ class CapsuleRepositoryImpl @Inject constructor(
             capsuleDao.getByName(name)
         }
 
+    override suspend fun getStarredCapsules(): List<Capsule>? =
+        withContext(ioDispatcher) {
+            capsuleDao.getStarredCapsules()
+        }
+
     override suspend fun getCapsuleById(id: Int): Capsule? =
         withContext(ioDispatcher) {
             capsuleDao.getCapsuleById(id)

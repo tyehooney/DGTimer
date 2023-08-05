@@ -41,4 +41,6 @@
     <string name="capsule_type_coffee">Coffee</string>
     <string name="capsule_type_green_tea">Green Tea</string>
     <string name="capsule_type_chocolate">Chocolate</string>
+
+    <string name="widget_empty_starred_capsule_list">There is no starred capsules.</string>
 </resources>

@@ -1,7 +1,7 @@
 package com.example.dgtimer.activities.timer
 
 import android.annotation.SuppressLint
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -171,10 +171,10 @@ class TimerActivity : AppCompatActivity() {
         private const val KEY_CAPSULE_ID = "capsuleId"
 
         fun createTimerActivityIntent(
-            callerActivity: Activity,
+            context: Context,
             capsuleId: Int
         ): Intent =
-            Intent(callerActivity, TimerActivity::class.java).apply {
+            Intent(context, TimerActivity::class.java).apply {
                 putExtra(KEY_CAPSULE_ID, capsuleId)
             }
     }
