@@ -1,0 +1,5 @@
+Update Note: 1.8.0
+
+- English service is available from this version.
+- Widget is now available.
+    - You can directly access each timer screen of capsules you starred through widget.
