@@ -14,8 +14,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.dgtimer.R
 import com.example.dgtimer.activities.settings.SettingsActivity
 import com.example.dgtimer.databinding.ActivityTimerBinding
+import com.example.dgtimer.db.Capsule
 import com.example.dgtimer.setAd
 import com.example.dgtimer.utils.AlarmPlayerWrapper
+import com.example.dgtimer.widget.DGTimerWidgetProvider
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -57,14 +59,8 @@ class TimerActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun initView() {
         with(binding) {
-            lifecycleScope.launch {
-                viewModel.setCapsuleDataJob?.join()
-                val capsule = viewModel.capsule ?: return@launch
-                root.setBackgroundColor(capsule.colorAsInt)
-                tvCapsuleName.text = capsule.name
-                tvCapsuleTips.text = getString(R.string.tip1) +
-                        if (capsule.stage.size > 1) "\n${getString(R.string.tip2)}"
-                        else ""
+            ivBtnStar.setOnClickListener {
+                viewModel.toggleCapsuleMajor()
             }
             ivBtnAlarmOption.setOnClickListener {
                 viewModel.updateAlarmOn(viewModel.isAlarmOn.value.not())
@@ -89,6 +85,12 @@ class TimerActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
+                    viewModel.capsuleFlow.collect {
+                        val capsule = it ?: return@collect
+                        updateCapsuleUi(capsule)
+                    }
+                }
+                launch {
                     viewModel.counters.collect {
                         updateCounterViews(it)
                     }
@@ -106,6 +108,24 @@ class TimerActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+    }
+
+    private fun updateCapsuleUi(capsule: Capsule) {
+        with(binding) {
+            root.setBackgroundColor(capsule.colorAsInt)
+            tvCapsuleName.text = capsule.name
+            tvCapsuleTips.text = getString(R.string.tip1) +
+                    if (capsule.stage.size > 1) "\n${getString(R.string.tip2)}"
+                    else ""
+            ivBtnStar.setImageResource(
+                if (capsule.isMajor) {
+                    R.drawable.ic_star_filled
+                } else {
+                    R.drawable.ic_star_border
+                }
+            )
+            DGTimerWidgetProvider.notifyAppWidgetUpdate(this@TimerActivity)
         }
     }
 
