@@ -28,7 +28,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.timer.TimerActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:parentActivityName=".activities.main.MainActivity" />
         <activity
             android:name=".activities.main.MainActivity"
             android:screenOrientation="portrait"/>

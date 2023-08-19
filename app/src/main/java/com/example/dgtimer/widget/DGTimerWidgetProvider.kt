@@ -1,6 +1,7 @@
 package com.example.dgtimer.widget
 
 import android.app.PendingIntent
+import android.app.TaskStackBuilder
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
@@ -42,9 +43,15 @@ class DGTimerWidgetProvider : AppWidgetProvider() {
             ACTION_CLICK_ITEM -> {
                 val itemId = intent.getIntExtra(EXTRA_ITEM_ID, -1)
                 val timerIntent = TimerActivity.createTimerActivityIntent(context, itemId).apply {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                 }
-                context.startActivity(timerIntent)
+                val taskStackBuilder = TaskStackBuilder.create(context).apply {
+                    addNextIntentWithParentStack(timerIntent)
+                }
+                taskStackBuilder.getPendingIntent(
+                    0,
+                    PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+                ).send()
             }
             else -> Unit
         }
