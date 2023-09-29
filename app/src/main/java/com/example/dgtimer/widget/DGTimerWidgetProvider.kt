@@ -27,12 +27,22 @@ class DGTimerWidgetProvider : AppWidgetProvider() {
     ) {
         context ?: return
         log("onUpdate()")
-        appWidgetIds?.forEach { appWidgetId ->
-            val remoteViews = createRemoteViews(context)
-            appWidgetManager?.updateAppWidget(appWidgetId, remoteViews)
-            appWidgetManager?.notifyAppWidgetViewDataChanged(appWidgetId, R.id.capsule_list_view)
-        }
+        updateWidget(context, appWidgetManager, appWidgetIds)
         super.onUpdate(context, appWidgetManager, appWidgetIds)
+    }
+
+    private fun updateWidget(
+        context: Context,
+        appWidgetManager: AppWidgetManager?,
+        appWidgetIds: IntArray?
+    ) {
+        log("updateWidget() widgetIds=${appWidgetIds.contentToString()}")
+        val remoteViews = createRemoteViews(context)
+        appWidgetManager?.let {
+            it.updateAppWidget(appWidgetIds, null)
+            it.updateAppWidget(appWidgetIds, remoteViews)
+            it.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.capsule_list_view)
+        }
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -53,6 +63,16 @@ class DGTimerWidgetProvider : AppWidgetProvider() {
                     PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
                 ).send()
             }
+            AppWidgetManager.ACTION_APPWIDGET_UPDATE -> {
+                val appWidgetManager = AppWidgetManager.getInstance(context)
+                val appWidgetIds = appWidgetManager.getAppWidgetIds(
+                    ComponentName(
+                        context,
+                        DGTimerWidgetProvider::class.java
+                    )
+                )
+                updateWidget(context, appWidgetManager, appWidgetIds)
+            }
             else -> Unit
         }
     }
@@ -63,6 +83,9 @@ class DGTimerWidgetProvider : AppWidgetProvider() {
                     "newWidgetIds:${newWidgetIds?.contentToString()}"
         )
         super.onRestored(context, oldWidgetIds, newWidgetIds)
+        context ?: return
+        val widgetManager = AppWidgetManager.getInstance(context)
+        updateWidget(context, widgetManager, newWidgetIds)
     }
 
     override fun onDisabled(context: Context?) {
@@ -118,20 +141,11 @@ class DGTimerWidgetProvider : AppWidgetProvider() {
         private const val ACTION_CLICK_ITEM = "action.click.item"
         const val EXTRA_ITEM_ID = "extra.item.position"
 
-        internal fun notifyAppWidgetUpdate(
-            context: Context
-        ) {
-            val appWidgetManager = AppWidgetManager.getInstance(context)
-            val appWidgetIds = appWidgetManager.getAppWidgetIds(
-                ComponentName(
-                    context,
-                    DGTimerWidgetProvider::class.java
-                )
-            )
-            appWidgetManager.notifyAppWidgetViewDataChanged(
-                appWidgetIds,
-                R.id.capsule_list_view
-            )
+        internal fun notifyAppWidgetUpdate(context: Context) {
+            val widgetIntent = Intent(context, DGTimerWidgetProvider::class.java).apply {
+                action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+            }
+            context.sendBroadcast(widgetIntent)
         }
     }
 }
