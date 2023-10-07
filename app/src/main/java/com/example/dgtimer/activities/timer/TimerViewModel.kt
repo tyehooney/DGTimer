@@ -39,6 +39,15 @@ class TimerViewModel @Inject constructor(
     private val _counterState = MutableStateFlow(CounterState.Ready)
     val counterState = _counterState.asStateFlow()
 
+    fun refreshCapsuleData() {
+        repository.refreshCapsules {
+            val capsuleId = _capsuleFlow.value?.id
+            capsuleId?.let {
+                setCapsuleData(capsuleId)
+            }
+        }
+    }
+
     fun setCapsuleData(capsuleId: Int) {
         viewModelScope.launch {
             val fetchedCapsule = repository.getCapsuleById(capsuleId) ?: return@launch

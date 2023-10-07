@@ -3,6 +3,7 @@ package com.example.dgtimer.activities.timer
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -31,14 +32,26 @@ class TimerActivity : AppCompatActivity() {
         AlarmPlayerWrapper(this)
     }
 
+    private var hasConfigurationChanged = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTimerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setCapsuleData()
+        if (!hasConfigurationChanged) {
+            setCapsuleData()
+        } else {
+            hasConfigurationChanged = false
+        }
         initView()
         initObservers()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        viewModel.refreshCapsuleData()
+        hasConfigurationChanged = true
     }
 
     override fun onStop() {
