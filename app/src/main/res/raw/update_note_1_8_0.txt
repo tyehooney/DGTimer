@@ -1,7 +1,11 @@
 Update Note: 1.8.0
 
 - English service is available from this version.
-- Widget is now available.
+
+- Widget is now available!
     - You can directly access each timer screen of capsules you starred through widget.
+
 - Star button is added in Timer Screen
     - You can update the current favorite status of each capsule.
+
+- The bug which the capsule list is auto scrolled right after star button is clicked is now fixed.
