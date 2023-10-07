@@ -33,6 +33,7 @@ import com.example.dgtimer.databinding.ActivityMainBinding
 import com.example.dgtimer.utils.getPackageInfoCompat
 import com.example.dgtimer.utils.readUpdateNote
 import com.example.dgtimer.utils.setSearchFocus
+import com.example.dgtimer.utils.updateListWithSavingState
 import com.example.dgtimer.widget.DGTimerWidgetProvider
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -106,7 +107,10 @@ class MainActivity : AppCompatActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.capsules.collect {
-                        mainCapsulesAdapter.submitList(it)
+                        mainCapsulesAdapter.updateListWithSavingState(
+                            binding.rvCapsules,
+                            it
+                        )
                         updateNetworkDisconnectedText()
                     }
                 }
@@ -117,7 +121,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 launch {
                     viewModel.searchedCapsules.collectLatest {
-                        searchedCapsulesAdapter.submitList(it)
+                        searchedCapsulesAdapter.updateListWithSavingState(
+                            binding.rvSearchedCapsules,
+                            it
+                        )
                     }
                 }
                 launch {

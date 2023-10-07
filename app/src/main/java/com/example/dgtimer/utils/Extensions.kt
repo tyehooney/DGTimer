@@ -10,6 +10,9 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.dgtimer.db.CapsuleType
 import java.io.IOException
 
@@ -34,6 +37,16 @@ internal fun EditText.setSearchFocus(focus: Boolean) {
         }
         setOnEditorActionListener(null)
         true
+    }
+}
+
+internal fun <T, VH : ViewHolder> ListAdapter<T, VH>.updateListWithSavingState(
+    recyclerView: RecyclerView,
+    newList: List<T>?
+) {
+    val saveState = recyclerView.layoutManager?.onSaveInstanceState()
+    submitList(newList) {
+        recyclerView.layoutManager?.onRestoreInstanceState(saveState)
     }
 }
 
