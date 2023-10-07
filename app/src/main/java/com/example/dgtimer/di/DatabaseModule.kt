@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.dgtimer.db.CapsuleDao
 import com.example.dgtimer.db.CapsuleDatabase
+import com.example.dgtimer.db.MIGRATION_2_to_3
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,7 +22,8 @@ class DatabaseModule {
             context,
             CapsuleDatabase::class.java,
             "capsules"
-        ).fallbackToDestructiveMigration()
+        ).addMigrations(MIGRATION_2_to_3)
+            .fallbackToDestructiveMigration()
             .allowMainThreadQueries()
             .build()
     }

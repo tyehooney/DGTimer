@@ -1,33 +1,46 @@
 <resources>
-    <string name="app_name">돌구타이머</string>
+    <string name="app_name">DGTimer</string>
 
-    <string name="searchCapsule">캡슐을 입력하세요</string>
+    <string name="searchCapsule">Search capsules here</string>
 
-    <string name="latte">밀크</string>
+    <string name="tip1">* You can start counting from the moment you turn on the extraction lever (button).</string>
+    <string name="tip2">* The white capsule is the milk capsule.</string>
 
-    <string name="tip1">* 추출 레버(버튼)를 켜는 순간부터 카운트를 시작하시면 됩니다.</string>
-    <string name="tip2">* 흰색 캡슐이 밀크캡슐입니다.</string>
+    <string name="ratingDialogTitle">How was your experience with the app?</string>
+    <string name="induceRate">If you have used our app well, please leave a rating on Google Play!</string>
+    <string name="rate">Rate</string>
+    <string name="later">Later</string>
+    <string name="neverShowIt">No</string>
 
-    <string name="ratingDialogTitle">앱 사용이 어떠셨나요?</string>
-    <string name="induceRate">저희 돌구타이머를 잘 사용해보셨다면 Google Play에서 평가를 남겨주세요!</string>
-    <string name="rate">평가하기</string>
-    <string name="later">나중에</string>
-    <string name="neverShowIt">싫어요</string>
+    <string name="settings">Settings</string>
+    <string name="reset_to_default">Reset to default</string>
+    <string name="current_alarm">Current notification sound</string>
+    <string name="alarm_volume">Volume</string>
+    <string name="amplitude">Amplitude</string>
+    <string name="app_version">App version</string>
+    <string name="rate_app">Rate this app</string>
 
-    <string name="selectAlarm">알람을 선택해주세요</string>
-    <string name="alarm_0">초인종</string>
-    <string name="alarm_1">맑은 종</string>
-    <string name="alarm_2">딩동댕</string>
-    <string name="alarm_3">탁상시계 알람</string>
-    <string name="alarm_4">닭소리</string>
-    <string name="alarm_5">고양이</string>
-    <string name="alarm_6">사이렌</string>
-    <string name="alarm_7">철도 건널목</string>
-    <string name="alarm_8">뱃고동</string>
-    <string name="alarm_9">전자 비프음</string>
+    <string name="selectAlarm">Choose your notification sound.</string>
+    <string name="alarm_0">Doorbell</string>
+    <string name="alarm_1">Clear bell sound</string>
+    <string name="alarm_2">Correct sound</string>
+    <string name="alarm_3">Table clock alarm</string>
+    <string name="alarm_4">Chicken</string>
+    <string name="alarm_5">Cat</string>
+    <string name="alarm_6">Siren</string>
+    <string name="alarm_7">Railroad crossing</string>
+    <string name="alarm_8">Boat horn</string>
+    <string name="alarm_9">Beep</string>
 
-    <string name="save">저장</string>
-    <string name="cancel">취소</string>
-    <string name="check">확인</string>
-    <string name="when_network_disconnected">캡슐 커피 목록이 나오지 않는다면\n 네트워크를 활성화해주세요!</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="when_network_disconnected">If the coffee list does not appear,\n please activate the network!</string>
+
+    <string name="latte">Milk</string>
+    <string name="capsule_type_coffee">Coffee</string>
+    <string name="capsule_type_green_tea">Green Tea</string>
+    <string name="capsule_type_chocolate">Chocolate</string>
+
+    <string name="widget_empty_starred_capsule_list">There is no starred capsules.</string>
 </resources>

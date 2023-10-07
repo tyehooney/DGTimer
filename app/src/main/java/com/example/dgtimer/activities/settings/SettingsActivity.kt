@@ -14,7 +14,7 @@ import com.example.dgtimer.AppRater.Companion.launchGooglePlayForRating
 import com.example.dgtimer.R
 import com.example.dgtimer.databinding.ActivitySettingsBinding
 import com.example.dgtimer.utils.AlarmPlayerWrapper
-import com.example.dgtimer.utils.Extensions.getPackageInfoCompat
+import com.example.dgtimer.utils.getPackageInfoCompat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -139,12 +139,18 @@ class SettingsActivity : AppCompatActivity() {
                 launch {
                     viewModel.volume.collectLatest {
                         binding.tvVolume.text = it.toString()
+                        if (binding.sbVolume.progress != it) {
+                            binding.sbVolume.progress = it
+                        }
                     }
                 }
 
                 launch {
                     viewModel.amplitude.collectLatest {
                         binding.tvAmplitude.text = it.toString()
+                        if (binding.sbAmplitude.progress != it) {
+                            binding.sbAmplitude.progress = it
+                        }
                     }
                 }
 

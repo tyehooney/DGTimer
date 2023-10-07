@@ -11,8 +11,8 @@ import com.example.dgtimer.db.Capsule
 import com.example.dgtimer.repo.CapsuleRepository
 import com.example.dgtimer.utils.TimeUtils.stageToMilliseconds
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,14 +23,13 @@ class TimerViewModel @Inject constructor(
     private val preferences: DGTimerPreferences
 ) : ViewModel() {
 
-    var capsule: Capsule? = null
-        private set
+    private val _capsuleFlow: MutableStateFlow<Capsule?> =
+        MutableStateFlow(null)
+    val capsuleFlow: StateFlow<Capsule?> = _capsuleFlow.asStateFlow()
 
     private val _counters: MutableStateFlow<List<Counter>> =
         MutableStateFlow(emptyList())
     val counters = _counters.asStateFlow()
-
-    var setCapsuleDataJob: Job? = null
 
     val alarmAmplitude get() = preferences.getInt(PrefKey.Amplitude, DEFAULT_AMPLITUDE)
     val alarmVolume get() = preferences.getInt(PrefKey.Volume, DEFAULT_VOLUME) / 100f
@@ -40,21 +39,36 @@ class TimerViewModel @Inject constructor(
     private val _counterState = MutableStateFlow(CounterState.Ready)
     val counterState = _counterState.asStateFlow()
 
+    fun refreshCapsuleData() {
+        repository.refreshCapsules {
+            val capsuleId = _capsuleFlow.value?.id
+            capsuleId?.let {
+                setCapsuleData(capsuleId)
+            }
+        }
+    }
+
     fun setCapsuleData(capsuleId: Int) {
-        setCapsuleDataJob?.cancel()
-        setCapsuleDataJob = viewModelScope.launch {
+        viewModelScope.launch {
             val fetchedCapsule = repository.getCapsuleById(capsuleId) ?: return@launch
-            capsule = fetchedCapsule
+            _capsuleFlow.value = fetchedCapsule
             val fetchedCounters = fetchedCapsule.stage.mapIndexed { index, stage ->
                 Counter(
-                    fetchedCapsule.type,
+                    fetchedCapsule.typeStringResId,
                     stageToMilliseconds(stage),
                     index,
                     index == 0
                 )
             }
             _counters.value = fetchedCounters
-            setCapsuleDataJob = null
+        }
+    }
+
+    fun toggleCapsuleMajor() {
+        val capsuleId = _capsuleFlow.value?.id ?: return
+        viewModelScope.launch {
+            repository.updateCapsuleMajor(capsuleId)
+            _capsuleFlow.value = repository.getCapsuleById(capsuleId)
         }
     }
 

@@ -1,8 +1,9 @@
 package com.example.dgtimer.activities.timer
 
 import android.annotation.SuppressLint
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -14,8 +15,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.dgtimer.R
 import com.example.dgtimer.activities.settings.SettingsActivity
 import com.example.dgtimer.databinding.ActivityTimerBinding
+import com.example.dgtimer.db.Capsule
 import com.example.dgtimer.setAd
 import com.example.dgtimer.utils.AlarmPlayerWrapper
+import com.example.dgtimer.widget.DGTimerWidgetProvider
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -29,14 +32,26 @@ class TimerActivity : AppCompatActivity() {
         AlarmPlayerWrapper(this)
     }
 
+    private var hasConfigurationChanged = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTimerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setCapsuleData()
+        if (!hasConfigurationChanged) {
+            setCapsuleData()
+        } else {
+            hasConfigurationChanged = false
+        }
         initView()
         initObservers()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        viewModel.refreshCapsuleData()
+        hasConfigurationChanged = true
     }
 
     override fun onStop() {
@@ -57,14 +72,8 @@ class TimerActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun initView() {
         with(binding) {
-            lifecycleScope.launch {
-                viewModel.setCapsuleDataJob?.join()
-                val capsule = viewModel.capsule ?: return@launch
-                root.setBackgroundColor(capsule.colorAsInt)
-                tvCapsuleName.text = capsule.name
-                tvCapsuleTips.text = getString(R.string.tip1) +
-                        if (capsule.stage.size > 1) "\n${getString(R.string.tip2)}"
-                        else ""
+            ivBtnStar.setOnClickListener {
+                viewModel.toggleCapsuleMajor()
             }
             ivBtnAlarmOption.setOnClickListener {
                 viewModel.updateAlarmOn(viewModel.isAlarmOn.value.not())
@@ -89,6 +98,12 @@ class TimerActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
+                    viewModel.capsuleFlow.collect {
+                        val capsule = it ?: return@collect
+                        updateCapsuleUi(capsule)
+                    }
+                }
+                launch {
                     viewModel.counters.collect {
                         updateCounterViews(it)
                     }
@@ -106,6 +121,24 @@ class TimerActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+    }
+
+    private fun updateCapsuleUi(capsule: Capsule) {
+        with(binding) {
+            root.setBackgroundColor(capsule.colorAsInt)
+            tvCapsuleName.text = capsule.name
+            tvCapsuleTips.text = getString(R.string.tip1) +
+                    if (capsule.stage.size > 1) "\n${getString(R.string.tip2)}"
+                    else ""
+            ivBtnStar.setImageResource(
+                if (capsule.isMajor) {
+                    R.drawable.ic_star_filled
+                } else {
+                    R.drawable.ic_star_border
+                }
+            )
+            DGTimerWidgetProvider.notifyAppWidgetUpdate(this@TimerActivity)
         }
     }
 
@@ -171,10 +204,10 @@ class TimerActivity : AppCompatActivity() {
         private const val KEY_CAPSULE_ID = "capsuleId"
 
         fun createTimerActivityIntent(
-            callerActivity: Activity,
+            context: Context,
             capsuleId: Int
         ): Intent =
-            Intent(callerActivity, TimerActivity::class.java).apply {
+            Intent(context, TimerActivity::class.java).apply {
                 putExtra(KEY_CAPSULE_ID, capsuleId)
             }
     }

@@ -1,6 +1,5 @@
 package com.example.dgtimer.activities.main
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -31,9 +30,11 @@ import com.example.dgtimer.AppRater
 import com.example.dgtimer.R
 import com.example.dgtimer.activities.timer.TimerActivity
 import com.example.dgtimer.databinding.ActivityMainBinding
-import com.example.dgtimer.utils.Extensions.getPackageInfoCompat
-import com.example.dgtimer.utils.Extensions.readUpdateNote
-import com.example.dgtimer.utils.Extensions.setSearchFocus
+import com.example.dgtimer.utils.getPackageInfoCompat
+import com.example.dgtimer.utils.readUpdateNote
+import com.example.dgtimer.utils.setSearchFocus
+import com.example.dgtimer.utils.updateListWithSavingState
+import com.example.dgtimer.widget.DGTimerWidgetProvider
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
@@ -43,7 +44,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    @Inject lateinit var appRater: AppRater
+    @Inject
+    lateinit var appRater: AppRater
 
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
@@ -105,7 +107,10 @@ class MainActivity : AppCompatActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.capsules.collect {
-                        mainCapsulesAdapter.submitList(it)
+                        mainCapsulesAdapter.updateListWithSavingState(
+                            binding.rvCapsules,
+                            it
+                        )
                         updateNetworkDisconnectedText()
                     }
                 }
@@ -116,7 +121,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 launch {
                     viewModel.searchedCapsules.collectLatest {
-                        searchedCapsulesAdapter.submitList(it)
+                        searchedCapsulesAdapter.updateListWithSavingState(
+                            binding.rvSearchedCapsules,
+                            it
+                        )
                     }
                 }
                 launch {
@@ -127,6 +135,13 @@ class MainActivity : AppCompatActivity() {
                 launch {
                     viewModel.showFab.collect() {
                         toggleScrollTopFab(it)
+                    }
+                }
+                launch {
+                    viewModel.updateCapsuleMajorEvent.collect {
+                        DGTimerWidgetProvider.notifyAppWidgetUpdate(
+                            this@MainActivity
+                        )
                     }
                 }
             }
@@ -155,7 +170,7 @@ class MainActivity : AppCompatActivity() {
             rvCapsules.adapter = mainCapsulesAdapter
             rvSearchedCapsules.adapter = searchedCapsulesAdapter
             rvCapsules.addOnScrollListener(
-                object: RecyclerView.OnScrollListener() {
+                object : RecyclerView.OnScrollListener() {
                     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                         viewModel.setScrollYForShowingFab(dy)
                     }
@@ -172,7 +187,7 @@ class MainActivity : AppCompatActivity() {
                 readUpdateNote(packageInfo.versionName)?.let { updateNote ->
                     updateVersionNoteDialog = AlertDialog.Builder(this)
                         .setMessage(updateNote)
-                        .setPositiveButton(R.string.check, null)
+                        .setPositiveButton(R.string.ok, null)
                         .create().apply {
                             show()
                         }
@@ -218,6 +233,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setSearchMode(isOn: Boolean) {
+        binding.llLogo.isVisible = !isOn
         binding.rvCapsules.isVisible = !isOn
         binding.rvSearchedCapsules.isVisible = isOn
         binding.llSearch.isVisible = isOn
@@ -258,7 +274,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         fun createMainActivityIntent(
-            callerActivity: Activity
-        ) = Intent(callerActivity, MainActivity::class.java)
+            context: Context
+        ) = Intent(context, MainActivity::class.java)
     }
 }

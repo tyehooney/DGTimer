@@ -23,6 +23,9 @@ interface CapsuleDao {
     @Query("SELECT * FROM capsules WHERE name LIKE '%' || :name || '%' ORDER BY major desc")
     fun searchByName(name: String): List<Capsule>?
 
+    @Query("SELECT * FROM capsules WHERE major == 1 ORDER BY name")
+    fun getStarredCapsules(): List<Capsule>?
+
     @Query("SELECT * FROM capsules WHERE id = :id LIMIT 1")
     fun searchById(id: Int): Flow<Capsule?>
 
