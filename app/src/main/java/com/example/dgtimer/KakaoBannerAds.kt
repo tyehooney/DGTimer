@@ -7,8 +7,7 @@ import com.kakao.adfit.ads.AdListener
 import com.kakao.adfit.ads.ba.BannerAdView
 
 private const val TAG = "KakaoBannerAds"
-fun setAd(bannerAdView: BannerAdView, context: Context,
-          lifecycle: Lifecycle){
+fun setAd(bannerAdView: BannerAdView, context: Context, lifecycle: Lifecycle){
 
     bannerAdView.setClientId(context.getString(R.string.adfit_id))
     bannerAdView.setAdListener(object : AdListener{
