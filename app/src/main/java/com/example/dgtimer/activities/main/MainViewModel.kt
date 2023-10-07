@@ -53,7 +53,7 @@ class MainViewModel @Inject constructor(
         }
 
     fun updateCapsulesFromServer() {
-        repository.refreshCapsules() {
+        repository.refreshCapsules {
             _isInitialized.value = true
         }
     }

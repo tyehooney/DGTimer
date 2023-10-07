@@ -29,9 +29,9 @@ class CapsuleRepositoryImpl @Inject constructor(
                 if (newCapsules.isNotEmpty()) {
                     capsuleDao.insertCapsules(newCapsules)
                 }
-                onFinished.invoke(true)
+                onFinished(true)
             } else {
-                onFinished.invoke(false)
+                onFinished(false)
             }
         }
     }
