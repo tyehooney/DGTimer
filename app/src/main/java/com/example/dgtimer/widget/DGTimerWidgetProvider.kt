@@ -1,5 +1,7 @@
 package com.example.dgtimer.widget
 
+import android.app.ActivityOptions
+import android.app.ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
 import android.app.PendingIntent
 import android.app.TaskStackBuilder
 import android.appwidget.AppWidgetManager
@@ -7,6 +9,7 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import android.widget.RemoteViews
 import com.example.dgtimer.R
@@ -51,17 +54,7 @@ class DGTimerWidgetProvider : AppWidgetProvider() {
         log("onReceive() action:${intent?.action}")
         when (intent?.action) {
             ACTION_CLICK_ITEM -> {
-                val itemId = intent.getIntExtra(EXTRA_ITEM_ID, -1)
-                val timerIntent = TimerActivity.createTimerActivityIntent(context, itemId).apply {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                }
-                val taskStackBuilder = TaskStackBuilder.create(context).apply {
-                    addNextIntentWithParentStack(timerIntent)
-                }
-                taskStackBuilder.getPendingIntent(
-                    0,
-                    PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-                ).send()
+                handleWidgetListItemClickEvent(context, intent)
             }
             AppWidgetManager.ACTION_APPWIDGET_UPDATE -> {
                 val appWidgetManager = AppWidgetManager.getInstance(context)
@@ -131,6 +124,29 @@ class DGTimerWidgetProvider : AppWidgetProvider() {
         remoteViews.setPendingIntentTemplate(R.id.capsule_list_view, clickItemPendingIntent)
 
         return remoteViews
+    }
+
+    private fun handleWidgetListItemClickEvent(context: Context, intent: Intent) {
+        val itemId = intent.getIntExtra(EXTRA_ITEM_ID, -1)
+        val timerIntent = TimerActivity.createTimerActivityIntent(context, itemId).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }
+        val pendingIntent = TaskStackBuilder.create(context).run {
+            addNextIntentWithParentStack(timerIntent)
+            getPendingIntent(
+                0,
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            )
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            val activityOptionsBundle = ActivityOptions.makeBasic()
+                .setPendingIntentBackgroundActivityStartMode(
+                    MODE_BACKGROUND_ACTIVITY_START_ALLOWED
+                ).toBundle()
+            pendingIntent.send(activityOptionsBundle)
+        } else {
+            pendingIntent.send()
+        }
     }
 
     private fun log(message: String) {
