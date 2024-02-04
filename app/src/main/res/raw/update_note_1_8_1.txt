@@ -1,1 +1,2 @@
 Update Note: 1.8.1
+- A bug where the timer screen could not be entered from the widget in Android 14 or later has been fixed.
