@@ -1,2 +1,28 @@
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+        google()
+    }
+}
 include ':app'
 rootProject.name = "DGTimer"
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    versionCatalogs {
+        androidxLibs {
+            from(files("gradle/androidx.versions.toml"))
+        }
+
+        googleLibs {
+            from(files("gradle/google.versions.toml"))
+        }
+
+        extLibs {
+            from(files("gradle/external.versions.toml"))
+        }
+    }
+}
