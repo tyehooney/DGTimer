@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
@@ -39,4 +40,20 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(androidxLibs.junit)
     androidTestImplementation(androidxLibs.espresso.core)
+
+    // Room
+    implementation(androidxLibs.room.runtime)
+    implementation(androidxLibs.room.ktx)
+    kapt(androidxLibs.room.compiler)
+    annotationProcessor(androidxLibs.room.compiler)
+
+    // Google Firebase
+    implementation(platform(googleLibs.firebase.bom))
+    implementation(googleLibs.firebase.firestore.ktx)
+    implementation(googleLibs.firebase.crashlytics.ktx)
+    implementation(googleLibs.firebase.analytics.ktx)
+
+    // coroutines
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.coroutines.core)
 }

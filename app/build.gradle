@@ -84,8 +84,6 @@ dependencies {
 
     implementation androidxLibs.recyclerview
 
-    implementation androidxLibs.lifecycle.extensions
-
     //https://github.com/bumptech/glide
     implementation extLibs.glide
     annotationProcessor extLibs.glide.compiler
