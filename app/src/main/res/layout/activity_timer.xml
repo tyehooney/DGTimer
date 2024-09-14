@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.dgtimer.activities.timer.TimerActivity">
+    tools:context="com.tyehooney.dgtimer.activities.timer.TimerActivity">
 
     <ImageView
         android:id="@+id/iv_btn_go_settings"
