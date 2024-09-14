@@ -18,6 +18,7 @@ material = { module = "com.google.android.material:material", version.ref = "mat
 
 [plugins]
 android-app = { id = "com.android.application", version.ref = "androidApp" }
+android-library = { id = "com.android.library", version.ref = "androidApp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinGradlePlugin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlinGradlePlugin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlinGradlePlugin" }
