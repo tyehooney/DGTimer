@@ -6,8 +6,8 @@ import android.util.Log
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService.RemoteViewsFactory
 import com.bumptech.glide.Glide
+import com.tyehooney.data.Capsule
 import com.tyehooney.dgtimer.R
-import com.tyehooney.dgtimer.db.Capsule
 import com.tyehooney.dgtimer.repo.CapsuleRepository
 import kotlinx.coroutines.runBlocking
 

@@ -1,6 +1,6 @@
 package com.tyehooney.dgtimer.repo
 
-import com.tyehooney.dgtimer.db.Capsule
+import com.tyehooney.data.Capsule
 import kotlinx.coroutines.flow.Flow
 
 interface CapsuleRepository {

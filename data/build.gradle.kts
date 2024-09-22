@@ -47,6 +47,12 @@ dependencies {
     kapt(androidxLibs.room.compiler)
     annotationProcessor(androidxLibs.room.compiler)
 
+    // hilt
+    implementation(googleLibs.hilt.android)
+    annotationProcessor(googleLibs.dagger.hilt.compiler)
+    kapt(googleLibs.hilt.android.compiler)
+    kapt(libs.hilt.compiler)
+
     // Google Firebase
     implementation(platform(googleLibs.firebase.bom))
     implementation(googleLibs.firebase.firestore.ktx)

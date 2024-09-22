@@ -38,4 +38,4 @@
 
 # Firebase
 -keepattributes Signature
--keep class com.tyehooney.dgtimer.db.** {*;}
+-keep class com.tyehooney.data.** {*;}

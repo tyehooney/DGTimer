@@ -13,7 +13,6 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.tyehooney.dgtimer.db.CapsuleType
 import java.io.IOException
 
 internal fun EditText.setSearchFocus(focus: Boolean) {
@@ -82,6 +81,3 @@ internal fun PackageManager.getPackageInfoCompat(packageName: String, flags: Int
     } else {
         @Suppress("DEPRECATION") getPackageInfo(packageName, flags)
     }
-
-internal fun Int.getCapsuleType(): CapsuleType =
-    CapsuleType.values().find { it.id == this } ?: CapsuleType.COFFEE

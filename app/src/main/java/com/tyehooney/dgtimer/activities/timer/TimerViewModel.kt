@@ -7,7 +7,7 @@ import com.tyehooney.dgtimer.DGTimerPreferences
 import com.tyehooney.dgtimer.DGTimerPreferences.Companion.DEFAULT_AMPLITUDE
 import com.tyehooney.dgtimer.DGTimerPreferences.Companion.DEFAULT_VOLUME
 import com.tyehooney.dgtimer.PrefKey
-import com.tyehooney.dgtimer.db.Capsule
+import com.tyehooney.data.Capsule
 import com.tyehooney.dgtimer.repo.CapsuleRepository
 import com.tyehooney.dgtimer.utils.TimeUtils.stageToMilliseconds
 import dagger.hilt.android.lifecycle.HiltViewModel

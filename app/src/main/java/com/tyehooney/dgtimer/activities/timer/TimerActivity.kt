@@ -15,7 +15,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.tyehooney.dgtimer.R
 import com.tyehooney.dgtimer.activities.settings.SettingsActivity
 import com.tyehooney.dgtimer.databinding.ActivityTimerBinding
-import com.tyehooney.dgtimer.db.Capsule
+import com.tyehooney.data.Capsule
 import com.tyehooney.dgtimer.setAd
 import com.tyehooney.dgtimer.utils.AlarmPlayerWrapper
 import com.tyehooney.dgtimer.widget.DGTimerWidgetProvider

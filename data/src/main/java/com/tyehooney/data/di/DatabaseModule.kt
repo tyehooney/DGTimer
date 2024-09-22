@@ -1,10 +1,10 @@
-package com.tyehooney.dgtimer.di
+package com.tyehooney.data.di
 
 import android.content.Context
 import androidx.room.Room
-import com.tyehooney.dgtimer.db.CapsuleDao
-import com.tyehooney.dgtimer.db.CapsuleDatabase
-import com.tyehooney.dgtimer.db.MIGRATION_2_to_3
+import com.tyehooney.data.CapsuleDao
+import com.tyehooney.data.CapsuleDatabase
+import com.tyehooney.data.MIGRATION_2_to_3
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

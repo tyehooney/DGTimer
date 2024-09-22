@@ -1,8 +1,8 @@
 package com.tyehooney.dgtimer.repo
 
-import com.tyehooney.dgtimer.db.Capsule
-import com.tyehooney.dgtimer.db.CapsuleDao
-import com.tyehooney.dgtimer.db.GlobalCapsule
+import com.tyehooney.data.Capsule
+import com.tyehooney.data.CapsuleDao
+import com.tyehooney.data.GlobalCapsule
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

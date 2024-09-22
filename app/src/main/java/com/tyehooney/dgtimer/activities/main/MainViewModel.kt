@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tyehooney.dgtimer.DGTimerPreferences
 import com.tyehooney.dgtimer.PrefKey
-import com.tyehooney.dgtimer.db.Capsule
+import com.tyehooney.data.Capsule
 import com.tyehooney.dgtimer.repo.CapsuleRepository
 import com.tyehooney.dgtimer.utils.trimAllSpaces
 import dagger.hilt.android.lifecycle.HiltViewModel

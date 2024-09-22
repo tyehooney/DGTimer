@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tyehooney.dgtimer.R
 import com.tyehooney.dgtimer.databinding.ItemCapsuleBinding
-import com.tyehooney.dgtimer.db.Capsule
+import com.tyehooney.data.Capsule
 
 class CapsuleAdapter(
     private val onItemClick: (Int) -> Unit,
