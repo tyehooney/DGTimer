@@ -10,6 +10,7 @@ import com.tyehooney.data.Capsule
 import com.tyehooney.dgtimer.R
 import com.tyehooney.dgtimer.repo.CapsuleRepository
 import kotlinx.coroutines.runBlocking
+import java.util.concurrent.ExecutionException
 
 class DGTimerWidgetRemoteViewsFactory(
     private val context: Context,
@@ -43,16 +44,23 @@ class DGTimerWidgetRemoteViewsFactory(
         val fillInIntent = Intent().apply {
             putExtra(DGTimerWidgetProvider.EXTRA_ITEM_ID, capsuleItem.id)
         }
-        val futureTarget = Glide.with(context)
-            .asBitmap()
-            .load(capsuleItem.image)
-            .submit()
-        return RemoteViews(context.packageName, R.layout.item_capsule_widget).apply {
-            setImageViewBitmap(R.id.iv_capsule, futureTarget.get())
+        val remoteView = RemoteViews(context.packageName, R.layout.item_capsule_widget).apply {
+            setImageViewBitmap(R.id.iv_capsule, null)
             setInt(R.id.fl_capsule_color, "setBackgroundColor", capsuleItem.color)
             setTextViewText(R.id.tv_capsule_name, capsuleItem.name)
             setOnClickFillInIntent(R.id.ll_capsule_root, fillInIntent)
         }
+        val futureTarget = Glide.with(context)
+            .asBitmap()
+            .load(capsuleItem.image)
+            .submit()
+        try {
+            remoteView.setImageViewBitmap(R.id.iv_capsule, futureTarget.get())
+        } catch (e: ExecutionException) {
+            e.printStackTrace()
+            return remoteView
+        }
+        return remoteView
     }
 
     private fun updateStarredCapsuleList() {
