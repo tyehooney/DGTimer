@@ -4,7 +4,7 @@ import com.tyehooney.data.Capsule
 import kotlinx.coroutines.flow.Flow
 
 interface CapsuleRepository {
-    fun refreshCapsules(onFinished: (Boolean) -> Unit)
+    suspend fun refreshCapsules()
     fun loadCapsules(): Flow<List<Capsule>?>
     suspend fun addCapsule(capsule: Capsule)
     suspend fun getCapsuleByName(name: String): List<Capsule>?

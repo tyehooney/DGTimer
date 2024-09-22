@@ -24,7 +24,6 @@ class DatabaseModule {
             "capsules"
         ).addMigrations(MIGRATION_2_to_3)
             .fallbackToDestructiveMigration()
-            .allowMainThreadQueries()
             .build()
     }
 

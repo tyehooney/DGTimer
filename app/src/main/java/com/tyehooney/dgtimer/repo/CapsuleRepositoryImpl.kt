@@ -6,6 +6,7 @@ import com.tyehooney.data.GlobalCapsule
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -17,24 +18,16 @@ class CapsuleRepositoryImpl @Inject constructor(
 
     private val ioDispatcher = Dispatchers.IO
 
-    override fun refreshCapsules(onFinished: (Boolean) -> Unit) {
-        val collection = FirebaseFirestore.getInstance().collection(FIREBASE_COLLECTION_NAME)
-        collection.get().addOnCompleteListener { task ->
-            if (task.isSuccessful && task.result != null) {
-                val newCapsules = task.result.documents.mapNotNull { snapshot ->
-                    snapshot.toObject(GlobalCapsule::class.java)
-                }.map { globalCapsule ->
-                    globalCapsule.toCapsule()
-                }
-                if (newCapsules.isNotEmpty()) {
-                    capsuleDao.insertCapsules(newCapsules)
-                }
-                onFinished(true)
-            } else {
-                onFinished(false)
+    override suspend fun refreshCapsules() =
+        withContext(ioDispatcher) {
+            val collection = FirebaseFirestore.getInstance().collection(FIREBASE_COLLECTION_NAME)
+            val newCapsules = collection.get().await().toObjects(GlobalCapsule::class.java).map {
+                it.toCapsule()
+            }
+            if (newCapsules.isNotEmpty()) {
+                capsuleDao.insertCapsules(newCapsules)
             }
         }
-    }
 
     private fun GlobalCapsule.toCapsule(): Capsule {
         val existingCapsule = capsuleDao.getCapsuleById(id)
