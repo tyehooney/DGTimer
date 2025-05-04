@@ -1,9 +1,9 @@
 [versions]
 firebaseCrashlyticsGradle = "3.0.2"
 googleServices = "4.4.2"
-hiltAndroidGradlePlugin = "2.48"
-hiltAndroidCompiler = "2.48"
-hiltPlugin = "2.42"
+hiltAndroidGradlePlugin = "2.56.1"
+hiltAndroidCompiler = "2.56.1"
+hiltPlugin = "2.56.1"
 firebaseBom = "33.1.2"
 
 [libraries]

@@ -1,5 +1,5 @@
 [versions]
-kakaoAdsBase = "3.12.4"
+kakaoAdsBase = "3.19.3"
 glide = "4.15.1"
 
 [libraries]

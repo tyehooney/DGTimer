@@ -1,12 +1,11 @@
 [versions]
-gradle = "8.5.1"
+gradle = "8.9.2"
 hiltCompiler = "1.2.0"
-kotlinGradlePlugin = "1.9.0"
+kotlinGradlePlugin = "2.1.20"
 kotlinxCoroutinesCore = "1.8.1"
 material = "1.12.0"
 junit = "4.13.2"
 androidApp = "7.0.4"
-coreKtx = "1.13.1"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.0"
@@ -19,7 +18,6 @@ kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", v
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesCore" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
