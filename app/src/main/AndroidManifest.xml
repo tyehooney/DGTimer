@@ -15,7 +15,7 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/ThemeNoStatusBar">
 
-        <activity android:name=".activities.SplashActivity"
+        <activity android:name="com.tyehooney.ui.activities.SplashActivity"
             android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
@@ -24,17 +24,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.settings.SettingsActivity"
+        <activity android:name="com.tyehooney.ui.activities.settings.SettingsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.timer.TimerActivity"
+            android:name="com.tyehooney.ui.activities.timer.TimerActivity"
             android:screenOrientation="portrait"
             android:configChanges="layoutDirection|locale"
-            android:parentActivityName=".activities.main.MainActivity" />
+            android:parentActivityName="com.tyehooney.ui.activities.main.MainActivity" />
         <activity
-            android:name=".activities.main.MainActivity"
+            android:name="com.tyehooney.ui.activities.main.MainActivity"
             android:screenOrientation="portrait"/>
-        <receiver android:name=".widget.DGTimerWidgetProvider"
+        <receiver android:name="com.tyehooney.ui.widget.DGTimerWidgetProvider"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -43,7 +43,7 @@
                 android:resource="@xml/dgtimer_appwidget_info" />
         </receiver>
 
-        <service android:name=".widget.DGTimerWidgetRemoteViewsService"
+        <service android:name="com.tyehooney.ui.widget.DGTimerWidgetRemoteViewsService"
             android:enabled="true"
             android:exported="true"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
