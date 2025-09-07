@@ -5,6 +5,7 @@ plugins {
     alias libs.plugins.kotlin.parcelize
     alias googleLibs.plugins.google.gms.services
     alias googleLibs.plugins.dagger.hilt.android
+    alias googleLibs.plugins.firebase.crashlytics
 }
 
 def localProperties = new Properties()
@@ -71,6 +72,10 @@ dependencies {
     testImplementation libs.junit
     androidTestImplementation androidxLibs.junit
     androidTestImplementation androidxLibs.espresso.core
+
+    // Firebase (for crash monitoring)
+    implementation platform(googleLibs.firebase.bom)
+    implementation googleLibs.firebase.crashlytics.ktx
 
     // hilt
     implementation googleLibs.hilt.android
