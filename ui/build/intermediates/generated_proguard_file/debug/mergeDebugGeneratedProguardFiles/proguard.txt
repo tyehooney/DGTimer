@@ -1,0 +1,6 @@
+-keep,allowobfuscation,allowshrinking class com.tyehooney.ui.activities.main.MainViewModel
+-keep,allowobfuscation,allowshrinking class com.tyehooney.ui.activities.main.MainViewModel
+-keep,allowobfuscation,allowshrinking class com.tyehooney.ui.activities.settings.SettingsViewModel
+-keep,allowobfuscation,allowshrinking class com.tyehooney.ui.activities.settings.SettingsViewModel
+-keep,allowobfuscation,allowshrinking class com.tyehooney.ui.activities.timer.TimerViewModel
+-keep,allowobfuscation,allowshrinking class com.tyehooney.ui.activities.timer.TimerViewModel

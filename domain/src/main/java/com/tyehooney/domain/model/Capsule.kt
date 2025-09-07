@@ -1,8 +1,5 @@
 package com.tyehooney.domain.model
 
-import android.graphics.Color
-import com.tyehooney.common.R
-
 data class Capsule(
     val id: Int = 0,
     val name: String = "",
@@ -12,15 +9,11 @@ data class Capsule(
     val image: String? = null,
     val isMajor: Boolean = false
 ) {
-    val colorAsInt: Int
-        get() = Color.parseColor(color)
+    val colorHex: String
+        get() = color ?: "#8B4513" // Default brown color
 
-    val typeStringResId: Int
-        get() = when (typeId.getCapsuleType()) {
-            CapsuleType.COFFEE -> R.string.capsule_type_coffee
-            CapsuleType.GREEN_TEA -> R.string.capsule_type_green_tea
-            CapsuleType.CHOCOLATE -> R.string.capsule_type_chocolate
-        }
+    val capsuleType: CapsuleType
+        get() = typeId.getCapsuleType()
 
     private fun Int.getCapsuleType(): CapsuleType =
         CapsuleType.entries.find { it.id == this } ?: CapsuleType.COFFEE

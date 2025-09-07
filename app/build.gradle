@@ -66,50 +66,19 @@ android {
 
 dependencies {
     implementation project(':ui')
-    implementation project(':domain')
-    implementation project(':data')
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation androidxLibs.appcompat
-    implementation androidxLibs.constraintlayout
-    implementation libs.material
-    implementation androidxLibs.activity.ktx
     testImplementation libs.junit
     androidTestImplementation androidxLibs.junit
     androidTestImplementation androidxLibs.espresso.core
 
-    implementation androidxLibs.room.runtime
-    implementation androidxLibs.room.ktx
-    kapt androidxLibs.room.compiler
-    annotationProcessor androidxLibs.room.compiler
-
     // Google Firebase
     implementation platform(googleLibs.firebase.bom)
-    implementation googleLibs.firebase.firestore.ktx
     implementation googleLibs.firebase.crashlytics.ktx
     implementation googleLibs.firebase.analytics.ktx
 
-    implementation androidxLibs.recyclerview
-
-    //https://github.com/bumptech/glide
-    implementation extLibs.glide
-    annotationProcessor extLibs.glide.compiler
-
-    // Lifecycle components
-    implementation androidxLibs.lifecycle.extensions
-    // noinspection LifecycleAnnotationProcessorWithJava8
-    annotationProcessor androidxLibs.lifecycle.compiler
-
-    // kakao adfit
-    implementation extLibs.kakao.ads.base
-
     // hilt
     implementation googleLibs.hilt.android
-    annotationProcessor googleLibs.dagger.hilt.compiler
     kapt googleLibs.hilt.android.compiler
-    kapt libs.hilt.compiler
-
-    // coroutines
-    implementation libs.kotlinx.coroutines.android
-    implementation libs.kotlinx.coroutines.core
 }

@@ -138,7 +138,7 @@ class TimerActivity : AppCompatActivity() {
 
     private fun updateCapsuleUi(capsule: Capsule) {
         with(binding) {
-            root.setBackgroundColor(capsule.colorAsInt)
+            root.setBackgroundColor(android.graphics.Color.parseColor(capsule.colorHex))
             tvCapsuleName.text = capsule.name
             tvCapsuleTips.text = getString(R.string.tip1) +
                     if (capsule.stage.size > 1) "\n${getString(R.string.tip2)}"

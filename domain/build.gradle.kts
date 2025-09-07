@@ -34,12 +34,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":common"))
-
     // Coroutines
     implementation(libs.kotlinx.coroutines.core)
     
-    // Hilt
+    // Hilt (minimal for dependency injection)
     implementation(googleLibs.hilt.android)
     kapt(googleLibs.dagger.hilt.compiler)
     

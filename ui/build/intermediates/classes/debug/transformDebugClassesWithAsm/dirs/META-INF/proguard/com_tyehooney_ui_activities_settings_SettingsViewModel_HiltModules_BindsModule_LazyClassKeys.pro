@@ -1,0 +1,1 @@
+-keep,allowobfuscation,allowshrinking class com.tyehooney.ui.activities.settings.SettingsViewModel

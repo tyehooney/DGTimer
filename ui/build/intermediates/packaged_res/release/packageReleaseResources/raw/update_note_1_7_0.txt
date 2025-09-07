@@ -1,0 +1,5 @@
+버전 1.7.0 업데이트
+
+- 기반 언어 변경(Java -> Kotlin)
+- siren 음원 파일 교체
+- splash screen시 back키 누른 후 재진입시 멈추는 현상 해결

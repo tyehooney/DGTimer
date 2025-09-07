@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
+import com.tyehooney.domain.model.CapsuleType
 import com.tyehooney.ui.R
 import com.tyehooney.ui.databinding.ViewCounterBinding
 import com.tyehooney.ui.utils.TimeUtils.MILLIS
@@ -39,7 +40,7 @@ class CounterView(
                 if (counter.index == 0 && counterViewCount > 1) {
                     context.getString(R.string.latte)
                 } else {
-                    context.getString(counter.typeStringResId)
+                    getCapsuleTypeString(context, counter.capsuleType)
                 }
             root.setOnClickListener {
                 onClick?.invoke(counter.index)
@@ -57,4 +58,12 @@ class CounterView(
         } else {
             ContextCompat.getColor(context, R.color.colorTextTransparent)
         }
+
+    private fun getCapsuleTypeString(context: Context, capsuleType: CapsuleType): String {
+        return when (capsuleType) {
+            CapsuleType.COFFEE -> context.getString(R.string.capsule_type_coffee)
+            CapsuleType.GREEN_TEA -> context.getString(R.string.capsule_type_green_tea)
+            CapsuleType.CHOCOLATE -> context.getString(R.string.capsule_type_chocolate)
+        }
+    }
 }

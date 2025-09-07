@@ -64,7 +64,7 @@ class CapsuleViewHolder(
             ivBtnCapsuleMajor.setOnClickListener {
                 onStarClick.invoke(capsule.id)
             }
-            vCapsuleColor.setBackgroundColor(capsule.colorAsInt)
+            vCapsuleColor.setBackgroundColor(android.graphics.Color.parseColor(capsule.colorHex))
             itemView.setOnClickListener {
                 onItemClick.invoke(capsule.id)
             }

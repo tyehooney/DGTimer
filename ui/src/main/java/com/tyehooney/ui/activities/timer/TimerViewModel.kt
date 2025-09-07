@@ -66,7 +66,7 @@ class TimerViewModel @Inject constructor(
                 // Create counters from capsule stages
                 val counters = capsule.stage.mapIndexed { index, stage ->
                     Counter(
-                        typeStringResId = capsule.typeStringResId,
+                        capsuleType = capsule.capsuleType,
                         totalTime = stageToMilliseconds(stage),
                         index = index,
                         isActive = index == 0,

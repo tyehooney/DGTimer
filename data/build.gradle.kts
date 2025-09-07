@@ -36,8 +36,8 @@ android {
 dependencies {
     implementation(project(":domain"))
     implementation(project(":common"))
+    
     implementation(androidxLibs.core.ktx)
-    implementation(androidxLibs.appcompat)
     testImplementation(libs.junit)
     androidTestImplementation(androidxLibs.junit)
     androidTestImplementation(androidxLibs.espresso.core)
@@ -46,21 +46,16 @@ dependencies {
     implementation(androidxLibs.room.runtime)
     implementation(androidxLibs.room.ktx)
     kapt(androidxLibs.room.compiler)
-    annotationProcessor(androidxLibs.room.compiler)
 
-    // hilt
+    // Hilt
     implementation(googleLibs.hilt.android)
-    annotationProcessor(googleLibs.dagger.hilt.compiler)
-    kapt(googleLibs.hilt.android.compiler)
-    kapt(libs.hilt.compiler)
+    kapt(googleLibs.dagger.hilt.compiler)
 
     // Google Firebase
     implementation(platform(googleLibs.firebase.bom))
     implementation(googleLibs.firebase.firestore.ktx)
-    implementation(googleLibs.firebase.crashlytics.ktx)
-    implementation(googleLibs.firebase.analytics.ktx)
 
-    // coroutines
+    // Coroutines
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
 }

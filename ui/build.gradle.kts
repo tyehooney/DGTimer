@@ -43,7 +43,7 @@ android {
 
 dependencies {
     implementation(project(":domain"))
-    implementation(project(":data"))
+    implementation(project(":data")) // UI needs data for preferences access
     implementation(project(":common"))
 
     // Android
@@ -56,11 +56,11 @@ dependencies {
 
     // Lifecycle components
     implementation(androidxLibs.lifecycle.extensions)
-    // kapt(androidxLibs.lifecycle.compiler)
+    kapt(androidxLibs.lifecycle.compiler)
 
     // Glide for image loading
     implementation(extLibs.glide)
-    // kapt(extLibs.glide.compiler)
+    kapt(extLibs.glide.compiler)
 
     // Kakao AdFit
     implementation(extLibs.kakao.ads.base)

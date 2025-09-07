@@ -1,2 +1,8 @@
 # Add project specific ProGuard rules for consumers here.
 # This file will be automatically included by consumer modules.
+-keep,allowobfuscation,allowshrinking class com.tyehooney.ui.activities.main.MainViewModel
+-keep,allowobfuscation,allowshrinking class com.tyehooney.ui.activities.main.MainViewModel
+-keep,allowobfuscation,allowshrinking class com.tyehooney.ui.activities.settings.SettingsViewModel
+-keep,allowobfuscation,allowshrinking class com.tyehooney.ui.activities.settings.SettingsViewModel
+-keep,allowobfuscation,allowshrinking class com.tyehooney.ui.activities.timer.TimerViewModel
+-keep,allowobfuscation,allowshrinking class com.tyehooney.ui.activities.timer.TimerViewModel
