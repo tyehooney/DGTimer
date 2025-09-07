@@ -15,4 +15,16 @@ object TimeUtils {
             8 -> 60 * MILLIS
             else -> 0L
         }
+    
+    fun formatTime(timeInMillis: Long): String {
+        val totalSeconds = timeInMillis / 1000
+        val minutes = totalSeconds / 60
+        val seconds = totalSeconds % 60
+        
+        return if (minutes > 0) {
+            "${minutes}:${seconds.toString().padStart(2, '0')}"
+        } else {
+            seconds.toString()
+        }
+    }
 }

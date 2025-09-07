@@ -1,27 +1,29 @@
 package com.tyehooney.ui.activities.main
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tyehooney.domain.model.Capsule
+import com.tyehooney.ui.R
+import com.tyehooney.ui.databinding.ItemCapsuleBinding
 
 class CapsuleAdapter(
     private val onItemClick: (Int) -> Unit,
     private val onStarClick: (Int) -> Unit
 ) : ListAdapter<Capsule, CapsuleViewHolder>(diffCallback) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CapsuleViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(android.R.layout.simple_list_item_1, parent, false)
-        return CapsuleViewHolder(view)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CapsuleViewHolder =
+        CapsuleViewHolder(
+            ItemCapsuleBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
 
     override fun onBindViewHolder(holder: CapsuleViewHolder, position: Int) {
         holder.bind(getItem(position), onItemClick, onStarClick)
@@ -39,18 +41,33 @@ class CapsuleAdapter(
 }
 
 class CapsuleViewHolder(
-    itemView: View
-) : RecyclerView.ViewHolder(itemView) {
-    private val textView: TextView = itemView.findViewById(android.R.id.text1)
-    
+    private val binding: ItemCapsuleBinding,
+) : RecyclerView.ViewHolder(binding.root) {
     fun bind(
         capsule: Capsule,
         onItemClick: (Int) -> Unit,
         onStarClick: (Int) -> Unit
     ) {
-        textView.text = capsule.name
-        itemView.setOnClickListener {
-            onItemClick.invoke(capsule.id)
+        val context = itemView.context
+        with(binding) {
+            Glide.with(context)
+                .load(capsule.image)
+                .into(ivCapsule)
+            tvCapsule.text = capsule.name
+            ivBtnCapsuleMajor.setImageDrawable(
+                if (capsule.isMajor) {
+                    ContextCompat.getDrawable(context, R.drawable.ic_star_yellow)
+                } else {
+                    ContextCompat.getDrawable(context, R.drawable.ic_star_gray)
+                }
+            )
+            ivBtnCapsuleMajor.setOnClickListener {
+                onStarClick.invoke(capsule.id)
+            }
+            vCapsuleColor.setBackgroundColor(capsule.colorAsInt)
+            itemView.setOnClickListener {
+                onItemClick.invoke(capsule.id)
+            }
         }
     }
 }

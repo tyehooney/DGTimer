@@ -27,8 +27,9 @@ android {
         }
     }
 
-    viewBinding {
-        enable = true
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
     }
 
     compileOptions {
@@ -55,20 +56,18 @@ dependencies {
 
     // Lifecycle components
     implementation(androidxLibs.lifecycle.extensions)
-    annotationProcessor(androidxLibs.lifecycle.compiler)
+    // kapt(androidxLibs.lifecycle.compiler)
 
     // Glide for image loading
     implementation(extLibs.glide)
-    annotationProcessor(extLibs.glide.compiler)
+    // kapt(extLibs.glide.compiler)
 
     // Kakao AdFit
     implementation(extLibs.kakao.ads.base)
 
     // Hilt
     implementation(googleLibs.hilt.android)
-    annotationProcessor(googleLibs.dagger.hilt.compiler)
-    kapt(googleLibs.hilt.android.compiler)
-    kapt(libs.hilt.compiler)
+    kapt(googleLibs.dagger.hilt.compiler)
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)

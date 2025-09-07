@@ -45,8 +45,38 @@ class CapsuleRepositoryImpl @Inject constructor(
 
     override fun loadCapsules(): Flow<List<Capsule>?> =
         capsuleDao.getAll().map { entities ->
-            entities?.map { it.toDomain() }
+            entities?.map { it.toDomain() } ?: getSampleCapsules()
         }
+    
+    private fun getSampleCapsules(): List<Capsule> = listOf(
+        Capsule(
+            id = 1,
+            name = "Espresso",
+            typeId = 0,
+            stage = listOf(30, 60),
+            isMajor = false,
+            image = null,
+            color = "#8B4513"
+        ),
+        Capsule(
+            id = 2,
+            name = "Lungo",
+            typeId = 0, 
+            stage = listOf(45, 90),
+            isMajor = false,
+            image = null,
+            color = "#D2B48C"
+        ),
+        Capsule(
+            id = 3,
+            name = "Americano",
+            typeId = 0,
+            stage = listOf(30, 120),
+            isMajor = true,
+            image = null,
+            color = "#A0522D"
+        )
+    )
 
     override suspend fun addCapsule(capsule: Capsule) {
         capsuleDao.insertCapsule(capsule.toEntity())
@@ -64,7 +94,7 @@ class CapsuleRepositoryImpl @Inject constructor(
 
     override suspend fun getCapsuleById(id: Int): Capsule? =
         withContext(ioDispatcher) {
-            capsuleDao.getCapsuleById(id)?.toDomain()
+            capsuleDao.getCapsuleById(id)?.toDomain() ?: getSampleCapsules().find { it.id == id }
         }
 
     override suspend fun searchCapsulesByName(

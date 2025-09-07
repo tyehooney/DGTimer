@@ -19,11 +19,23 @@ import com.tyehooney.domain.model.Capsule
 import com.tyehooney.ui.setAd
 import com.tyehooney.ui.utils.AlarmPlayerWrapper
 import com.tyehooney.ui.widget.DGTimerWidgetProvider
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class TimerActivity : AppCompatActivity() {
+
+    companion object {
+        private const val KEY_CAPSULE_ID = "capsuleId"
+
+        fun createTimerActivityIntent(
+            context: Context,
+            capsuleId: Int
+        ): Intent =
+            Intent(context, TimerActivity::class.java).apply {
+                putExtra(KEY_CAPSULE_ID, capsuleId)
+            }
+    }
 
     private lateinit var binding: ActivityTimerBinding
     private val viewModel: TimerViewModel by viewModels()
@@ -128,8 +140,8 @@ class TimerActivity : AppCompatActivity() {
         with(binding) {
             root.setBackgroundColor(capsule.colorAsInt)
             tvCapsuleName.text = capsule.name
-            tvCapsuleTips.text = "Tips: " + // Simplified string
-                    if (capsule.stage.size > 1) "\nTap timer to select stage"
+            tvCapsuleTips.text = getString(R.string.tip1) +
+                    if (capsule.stage.size > 1) "\n${getString(R.string.tip2)}"
                     else ""
             ivBtnStar.setImageResource(
                 if (capsule.isMajor) {
@@ -200,15 +212,4 @@ class TimerActivity : AppCompatActivity() {
         }
     }
 
-    companion object {
-        private const val KEY_CAPSULE_ID = "capsuleId"
-
-        fun createTimerActivityIntent(
-            context: Context,
-            capsuleId: Int
-        ): Intent =
-            Intent(context, TimerActivity::class.java).apply {
-                putExtra(KEY_CAPSULE_ID, capsuleId)
-            }
-    }
 }
