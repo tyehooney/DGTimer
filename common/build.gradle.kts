@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(googleLibs.plugins.dagger.hilt.android)
 }
 
 android {
@@ -34,6 +36,11 @@ android {
 
 dependencies {
     implementation(androidxLibs.core.ktx)
+    
+    // Hilt for dependency injection
+    implementation(googleLibs.hilt.android)
+    kapt(googleLibs.dagger.hilt.compiler)
+    
     testImplementation(libs.junit)
     androidTestImplementation(androidxLibs.junit)
     androidTestImplementation(androidxLibs.espresso.core)

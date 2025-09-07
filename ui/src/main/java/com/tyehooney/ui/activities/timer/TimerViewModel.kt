@@ -12,11 +12,11 @@ import com.tyehooney.domain.usecase.GetCapsuleByIdUseCase
 import com.tyehooney.domain.usecase.UpdateCapsuleMajorUseCase
 import com.tyehooney.domain.usecase.RefreshCapsulesUseCase
 import com.tyehooney.ui.utils.TimeUtils.stageToMilliseconds
-import com.tyehooney.data.DGTimerPreferences
-import com.tyehooney.data.PrefKey
-import com.tyehooney.data.DGTimerPreferences.Companion.DEFAULT_ALARM
-import com.tyehooney.data.DGTimerPreferences.Companion.DEFAULT_AMPLITUDE
-import com.tyehooney.data.DGTimerPreferences.Companion.DEFAULT_VOLUME
+import com.tyehooney.common.DGTimerPreferences
+import com.tyehooney.common.PrefKey
+import com.tyehooney.common.DGTimerPreferences.Companion.DEFAULT_ALARM
+import com.tyehooney.common.DGTimerPreferences.Companion.DEFAULT_AMPLITUDE
+import com.tyehooney.common.DGTimerPreferences.Companion.DEFAULT_VOLUME
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

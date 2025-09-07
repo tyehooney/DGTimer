@@ -2,8 +2,8 @@ package com.tyehooney.ui.activities.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tyehooney.data.DGTimerPreferences
-import com.tyehooney.data.PrefKey
+import com.tyehooney.common.DGTimerPreferences
+import com.tyehooney.common.PrefKey
 import com.tyehooney.domain.model.Capsule
 import com.tyehooney.domain.usecase.GetCapsulesUseCase
 import com.tyehooney.domain.usecase.RefreshCapsulesUseCase

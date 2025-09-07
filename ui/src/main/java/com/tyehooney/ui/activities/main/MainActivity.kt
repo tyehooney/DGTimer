@@ -26,7 +26,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
-import com.tyehooney.ui.AppRater
+import com.tyehooney.common.AppRater
 import com.tyehooney.ui.R
 import com.tyehooney.ui.activities.timer.TimerActivity
 import com.tyehooney.ui.databinding.ActivityMainBinding

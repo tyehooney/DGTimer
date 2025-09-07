@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.tyehooney.ui.AppRater
+import com.tyehooney.common.AppRater
 import com.tyehooney.ui.R
 import com.tyehooney.ui.databinding.ActivitySettingsBinding
 import com.tyehooney.ui.utils.AlarmPlayerWrapper

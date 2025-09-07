@@ -1,11 +1,11 @@
 package com.tyehooney.ui.activities.settings
 
 import androidx.lifecycle.ViewModel
-import com.tyehooney.data.DGTimerPreferences
-import com.tyehooney.data.DGTimerPreferences.Companion.DEFAULT_ALARM
-import com.tyehooney.data.DGTimerPreferences.Companion.DEFAULT_AMPLITUDE
-import com.tyehooney.data.DGTimerPreferences.Companion.DEFAULT_VOLUME
-import com.tyehooney.data.PrefKey
+import com.tyehooney.common.DGTimerPreferences
+import com.tyehooney.common.DGTimerPreferences.Companion.DEFAULT_ALARM
+import com.tyehooney.common.DGTimerPreferences.Companion.DEFAULT_AMPLITUDE
+import com.tyehooney.common.DGTimerPreferences.Companion.DEFAULT_VOLUME
+import com.tyehooney.common.PrefKey
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -43,7 +43,6 @@ android {
 
 dependencies {
     implementation(project(":domain"))
-    implementation(project(":data")) // UI needs data for preferences access
     implementation(project(":common"))
 
     // Android

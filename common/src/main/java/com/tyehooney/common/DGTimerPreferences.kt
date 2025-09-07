@@ -1,4 +1,4 @@
-package com.tyehooney.data
+package com.tyehooney.common
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
